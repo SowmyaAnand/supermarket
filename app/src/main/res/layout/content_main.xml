@@ -31,13 +31,13 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIconTint="@color/colorPrimary"
-            app:tabTextColor="@color/white"
-            app:tabTextAppearance="@style/MineCustomizedTab"
-            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabSelectedTextColor="@color/colorPrimary"
             app:tabPaddingEnd="0dp"
             android:clipToPadding="true"
             app:tabPaddingStart="0dp"
+            app:tabIconTint="@color/tabbar"
+            app:tabTextAppearance="@style/MineCustomizedTab"
             >
         </com.google.android.material.tabs.TabLayout>
     </LinearLayout>

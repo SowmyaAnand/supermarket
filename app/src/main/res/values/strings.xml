@@ -24,8 +24,9 @@
     <string name="skip">SKIP</string>
 
     <string name="title_activity_tabbed">tabbed</string>
-    <string name="tab_text_1">Receipes</string>
-    <string name="tab_text_2">Blogs</string>
-    <string name="tab_text_3">Kids Corner</string>
+    <string name="tab_text_1">Home</string>
+    <string name="tab_text_2">Offers</string>
+    <string name="tab_text_3">Contact US</string>
+    <string name="tab_text__4">My Account</string>
 
 </resources>

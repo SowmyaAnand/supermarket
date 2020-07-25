@@ -24,9 +24,10 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private int[] tabIcons = {
 
-            R.drawable.ic_event_available_black_24dp,
-            R.drawable.ic_event_available_black_24dp,
-            R.drawable.ic_event_available_black_24dp
+            R.drawable.ic_home_black_24dp,
+            R.drawable.ic_local_offer_black_24dp,
+            R.drawable.ic_contact_phone_black_24dp,
+            R.drawable.ic_person_black_24dp
 
     };
     @Override
@@ -44,9 +45,10 @@ public class MainActivity extends AppCompatActivity {
                 .setDrawerLayout(drawer)
                 .build();
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        sectionsPagerAdapter.addFragment(new Fragment1(),"Receipes");
-        sectionsPagerAdapter.addFragment(new Fragment2(),"Blogs");
-        sectionsPagerAdapter.addFragment(new Fragment3(),"Kids Corner");
+        sectionsPagerAdapter.addFragment(new Fragment1(),"Home");
+        sectionsPagerAdapter.addFragment(new Fragment2(),"Offers");
+        sectionsPagerAdapter.addFragment(new Fragment2(),"Contact");
+        sectionsPagerAdapter.addFragment(new Fragment2(),"My Account");
         ViewPager viewPager = findViewById(R.id.view_pager2);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         tabs.getTabAt(0).setIcon(tabIcons[0]);
         tabs.getTabAt(1).setIcon(tabIcons[1]);
         tabs.getTabAt(2).setIcon(tabIcons[2]);
+        tabs.getTabAt(3).setIcon(tabIcons[3]);
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
