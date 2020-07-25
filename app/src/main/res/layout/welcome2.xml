@@ -46,16 +46,5 @@ android:id="@+id/linearimg"
             android:src="@drawable/image2"/>
 
     </LinearLayout>
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
 
-        android:background="@drawable/mybutton"
-android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
-        android:textColor="@color/colorPrimary"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:text="Get Started" />
 </RelativeLayout>

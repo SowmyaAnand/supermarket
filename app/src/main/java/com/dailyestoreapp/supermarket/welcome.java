@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class welcome extends AppCompatActivity {
     private int[] layouts;
     private Button btnSkip, btnNext;
 
+    Button gt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,13 +48,14 @@ public class welcome extends AppCompatActivity {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
         setContentView(R.layout.activity_welcome);
-
+        //Timer timer = new Timer();
+        //timer.scheduleAtFixedRate(new Mytimertask(),2000,4000);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
-
-
+        gt = (Button) findViewById(R.id.gtstarted);
+        gt.setVisibility(View.GONE);
         // layouts of welcome sliders
         layouts = new int[]{
                 R.layout.welcome1,
@@ -89,6 +92,33 @@ public class welcome extends AppCompatActivity {
                 }
             }
         });
+
+        gt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int current = getItem(+1);
+                if (current < layouts.length) {
+                    // move to next screen
+                    viewPager.setCurrentItem(current);
+                } else {
+                    launchHomeScreen();
+                }
+
+            }
+        });
+
+//        getstarted.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int current = getItem(+1);
+//                if (current < layouts.length) {
+//                    // move to next screen
+//                    viewPager.setCurrentItem(current);
+//                } else {
+//                    launchHomeScreen();
+//                }
+//            }
+//        });
     }
 
     private void addBottomDots(int currentPage) {
@@ -134,10 +164,12 @@ public class welcome extends AppCompatActivity {
                 // last page. make button text to GOT IT
                 btnNext.setVisibility(View.GONE);
                 btnSkip.setVisibility(View.GONE);
+                gt.setVisibility(View.VISIBLE);
             } else {
                 // still pages are left
                 btnNext.setVisibility(View.VISIBLE);
                 btnSkip.setVisibility(View.VISIBLE);
+                gt.setVisibility(View.GONE);
             }
         }
 
@@ -196,6 +228,29 @@ public class welcome extends AppCompatActivity {
         public void destroyItem(ViewGroup container, int position, Object object) {
             View view = (View) object;
             container.removeView(view);
+        }
+    }
+    public class Mytimertask extends TimerTask{
+        @Override
+        public void run() {
+            welcome.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if(viewPager.getCurrentItem() ==0)
+                    {
+                        viewPager.setCurrentItem(1);
+                    }
+                    else if(viewPager.getCurrentItem()==1)
+                    {
+                        viewPager.setCurrentItem(2);
+
+                    }
+                    else
+                    {
+                        viewPager.setCurrentItem(0);
+                    }
+                }
+            });
         }
     }
 }

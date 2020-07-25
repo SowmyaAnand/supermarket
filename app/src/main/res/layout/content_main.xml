@@ -17,4 +17,28 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/mobile_navigation" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIconTint="@color/colorPrimary"
+            app:tabTextColor="@color/white"
+            app:tabTextAppearance="@style/MineCustomizedTab"
+            app:tabIndicatorColor="@color/white"
+            app:tabPaddingEnd="0dp"
+            android:clipToPadding="true"
+            app:tabPaddingStart="0dp"
+            >
+        </com.google.android.material.tabs.TabLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
