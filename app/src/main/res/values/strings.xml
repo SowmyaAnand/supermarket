@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">supermarket</string>
+    <string name="app_name">supermarket2</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -12,10 +12,13 @@
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="home_second">Home Second</string>
-    <string name="slide_1_title">Welcome to Kitchen Hub</string>
+    <string name="slide_1_title">Easy Purchase</string>
+    <string name="slide_1_title2"> &amp;Fast Delivery..</string>
     <string name="slide_1_desc">Check out list of Delicious Receipes</string>
-
-    <string name="slide_2_title">Become a Food Blogger</string>
+    <string name="sample">Get products delivered at your door step.Contactless delivery available </string>
+    <string name="sample2">Dont miss out the great offers on quality products  </string>
+    <string name="slide_2_title">Cash Back &amp;</string>
+    <string name="slide_2_title2">Exciting Offers</string>
     <string name="slide_2_desc">Upload your favourite receipes</string>
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
