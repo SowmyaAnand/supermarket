@@ -4,12 +4,18 @@ import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.GridView;
+import android.widget.TextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Fragment1#newInstance} factory method to
@@ -20,7 +26,10 @@ public class Fragment1 extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    ViewPager mviewpager,flyerpager;
+    ImageAdapter adapterview;
+    Imageadapterforflyers flyeradapterview;
+    TextView t;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -55,6 +64,9 @@ public class Fragment1 extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+
     }
 
     @Override
@@ -62,8 +74,66 @@ public class Fragment1 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-       // GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
-       // gridview.setAdapter(new ImageAdapter(rootView.getContext()));
+
+        mviewpager = (ViewPager)rootView.findViewById(R.id.viewpager);
+        flyerpager = (ViewPager)rootView.findViewById(R.id.viewpager2);
+        flyeradapterview = new Imageadapterforflyers(getContext());
+        flyerpager.setAdapter(flyeradapterview);
+        Timer t = new Timer();
+        t.scheduleAtFixedRate(new Mytimertask2(),900,1800);
+       adapterview = new ImageAdapter(getContext());
+        mviewpager.setAdapter(adapterview);
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new Mytimertask(),1200,2400);
+       GridView gridview = (GridView) rootView.findViewById(R.id.categories);
+
         return rootView;
+    }
+
+    public class Mytimertask extends TimerTask {
+        @Override
+        public void run() {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if(mviewpager.getCurrentItem() ==0)
+                    {
+                        mviewpager.setCurrentItem(1);
+                    }
+                    else if(mviewpager.getCurrentItem()==1)
+                    {
+                        mviewpager.setCurrentItem(2);
+
+                    }
+                    else
+                    {
+                        mviewpager.setCurrentItem(0);
+                    }
+                }
+            });
+        }
+    }
+    public class Mytimertask2 extends TimerTask {
+        @Override
+        public void run() {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if(flyerpager.getCurrentItem() ==0)
+                    {
+                        flyerpager.setCurrentItem(1);
+                    }
+                    else if(flyerpager.getCurrentItem()==1)
+                    {
+                        flyerpager.setCurrentItem(2);
+
+                    }
+                    else
+                    {
+                        flyerpager.setCurrentItem(0);
+                    }
+                }
+            });
+        }
     }
 }

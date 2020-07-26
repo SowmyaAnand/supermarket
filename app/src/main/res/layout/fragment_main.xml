@@ -3,5 +3,39 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager2"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        />
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+       android:padding="5dp"
+        />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_medium"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:text="Shop By Category"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+    <GridView
+        android:id="@+id/categories"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:columnWidth="40dp"
+        android:numColumns="2"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:gravity="center"/>
 </LinearLayout>
+

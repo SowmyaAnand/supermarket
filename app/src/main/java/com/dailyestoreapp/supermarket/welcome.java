@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -55,7 +56,9 @@ public class welcome extends AppCompatActivity {
         btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
         gt = (Button) findViewById(R.id.gtstarted);
+
         gt.setVisibility(View.GONE);
+
         // layouts of welcome sliders
         layouts = new int[]{
                 R.layout.welcome1,
@@ -165,11 +168,13 @@ public class welcome extends AppCompatActivity {
                 btnNext.setVisibility(View.GONE);
                 btnSkip.setVisibility(View.GONE);
                 gt.setVisibility(View.VISIBLE);
+
             } else {
                 // still pages are left
                 btnNext.setVisibility(View.VISIBLE);
                 btnSkip.setVisibility(View.VISIBLE);
                 gt.setVisibility(View.GONE);
+
             }
         }
 

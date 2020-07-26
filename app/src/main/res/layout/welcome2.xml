@@ -24,6 +24,7 @@
         android:layout_marginStart="8dp"
         android:textSize="@dimen/slide_title" />
     <TextView
+        android:id="@+id/sec"
         android:layout_width="wrap_content"
         android:text="@string/sample2"
         android:layout_marginStart="8dp"
@@ -32,18 +33,19 @@
         android:layout_height="wrap_content"/>
 
     <LinearLayout
-android:id="@+id/linearimg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_below="@+id/sec"
+
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="140dp"
-            android:layout_height="140dp"
+            android:layout_width="450dp"
+            android:layout_height="450dp"
 
-
-            android:src="@drawable/image2"/>
+            android:src="@drawable/offers"/>
 
     </LinearLayout>
 
