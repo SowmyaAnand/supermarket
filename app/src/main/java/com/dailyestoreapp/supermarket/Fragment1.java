@@ -1,6 +1,7 @@
 package com.dailyestoreapp.supermarket;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -28,6 +30,7 @@ public class Fragment1 extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     ViewPager mviewpager,flyerpager;
     ImageAdapter adapterview;
+    ExpandableHeightGridView gridview;
     Imageadapterforflyers flyeradapterview;
     TextView t;
     // TODO: Rename and change types of parameters
@@ -85,7 +88,16 @@ public class Fragment1 extends Fragment {
         mviewpager.setAdapter(adapterview);
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new Mytimertask(),1200,2400);
-       GridView gridview = (GridView) rootView.findViewById(R.id.categories);
+        gridview = (ExpandableHeightGridView) rootView.findViewById(R.id.categories);
+        gridview.setAdapter(new GridviewAdapter(rootView.getContext()));
+        gridview.setExpanded(true);
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @SuppressWarnings("rawtypes")
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Intent next = new Intent(getContext(),Itemlisting.class);
+                startActivity(next);
+            }
+        });
 
         return rootView;
     }
