@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +23,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
     Context context;
     ArrayList<String> lts=new ArrayList<String>();
     ArrayList pnames = new ArrayList<>(Arrays.asList("Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6", "Person 7"));
-
+    int quantity=1;
     public ItemAdapter(Context context, ArrayList personNames) {
         this.context = context;
         this.personNames = personNames;
@@ -39,11 +40,40 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         // set the data in items
         String name = (String) personNames.get(position);
        holder.name.setText(name);
+       holder.addbtn.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               holder.addbtn.setVisibility(View.GONE);
+           }
+       });
+       holder.addition.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               String q = String.valueOf(holder.quantityy.getText());
+               quantity= Integer.parseInt(q);
+               quantity=quantity+1;
+               String stringquantity = String.valueOf(quantity);
+              holder.quantityy.setText(stringquantity);
+           }
+       });
+        holder.substraction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String q2 = String.valueOf(holder.quantityy.getText());
+                quantity= Integer.parseInt(q2);
+                if(quantity>1)
+                {
+                    quantity=quantity-1;
+                }
+                String stringquantity2 = String.valueOf(quantity);
+                holder.quantityy.setText(stringquantity2);
+            }
+        });
         // implement setOnClickListener event on item view.
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -60,10 +90,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
         return personNames.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name;// init the item view's
+        TextView name,quantityy;// init the item view's
+        Button addition,substraction,addbtn;
         public MyViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.Title);
+            addition=(Button) itemView.findViewById(R.id.plus);
+            substraction = (Button) itemView.findViewById(R.id.minus);
+            quantityy = (TextView) itemView.findViewById(R.id.quantity);
+            addbtn = (Button) itemView.findViewById(R.id.add);
             // get the reference of item view's
 
         }

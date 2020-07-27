@@ -15,7 +15,38 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             android:fitsSystemWindows="true"
-            android:theme="@style/AppTheme.AppBarOverlay" />
+            android:theme="@style/AppTheme.AppBarOverlay" >
+            <RelativeLayout
+                android:id="@+id/relativeMsg"
+                android:layout_gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/messageImg"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_message_black_24dp"/>
+
+                <TextView
+                    android:visibility="visible"
+                    android:id="@+id/txt_noticnt"
+                    android:layout_width="20dp"
+                    android:textSize="8dp"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    android:background="@drawable/circle_shape"
+                    android:layout_alignRight="@+id/messageImg"
+
+                    />
+
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
 
 
     <androidx.recyclerview.widget.RecyclerView

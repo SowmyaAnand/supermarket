@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="?attr/actionButtonStyle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:focusable="true"
+    >
+<RelativeLayout
+
+    android:layout_width="30dp"
+    android:layout_gravity="right"
+
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/crt"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:clickable="true"
+
+        android:src="@drawable/ic_shopping_cart_black_24dp" />
+
+    <!-- Badge Count -->
+    <TextView
+        android:id="@+id/actionbar_notifcation_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="6dp"
+        android:layout_alignTop="@+id/crt"
+        android:text="99"
+        android:textSize="10dp"
+        android:background="@drawable/circle_shape"
+        android:textColor="@color/colorPrimary" />
+
+</RelativeLayout>
+</FrameLayout>
+<!--<FrameLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    style="?attr/actionButtonStyle"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:clipToPadding="false"-->
+<!--    android:focusable="true"-->
+<!--    >-->
+
+<!--    &lt;!&ndash; Badge &ndash;&gt;-->
+<!--    <ImageView-->
+<!--        android:id="@+id/img_badge_sync"-->
+<!--        android:layout_width="12dp"-->
+<!--        android:layout_height="12dp"-->
+<!--        android:src="@drawable/circle_shape" />-->
+
+<!--    &lt;!&ndash; Sync image &ndash;&gt;-->
+<!--    <ImageView-->
+<!--        android:id="@+id/icon_sync"-->
+<!--        android:layout_width="32dp"-->
+<!--        android:layout_height="32dp"-->
+<!--        android:src="@drawable/ic_message_black_24dp" />-->
+
+<!--</FrameLayout>-->
