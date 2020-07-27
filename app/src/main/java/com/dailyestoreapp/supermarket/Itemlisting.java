@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,6 +61,7 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
+        Log.e("names","the names =="+personNames);
         customAdapter = new ItemAdapter(Itemlisting.this, personNames);
         recyclerView.setAdapter(customAdapter);
 
@@ -82,11 +84,11 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public boolean onQueryTextChange(String newText) {
                 String text = newText;
-            customAdapter.filter(text);
-                return false;
+           customAdapter.filter(text);
+                return true;
             }
         });
-        return false;
+        return true;
     }
 //    @Override
 //    public boolean onOptionsItemSelected(@NonNull MenuItem item) {

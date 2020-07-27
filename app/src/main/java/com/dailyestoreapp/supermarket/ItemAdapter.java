@@ -1,6 +1,7 @@
 package com.dailyestoreapp.supermarket;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +12,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> {
-    ArrayList personNames;
+    ArrayList<String> personNames = new ArrayList<String>();
     Context context;
-    private ArrayList<persons> arraylist;
+    ArrayList<String> lts=new ArrayList<String>();
+    ArrayList pnames = new ArrayList<>(Arrays.asList("Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6", "Person 7"));
+
     public ItemAdapter(Context context, ArrayList personNames) {
         this.context = context;
         this.personNames = personNames;
-        this.arraylist.addAll(personNames);
+        this.lts.addAll(personNames);
 
     }
     @Override
@@ -65,18 +69,24 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
         }
     }
     public void filter(String charText) {
+        Log.e("texting if","persons="+charText);
         charText = charText.toLowerCase(Locale.getDefault());
+        Log.e("texting if2","persons="+charText);
         personNames.clear();
         Iterator itr=personNames.iterator();
         if (charText.length() == 0) {
-            personNames.addAll(arraylist);
+            Log.e("texting if3","persons="+charText);
+            personNames.addAll(lts);
         } else {
-            for (persons wp : arraylist) {
-                if (wp.getAnimalName().toLowerCase(Locale.getDefault()).contains(charText)) {
-                    personNames.add(wp);
+            for(int i =0;i<lts.size();i++) {
+                Log.e("texting else","persons="+lts.get(i));
+                String s = (String) lts.get(i);
+                if (s.toLowerCase(Locale.getDefault()).contains(charText)) {
+                    personNames.add(s);
                 }
             }
         }
+        Log.e("text","persons="+personNames);
         notifyDataSetChanged();
     }
 }
