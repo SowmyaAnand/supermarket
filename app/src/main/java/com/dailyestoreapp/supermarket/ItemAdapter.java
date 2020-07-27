@@ -11,13 +11,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> {
     ArrayList personNames;
     Context context;
+    private ArrayList<persons> arraylist;
     public ItemAdapter(Context context, ArrayList personNames) {
         this.context = context;
         this.personNames = personNames;
+        this.arraylist.addAll(personNames);
+
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -33,7 +39,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
         // set the data in items
         String name = (String) personNames.get(position);
-       // holder.name.setText(name);
+       holder.name.setText(name);
         // implement setOnClickListener event on item view.
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -53,8 +59,24 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
         TextView name;// init the item view's
         public MyViewHolder(View itemView) {
             super(itemView);
+            name = (TextView) itemView.findViewById(R.id.Title);
             // get the reference of item view's
 
         }
+    }
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        personNames.clear();
+        Iterator itr=personNames.iterator();
+        if (charText.length() == 0) {
+            personNames.addAll(arraylist);
+        } else {
+            for (persons wp : arraylist) {
+                if (wp.getAnimalName().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    personNames.add(wp);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }
