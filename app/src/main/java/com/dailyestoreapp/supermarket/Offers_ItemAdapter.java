@@ -8,24 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> {
+public class Offers_ItemAdapter extends RecyclerView.Adapter<Offers_ItemAdapter.MyViewHolder> {
     ArrayList<String> personNames = new ArrayList<String>();
     Context context;
     ArrayList<String> lts=new ArrayList<String>();
     ArrayList pnames = new ArrayList<>(Arrays.asList("Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6", "Person 7"));
     int quantity=1;
-    public ItemAdapter(Context context, ArrayList personNames) {
+    public Offers_ItemAdapter(Context context, ArrayList personNames) {
         this.context = context;
         this.personNames = personNames;
         this.lts.addAll(personNames);
@@ -34,7 +31,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // infalte the item Layout
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.items, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.offer_items, parent, false);
         // set the view's size, margins, paddings and layout parameters
         MyViewHolder vh = new MyViewHolder(v); // pass the view to View Holder
         return vh;
@@ -45,23 +42,23 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
         // set the data in items
         String name = (String) personNames.get(position);
-       holder.name.setText(name);
-       holder.addbtn.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               holder.addbtn.setVisibility(View.GONE);
-           }
-       });
-       holder.addition.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               String q = String.valueOf(holder.quantityy.getText());
-               quantity= Integer.parseInt(q);
-               quantity=quantity+1;
-               String stringquantity = String.valueOf(quantity);
-              holder.quantityy.setText(stringquantity);
-           }
-       });
+        holder.name.setText(name);
+        holder.addbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.addbtn.setVisibility(View.GONE);
+            }
+        });
+        holder.addition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String q = String.valueOf(holder.quantityy.getText());
+                quantity= Integer.parseInt(q);
+                quantity=quantity+1;
+                String stringquantity = String.valueOf(quantity);
+                holder.quantityy.setText(stringquantity);
+            }
+        });
         holder.substraction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

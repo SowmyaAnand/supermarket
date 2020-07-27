@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         sectionsPagerAdapter.addFragment(new Fragment1(),"Home");
         sectionsPagerAdapter.addFragment(new Fragment2(),"Offers");
-        sectionsPagerAdapter.addFragment(new Fragment2(),"Contact");
+        sectionsPagerAdapter.addFragment(new Fragment3(),"Contact");
         sectionsPagerAdapter.addFragment(new Fragment2(),"My Account");
         ViewPager viewPager = findViewById(R.id.view_pager2);
         viewPager.setAdapter(sectionsPagerAdapter);
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main2, menu);
         return true;
     }
 

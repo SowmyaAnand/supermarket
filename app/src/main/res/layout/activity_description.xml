@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+
+    android:background="@color/white"
+    tools:context=".description">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_itemdesc"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:layout_below="@+id/toolbar_itemdesc"
+        android:orientation="vertical">
+
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:src="@drawable/oniondesc"
+    android:layout_gravity="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="30sp"
+        android:textColor="@color/black"
+        android:padding="2dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Fresh Onion"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/descprice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="25sp"
+                android:fontFamily="@font/roboto_light"
+                android:padding="2dp"
+                android:textColor="@color/black"
+                android:text="Rs 30"/>
+            <RelativeLayout
+                android:id="@+id/priceadd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/prce"
+                android:layout_toRightOf="@+id/img"
+
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:gravity="end">
+                    <Button
+                        android:id="@+id/plus2"
+                        android:layout_width="25dp"
+                        android:layout_height="40dp"
+
+                        android:background="@color/colorPrimary"
+                        android:textColor="@color/white"
+                        android:text="+"/>
+                    <TextView
+                        android:id="@+id/quantity2"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:text="1"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+
+                        android:layout_toRightOf="@+id/plus2"
+
+                        />
+                    <Button
+                        android:id="@+id/minus2"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_toRightOf="@+id/quantity2"
+
+                        android:background="@color/colorPrimary"
+                        android:textColor="@color/white"
+                        android:text="-"/>
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:text="Product Description"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="35sp"-->
+<!--        android:gravity="center"-->
+<!--        android:background="@color/colorPrimary"-->
+<!--        android:layout_height="wrap_content"/>-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/roboto_light"
+
+            android:padding="2dp"
+            android:text="@string/descriptiontext"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:text="ADD"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+           android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            android:layout_height="wrap_content"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>
