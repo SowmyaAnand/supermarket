@@ -18,7 +18,7 @@
                 app:cardCornerRadius="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:layout_height="match_parent">
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -152,6 +152,7 @@
 
                     </androidx.cardview.widget.CardView>
                     <LinearLayout
+                        android:id="@+id/options"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="10dp"
@@ -168,6 +169,7 @@
                             android:focusable="true"
                             android:layout_weight="6"/>
                         <ImageView
+                            android:id="@+id/email"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:src="@drawable/email"
@@ -210,6 +212,7 @@
 <!--                            android:textColor="@android:color/white" >-->
 <!--                        </TextView>-->
                     </LinearLayout>
+
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 

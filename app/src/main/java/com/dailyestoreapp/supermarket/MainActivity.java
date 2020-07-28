@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         sectionsPagerAdapter.addFragment(new Fragment1(),"Home");
         sectionsPagerAdapter.addFragment(new Fragment2(),"Offers");
         sectionsPagerAdapter.addFragment(new Fragment3(),"Contact");
-        sectionsPagerAdapter.addFragment(new Fragment2(),"My Account");
+        sectionsPagerAdapter.addFragment(new Fragment4(),"My Account");
         ViewPager viewPager = findViewById(R.id.view_pager2);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);

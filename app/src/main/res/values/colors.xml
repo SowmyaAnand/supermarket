@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ff4500</color>
-    <color name="colorPrimaryDark">#ff4500</color>
+<!--    <color name="colorPrimary">#ff4500</color>-->
+<!--    <color name="colorPrimaryDark">#ff4500</color>-->
+    <color name="colorPrimary">#ED1A63</color>
+    <color name="colorPrimaryDark">#ED1A63</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name = "active">#ff4500</color>
+<!--    <color name = "active">#ff4500</color>-->
+    <color name = "active">#ED1A63</color>
     <color name ="black">#000000</color>
     <color name = "inactive">#696969</color>
     <color name = "gray">#DCDCDC</color>
     <color name="white">#FFFFFF</color>
     <!-- dots inactive colors -->
-    <color name="dot_dark_screen1">#FF8C00</color>
-    <color name="dot_dark_screen2">#FF8C00</color>
-
+<!--    <color name="dot_dark_screen1">#FF8C00</color>-->
+<!--    <color name="dot_dark_screen2">#FF8C00</color>-->
+    <color name="dot_dark_screen1">#ED1A63</color>
+    <color name="dot_dark_screen2">#ED1A63</color>
     <!-- dots active colors -->
     <color name="dot_light_screen1">#FFFFFF</color>
     <color name="dot_light_screen2">#FFFFFF</color>

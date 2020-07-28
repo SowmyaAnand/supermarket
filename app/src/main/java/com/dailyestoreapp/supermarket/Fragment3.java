@@ -1,8 +1,10 @@
 package com.dailyestoreapp.supermarket;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,7 +24,7 @@ import androidx.viewpager.widget.ViewPager;
 public class Fragment3 extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-ImageView call,whats;
+ImageView call,whats,email;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -65,11 +67,18 @@ EditText ed,ed2;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final String number = "+919821182318";
+        final String number = "+917510237377";
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment3, container, false);
         call = (ImageView) rootView.findViewById(R.id.call);
         whats = (ImageView) rootView.findViewById(R.id.whatsapp);
+        email = (ImageView) rootView.findViewById(R.id.email);
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMail();
+            }
+        });
         whats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +101,7 @@ EditText ed,ed2;
             @Override
             public void onClick(View v) {
                  try {
-                   String ph = "+917025864742";
+                   String ph = "+917510237377";
                  Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + ph));
                  startActivity(intent);
                   } catch (Exception e) {
@@ -103,15 +112,26 @@ EditText ed,ed2;
 
         return rootView;
     }
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+    private void sendMail() {
+//        String recipientList = "anandc17@gmail.com";
+//        String[] recipients = recipientList.split(",");
+//        String subject = "DailyeStore";
+//        String message = "Hi";
+//        Intent intent = new Intent(Intent.ACTION_SEND);
+//        intent.putExtra(Intent.EXTRA_EMAIL, recipients);
+//        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+//        intent.putExtra(Intent.EXTRA_TEXT, message);
+//        intent.setType("text/plain");
+//        startActivity(intent);
+        try{
+            Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + "dailyestore@gmail.com"));
+            intent.putExtra(Intent.EXTRA_SUBJECT, "DailyeStore");
+            intent.putExtra(Intent.EXTRA_TEXT, "your_text");
+            startActivity(intent);
+        }catch(ActivityNotFoundException e){
+            Toast.makeText(getContext(), "No application found to support ", Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
 
 }
