@@ -94,7 +94,7 @@ public class Fragment1 extends Fragment {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @SuppressWarnings("rawtypes")
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Intent next = new Intent(getContext(),Itemlisting.class);
+                Intent next = new Intent(getContext(),CartPage.class);
                 startActivity(next);
             }
         });

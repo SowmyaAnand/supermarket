@@ -11,6 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity android:name=".Payment"></activity>
+        <activity android:name=".CartPage" />
+        <activity android:name=".Signup" />
+        <activity android:name=".Login"></activity>
         <activity android:name=".description" />
         <activity android:name=".Itemlisting" />
         <activity android:name=".welcome">

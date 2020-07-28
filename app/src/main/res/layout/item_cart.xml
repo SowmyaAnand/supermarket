@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    android:id="@+id/secondCard"
+    android:layout_margin="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white"
+    app:cardElevation="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/onion"
+            />
+
+        <RelativeLayout
+            android:id="@+id/relativeLytVideo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:visibility="gone"
+            android:background="@color/colorAccent">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/relativeLytFilePath"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:visibility="visible"
+
+            >
+
+            <ImageView
+                android:id="@+id/pdf_img"
+                android:visibility="gone"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"
+                />
+            <ImageView
+                android:id="@+id/doc_img"
+                android:visibility="gone"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"
+                />
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/excel_img"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/txtNoAttach"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_marginRight="30dp"
+            android:id="@+id/Title"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_toRightOf="@+id/img"
+            android:text="Title"/>
+        <TextView
+            android:id="@+id/publishNme"
+            android:layout_below="@+id/Title"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img"
+            android:text="Quantity:1kg"
+            />
+
+        <TextView
+            android:id="@+id/prce"
+            android:layout_below="@+id/publishNme"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img"
+            android:text="Rs 250"
+            />
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/priceadd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/prce"
+            android:layout_toRightOf="@+id/img"
+
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:gravity="end">
+                <Button
+                    android:id="@+id/plus_cart"
+                    android:layout_width="25dp"
+                    android:layout_height="40dp"
+
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/white"
+                    android:text="+"/>
+                <TextView
+                    android:id="@+id/quantity_cart"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:text="1"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+
+                    android:layout_toRightOf="@+id/plus_cart"
+
+                    />
+                <Button
+                    android:id="@+id/minus_cart"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:layout_toRightOf="@+id/quantity_cart"
+
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/white"
+                    android:text="-"/>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
