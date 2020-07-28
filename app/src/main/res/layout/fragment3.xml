@@ -1,74 +1,517 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-android:layout_margin="8dp"
-    android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/head"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="Get in touch"
-        android:textSize="35dp"
-        android:textColor="@color/colorPrimary"
-        android:fontFamily="@font/roboto_medium"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <RelativeLayout
+            android:layout_width="match_parent"
 
-        />
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/head"
-        android:hint="Name">
-        <EditText
-            android:id="@+id/edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"/>
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_layout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text_input_layout"
-        android:hint="Email Id">
-        <EditText
-            android:id="@+id/edit_text2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"/>
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_layout_mob"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text_input_layout2"
-        android:hint="Email Id">
-        <EditText
-            android:id="@+id/edit_text_mob"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"/>
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_layout_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text_input_layout_mob"
-        android:hint="Email Id">
-        <EditText
-            android:id="@+id/edit_text_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"/>
-    </com.google.android.material.textfield.TextInputLayout>
-    <EditText
-        android:id="@+id/Message"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/text_input_layout_address"
-        android:layout_marginTop="20dp"
-        android:hint="Enter your message here"
-        android:inputType="text|textMultiLine"
-        android:gravity="top"
-        android:layout_height="wrap_content"/>
-</RelativeLayout>
+            android:layout_height="match_parent">
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+
+                android:elevation="40dp"
+                app:cardCornerRadius="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="40dp"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/head"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:text="Get in touch"
+                        android:textSize="25dp"
+                        android:layout_marginLeft="40dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_medium"
+
+                        />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_input_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/head"
+                        android:layout_marginTop="30dp"
+                        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
+                        android:hint="Name">
+                        <EditText
+                        android:id="@+id/edit_text"
+                        android:paddingLeft="40dp"
+                        android:layout_marginTop="50dp"
+                        android:background="@drawable/customized_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHighlight="@color/colorPrimary"
+                        android:inputType="text"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_input_layout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/text_input_layout"
+                        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
+
+                        android:hint="Email">
+                        <EditText
+                            android:id="@+id/edit_text2"
+                            android:paddingLeft="40dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/customized_edittext"
+                            android:textColorHighlight="@color/colorPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_input_layout_mob"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text_input_layout2"
+                        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
+
+                        android:hint="Mobile ">
+                        <EditText
+                            android:id="@+id/edit_text_mob"
+                            android:paddingLeft="40dp"
+
+                            android:background="@drawable/customized_edittext"
+                            android:textColorHighlight="@color/colorPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_input_layout_address"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text_input_layout_mob"
+                        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
+
+                        android:hint="Address">
+                        <EditText
+                            android:id="@+id/edit_text_address"
+                            android:paddingLeft="40dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/customized_edittext"
+                            android:layout_width="match_parent"
+                            android:textColorHighlight="@color/colorPrimary"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.cardview.widget.CardView
+
+                        android:id="@+id/descriptionCard"
+                        android:layout_below="@+id/text_input_layout_address"
+                        android:layout_marginTop="30dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="0dp"
+
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        app:cardBackgroundColor="@android:color/transparent">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            >
+                            <TextView
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Message"
+                                android:paddingLeft="40dp"
+                                android:background="@drawable/customized_edittext"
+                                android:textColor="#c5c5c5"
+                                android:textSize="16dp"/>
+
+                            <EditText
+                                android:padding="15dp"
+                                android:id="@+id/edtxtDescr"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:lines="6"
+                                android:hint="Type your message here"
+                                android:background="@android:color/transparent"
+                                android:gravity="left"
+                                android:layout_marginTop="20dp"
+                                android:maxLength="600"/>
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="40dp"
+
+                        android:layout_below="@+id/descriptionCard">
+
+                        <ImageView
+                            android:id="@+id/call"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/normal"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:layout_weight="6"/>
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/email"
+                            android:layout_weight="6"/>
+                        <ImageView
+                            android:id="@+id/whatsapp"
+                            android:layout_width="0dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/whatsappimg"
+                            android:layout_weight="6"/>
+<!--                        <TextView-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_weight="6"-->
+<!--                            android:background="@android:color/holo_green_light"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="30%"-->
+<!--                            android:textColor="@android:color/white" >-->
+<!--                        </TextView>-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_weight="6"-->
+<!--                            android:background="@android:color/holo_blue_bright"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="20%"-->
+<!--                            android:textColor="@android:color/white" >-->
+<!--                        </TextView>-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_weight="6"-->
+<!--                            android:background="@android:color/holo_orange_dark"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="50%"-->
+<!--                            android:textColor="@android:color/white" >-->
+<!--                        </TextView>-->
+                    </LinearLayout>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+    </ScrollView>
+</ScrollView>
+
+<!--&lt;!&ndash;    <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/head"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_marginTop="30dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:text="Get in touch"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textSize="35dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textColor="@color/colorPrimary"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:fontFamily="@font/roboto_medium"&ndash;&gt;-->
+
+<!--&lt;!&ndash;        />&ndash;&gt;-->
+<!--&lt;!&ndash;    <com.google.android.material.textfield.TextInputLayout&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/text_input_layout"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_below="@+id/head"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:hint="Name">&ndash;&gt;-->
+<!--&lt;!&ndash;        <EditText&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/edit_text"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:inputType="text"/>&ndash;&gt;-->
+<!--&lt;!&ndash;    </com.google.android.material.textfield.TextInputLayout>&ndash;&gt;-->
+<!--&lt;!&ndash;    <com.google.android.material.textfield.TextInputLayout&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/text_input_layout2"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_below="@+id/text_input_layout"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:hint="Email Id">&ndash;&gt;-->
+<!--&lt;!&ndash;        <EditText&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/edit_text2"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:inputType="text"/>&ndash;&gt;-->
+<!--&lt;!&ndash;    </com.google.android.material.textfield.TextInputLayout>&ndash;&gt;-->
+<!--&lt;!&ndash;    <com.google.android.material.textfield.TextInputLayout&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/text_input_layout_mob"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_below="@+id/text_input_layout2"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:hint="Email Id">&ndash;&gt;-->
+<!--&lt;!&ndash;        <EditText&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/edit_text_mob"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:inputType="text"/>&ndash;&gt;-->
+<!--&lt;!&ndash;    </com.google.android.material.textfield.TextInputLayout>&ndash;&gt;-->
+<!--&lt;!&ndash;    <com.google.android.material.textfield.TextInputLayout&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/text_input_layout_address"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_below="@+id/text_input_layout_mob"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:hint="Email Id">&ndash;&gt;-->
+<!--&lt;!&ndash;        <EditText&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/edit_text_address"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:inputType="number"/>&ndash;&gt;-->
+<!--&lt;!&ndash;    </com.google.android.material.textfield.TextInputLayout>&ndash;&gt;-->
+<!--&lt;!&ndash;    <EditText&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/Message"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_below="@+id/text_input_layout_address"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_marginTop="20dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:hint="Enter your message here"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:inputType="text|textMultiLine"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:gravity="top"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"/>&ndash;&gt;-->
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:fillViewport="true">-->
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/userNameCard"-->
+<!--                android:layout_margin="16dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:cardCornerRadius="15dp"-->
+<!--                app:cardElevation="15dp"-->
+<!--                app:cardBackgroundColor="@color/white"-->
+<!--                xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--                android:layout_marginRight="16dp">-->
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:orientation="horizontal">-->
+<!--&lt;!&ndash;                    <de.hdodenhof.circleimageview.CircleImageView&ndash;&gt;-->
+<!--&lt;!&ndash;                        xmlns:app="http://schemas.android.com/apk/res-auto"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_margin="15dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:id="@+id/usrImg"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_width="50dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_height="50dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:src="@drawable/ic_user_img"&ndash;&gt;-->
+<!--                        />-->
+<!--                    <TextView-->
+<!--                        android:id="@+id/userNmeTxt"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="UserName"-->
+<!--                        android:layout_marginLeft="20dp"-->
+<!--                        android:textColor="@color/colorPrimary"-->
+<!--                        android:layout_gravity="center"/>-->
+<!--                </LinearLayout>-->
+
+<!--            </androidx.cardview.widget.CardView>-->
+
+
+
+<!--            <LinearLayout-->
+<!--                android:layout_marginBottom="60dp"-->
+<!--                android:layout_below="@+id/userNameCard"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:orientation="vertical">-->
+
+
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:layout_margin="16dp"-->
+<!--                    android:id="@+id/TextCard"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--                    app:cardBackgroundColor="@color/white"-->
+<!--                    app:cardElevation="15dp">-->
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical">-->
+<!--                        <TextView-->
+<!--                            android:padding="10dp"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Publisher"-->
+<!--                            android:textColor="@color/colorPrimary"-->
+<!--                            android:textSize="16dp"></TextView>-->
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="1dp"-->
+<!--                            android:background="@color/colorAccent"></View>-->
+
+<!--                        <EditText-->
+<!--                            android:padding="10dp"-->
+<!--                            android:id="@+id/edtxtPublishBy"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="#FFF"-->
+<!--                            android:layout_marginTop="10dp"-->
+<!--                            />-->
+<!--                    </LinearLayout>-->
+<!--                </androidx.cardview.widget.CardView>-->
+
+
+
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:layout_margin="16dp"-->
+<!--                    android:id="@+id/headerTextCard"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--                    app:cardBackgroundColor="@color/white"-->
+<!--                    app:cardElevation="15dp">-->
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical">-->
+<!--                        <TextView-->
+<!--                            android:padding="10dp"-->
+
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Title"-->
+<!--                            android:textColor="@color/colorPrimary"-->
+<!--                            android:textSize="16dp"></TextView>-->
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="1dp"-->
+<!--                            android:background="@color/colorAccent"></View>-->
+
+<!--                        <EditText-->
+<!--                            android:padding="15dp"-->
+<!--                            android:id="@+id/edtxtHeader"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="#FFF"-->
+<!--                            android:layout_marginTop="10dp"-->
+<!--                            android:singleLine="true"-->
+<!--                            android:maxLength="60"/>-->
+<!--                    </LinearLayout>-->
+<!--                </androidx.cardview.widget.CardView>-->
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:layout_margin="16dp"-->
+<!--                    android:id="@+id/descriptionCard"-->
+<!--                    android:layout_below="@+id/headerTextCard"-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:cardElevation="15dp"-->
+<!--                    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--                    app:cardBackgroundColor="@color/white">-->
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical"-->
+<!--                        >-->
+<!--                        <TextView-->
+<!--                            android:padding="10dp"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Description"-->
+<!--                            android:textColor="@color/colorPrimary"-->
+<!--                            android:textSize="16dp"/>-->
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="1dp"-->
+<!--                            android:background="@color/colorAccent"></View>-->
+<!--                        <EditText-->
+<!--                            android:padding="15dp"-->
+<!--                            android:id="@+id/edtxtDescr"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="#FFF"-->
+<!--                            android:lines="6"-->
+<!--                            android:gravity="left"-->
+<!--                            android:layout_marginTop="20dp"-->
+<!--                            android:maxLength="600"/>-->
+<!--                    </LinearLayout>-->
+<!--                </androidx.cardview.widget.CardView>-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/txtAttachment"-->
+<!--                    android:layout_marginRight="10dp"-->
+<!--                    android:drawablePadding="10dp"-->
+<!--                    android:padding="10dp"-->
+<!--                    android:layout_gravity="end"-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Add Attachment"-->
+<!--                    android:background="@color/colorPrimary"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    />-->
+
+<!--                <RelativeLayout-->
+<!--                    android:visibility="gone"-->
+<!--                    android:id="@+id/relativeShow"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content">-->
+
+<!--                    <ImageView-->
+<!--                        android:visibility="gone"-->
+<!--                        android:id="@+id/showImg"-->
+<!--                        android:layout_width="70dp"-->
+<!--                        android:layout_height="70dp"-->
+<!--                        />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/showDetailsTxt"-->
+<!--                        android:padding="10dp"-->
+<!--                        android:layout_toRightOf="@+id/showImg"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="File name: hhhhhhhh\nFile path: kkkk"/>-->
+
+
+
+<!--                </RelativeLayout>-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/txtAttachResult"-->
+<!--                    android:layout_marginRight="10dp"-->
+<!--                    android:layout_gravity="end"-->
+<!--                    android:padding="10dp"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text=""/>-->
+
+
+<!--            </LinearLayout>-->
+
+
+
+<!--            <Button-->
+<!--                android:id="@+id/btnPost"-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="POST"-->
+<!--                android:background="@color/colorPrimary"-->
+<!--                android:textColor="@color/white"/>-->
+
+<!--        </RelativeLayout>-->
+
+<!--    </ScrollView>-->
+<!--</RelativeLayout>-->
