@@ -6,16 +6,16 @@
         android:id="@+id/txtclose"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:textColor="#FFF"
+        android:textColor="@color/colorPrimary"
         android:text="X"
-        android:textSize="30sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         android:layout_gravity="end"
         android:gravity="center"
         android:background="@drawable/circle"/>
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/mainoffer2"
+        android:layout_width="match_parent"
+        android:layout_height="396dp"
+        android:src="@drawable/popupcoupon"
         />
 </RelativeLayout>

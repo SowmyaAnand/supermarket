@@ -2,13 +2,49 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/white"
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusableInTouchMode="true"
         android:orientation="vertical">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_itemlisting"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppTheme.AppBarOverlay" >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/search"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+
+                android:layout_marginBottom="8dp"
+                android:layout_alignTop="@+id/searchview"
+                android:src="@drawable/ic_search_gray"/>
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+
+                android:layout_toRightOf="@+id/search"
+
+                />
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager2"
         android:layout_centerHorizontal="true"
@@ -21,22 +57,21 @@
         android:layout_below="@+id/viewpager2"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-       android:padding="5dp"
+
         />
 
     <TextView
         android:id="@+id/categoryheading"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/roboto_medium"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/roboto_light"
         android:layout_below="@+id/viewpager"
-        android:textStyle="bold"
-
         android:gravity="center_horizontal"
-        android:text="Shop By Category"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:text="SHOP BY CATEGORY"
+        android:background="@color/colorPrimary"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
         <com.dailyestoreapp.supermarket.ExpandableHeightGridView
             android:id="@+id/categories"
@@ -46,9 +81,9 @@ android:layout_below="@+id/categoryheading"
             android:layout_marginTop="20dp"
             android:columnWidth="40dp"
             android:gravity="center"
-            android:horizontalSpacing="10dp"
-            android:numColumns="2"
-            android:verticalSpacing="10dp" />
+            android:horizontalSpacing="3dp"
+            android:numColumns="3"
+            android:verticalSpacing="3dp" />
 
 
     </LinearLayout>

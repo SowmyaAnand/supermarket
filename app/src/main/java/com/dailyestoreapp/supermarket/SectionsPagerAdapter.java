@@ -48,4 +48,5 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         mFragmentTitleList.add(title);
 
     }
+
 }

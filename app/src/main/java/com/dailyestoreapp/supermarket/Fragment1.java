@@ -6,15 +6,20 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.widget.SearchView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.AdapterView;
 import android.widget.GridView;
+
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -32,7 +37,11 @@ public class Fragment1 extends Fragment {
     ImageAdapter adapterview;
     ExpandableHeightGridView gridview;
     Imageadapterforflyers flyeradapterview;
+    SearchView sr;
     TextView t;
+    GridviewAdapter gridadpt;
+    ArrayList personNames = new ArrayList<>(Arrays.asList("Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6", "Person 7"));
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -80,6 +89,9 @@ public class Fragment1 extends Fragment {
 
         mviewpager = (ViewPager)rootView.findViewById(R.id.viewpager);
         flyerpager = (ViewPager)rootView.findViewById(R.id.viewpager2);
+        sr = (SearchView)rootView.findViewById(R.id.searchview);
+
+        sr.setQueryHint("Type here to search");
         flyeradapterview = new Imageadapterforflyers(getContext());
         flyerpager.setAdapter(flyeradapterview);
         Timer t = new Timer();
@@ -87,17 +99,18 @@ public class Fragment1 extends Fragment {
        adapterview = new ImageAdapter(getContext());
         mviewpager.setAdapter(adapterview);
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new Mytimertask(),1200,2400);
+        timer.scheduleAtFixedRate(new Mytimertask(),1500,3000);
         gridview = (ExpandableHeightGridView) rootView.findViewById(R.id.categories);
         gridview.setAdapter(new GridviewAdapter(rootView.getContext()));
         gridview.setExpanded(true);
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @SuppressWarnings("rawtypes")
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Intent next = new Intent(getContext(),CartPage.class);
+                Intent next = new Intent(getContext(),Itemlisting.class);
                 startActivity(next);
             }
         });
+
 
         return rootView;
     }
@@ -108,6 +121,7 @@ public class Fragment1 extends Fragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    Log.e("text","flyer++"+mviewpager.getCurrentItem());
                     if(mviewpager.getCurrentItem() ==0)
                     {
                         mviewpager.setCurrentItem(1);
@@ -117,6 +131,7 @@ public class Fragment1 extends Fragment {
                         mviewpager.setCurrentItem(2);
 
                     }
+
                     else
                     {
                         mviewpager.setCurrentItem(0);
@@ -131,6 +146,7 @@ public class Fragment1 extends Fragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    Log.e("text","flyer++"+flyerpager.getCurrentItem());
                     if(flyerpager.getCurrentItem() ==0)
                     {
                         flyerpager.setCurrentItem(1);
@@ -140,6 +156,22 @@ public class Fragment1 extends Fragment {
                         flyerpager.setCurrentItem(2);
 
                     }
+                    else if(flyerpager.getCurrentItem()==2)
+                    {
+                        flyerpager.setCurrentItem(3);
+
+                    }
+                    else if(flyerpager.getCurrentItem()==3)
+                    {
+                        flyerpager.setCurrentItem(4);
+
+                    }
+                    else if(flyerpager.getCurrentItem()==4)
+                    {
+                        flyerpager.setCurrentItem(5);
+
+                    }
+
                     else
                     {
                         flyerpager.setCurrentItem(0);
