@@ -19,10 +19,15 @@
 <!--      android:actionLayout="@layout/messagebadgelayout"-->
 <!--      app:showAsAction="always"/>-->
     <item
-        android:id="@+id/action_sync"
+        android:id="@+id/crt"
         android:title="Sync"
         app:actionLayout="@layout/messagebadgelayout"
         app:showAsAction="always"/>
-
+  <item
+      android:id="@+id/account"
+      android:title="Myaccount"
+      android:orderInCategory="2"
+      android:icon="@drawable/ic_person_black_24dp"
+      app:showAsAction="always"/>
 
 </menu>

@@ -1,9 +1,11 @@
 package com.dailyestoreapp.supermarket;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
@@ -75,6 +77,24 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main2, menu);
         return true;
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId()) {
+            case R.id.crt:
+                Intent cart = new Intent(MainActivity.this,CartPage.class);
+                startActivity(cart);
+                return true;
+            case R.id.account:
+                // do whatever
+                Intent cartp = new Intent(MainActivity.this,Login.class);
+                startActivity(cartp);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     @Override
     public boolean onSupportNavigateUp() {
