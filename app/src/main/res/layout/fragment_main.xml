@@ -34,12 +34,12 @@
                 android:id="@+id/searchview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/white"
-
+                android:outlineAmbientShadowColor="@color/gray"
+                android:outlineSpotShadowColor="@color/gray"
                 android:layout_toRightOf="@+id/search"
 
                 />
@@ -79,12 +79,49 @@
             android:layout_height="wrap_content"
 android:layout_below="@+id/categoryheading"
             android:layout_marginTop="20dp"
-            android:columnWidth="40dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
             android:gravity="center"
-            android:horizontalSpacing="3dp"
+            android:horizontalSpacing="4dp"
             android:numColumns="3"
-            android:verticalSpacing="3dp" />
+            android:verticalSpacing="4dp" />
+<ImageView
+    android:id="@+id/banner1"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:src="@drawable/banner1"/>
+        <ImageView
+            android:id="@+id/banner2"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_below="@+id/banner1"
+            android:src="@drawable/banner3"/>
 
+        <TextView
+            android:id="@+id/deals"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:fontFamily="@font/roboto_light"
+            android:layout_below="@+id/banner2"
+            android:gravity="center_horizontal"
+            android:text="DEAL OF THE DAY"
+            android:background="@color/colorPrimary"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+        <com.dailyestoreapp.supermarket.ExpandableHeightGridView
+            android:id="@+id/dealsoftheday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/deals"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:gravity="center"
+            android:horizontalSpacing="4dp"
+            android:numColumns="2"
+            android:verticalSpacing="4dp" />
 
     </LinearLayout>
 </ScrollView>

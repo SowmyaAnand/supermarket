@@ -30,7 +30,7 @@ public class Imageadapterforflyers extends PagerAdapter {
     }
 
     private int[] slideImageId = new int[]{
-            R.drawable.bannerthin1,R.drawable.bannerthin2,R.drawable.bannerthin3,R.drawable.banner1,R.drawable.banner2,R.drawable.banner3
+            R.drawable.bannerthin1,R.drawable.bannerthin2,R.drawable.bannerthin3,R.drawable.banner2
     };
 
     @Override

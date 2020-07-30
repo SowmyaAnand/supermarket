@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -84,8 +85,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+        Log.e("MAin","Item selected ="+item.getItemId());
         switch (item.getItemId()) {
-            case R.id.crt:
+            case R.id.cart:
                 Intent cart = new Intent(MainActivity.this,CartPage.class);
                 startActivity(cart);
                 return true;

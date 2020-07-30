@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -28,6 +29,7 @@ Toolbar tcart;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_page);
         tcart = (Toolbar)findViewById(R.id.toolbar_cart);
+
         setSupportActionBar(tcart);
         recyclerView_cart = (RecyclerView) findViewById(R.id.itemrecycler_cart);
         // set a LinearLayoutManager with default vertical orientation
@@ -37,6 +39,15 @@ Toolbar tcart;
         Log.e("names","the names =="+personNames);
         customAdapter_cart = new CartAdapter(CartPage.this, personNames);
         recyclerView_cart.setAdapter(customAdapter_cart);
+        Button checkout= (Button)findViewById(R.id.checkout);
+        checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent n = new Intent(CartPage.this,Payment.class);
+                startActivity(n);
+            }
+        });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

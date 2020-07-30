@@ -20,7 +20,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     ArrayList<String> personNames = new ArrayList<String>();
     Context context;
     ArrayList<String> lts=new ArrayList<String>();
-    ArrayList pnames = new ArrayList<>(Arrays.asList("Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6", "Person 7"));
+    ArrayList pnames = new ArrayList<>(Arrays.asList("ITEM NAME", "ITEM NAME", "ITEM NAME" ));
     int quantity=1;
     public CartAdapter(Context context, ArrayList personNames) {
         this.context = context;

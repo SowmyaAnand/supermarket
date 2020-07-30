@@ -35,7 +35,7 @@ public class Fragment1 extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     ViewPager mviewpager,flyerpager;
     ImageAdapter adapterview;
-    ExpandableHeightGridView gridview;
+    ExpandableHeightGridView gridview,dealsview;
     Imageadapterforflyers flyeradapterview;
     SearchView sr;
     TextView t;
@@ -92,6 +92,7 @@ public class Fragment1 extends Fragment {
         sr = (SearchView)rootView.findViewById(R.id.searchview);
 
         sr.setQueryHint("Type here to search");
+
         flyeradapterview = new Imageadapterforflyers(getContext());
         flyerpager.setAdapter(flyeradapterview);
         Timer t = new Timer();
@@ -108,6 +109,15 @@ public class Fragment1 extends Fragment {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Intent next = new Intent(getContext(),Itemlisting.class);
                 startActivity(next);
+            }
+        });
+        dealsview = (ExpandableHeightGridView) rootView.findViewById(R.id.dealsoftheday);
+        dealsview.setAdapter(new DealsdayAdapter(rootView.getContext()));
+        dealsview.setExpanded(true);
+        dealsview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @SuppressWarnings("rawtypes")
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
             }
         });
 
@@ -161,16 +171,7 @@ public class Fragment1 extends Fragment {
                         flyerpager.setCurrentItem(3);
 
                     }
-                    else if(flyerpager.getCurrentItem()==3)
-                    {
-                        flyerpager.setCurrentItem(4);
 
-                    }
-                    else if(flyerpager.getCurrentItem()==4)
-                    {
-                        flyerpager.setCurrentItem(5);
-
-                    }
 
                     else
                     {

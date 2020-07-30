@@ -21,18 +21,18 @@
                 android:orientation="vertical">
                 <ImageView
                     android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/frame_18"
+                    android:layout_height="120dp"
+                    android:src="@drawable/full_logo"
                     android:layout_marginTop="20dp"
                     />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Signup"
+                    android:text="SIGNUP"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="28sp"
+                    android:textSize="20sp"
                     android:fontFamily="@font/roboto_medium"
                     />
                 <com.google.android.material.textfield.TextInputLayout
@@ -43,10 +43,10 @@
                     android:layout_marginTop="40dp"
                     android:textColorHint="@color/black"
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
-                    android:hint="Name">
+                    android:hint="NAME">
                     <EditText
                         android:id="@+id/edit_text"
-
+                        android:textSize="14dp"
                         android:layout_marginTop="50dp"
                         android:background="@drawable/customized_edittext"
                         android:layout_width="match_parent"
@@ -63,10 +63,10 @@
                     android:layout_below="@+id/text_input_layout"
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
 
-                    android:hint="Email">
+                    android:hint="EMAIL">
                     <EditText
                         android:id="@+id/edit_text3"
-
+                        android:textSize="14dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/customized_edittext"
                         android:textColorHighlight="@color/colorPrimary"
@@ -83,10 +83,10 @@
                     android:layout_below="@+id/text_input_layout"
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
 
-                    android:hint="Mobile">
+                    android:hint="MOBILE">
                     <EditText
                         android:id="@+id/edit_text5"
-
+                        android:textSize="14dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/customized_edittext"
                         android:textColorHighlight="@color/colorPrimary"
@@ -103,10 +103,10 @@
                     android:layout_below="@+id/text_input_layout"
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
 
-                    android:hint="Address">
+                    android:hint="ADDRESS">
                     <EditText
                         android:id="@+id/edit_text10"
-
+                        android:textSize="14dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/customized_edittext"
                         android:textColorHighlight="@color/colorPrimary"
@@ -123,10 +123,10 @@
                     android:layout_below="@+id/text_input_layout"
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
 
-                    android:hint="Pincode">
+                    android:hint="PINCODE">
                     <EditText
                         android:id="@+id/edit_text2"
-
+                        android:textSize="14dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/customized_edittext"
                         android:textColorHighlight="@color/colorPrimary"
@@ -139,7 +139,7 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Login"
+                    android:text="SIGNUP"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="40dp"
