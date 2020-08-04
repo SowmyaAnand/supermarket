@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,9 +22,11 @@ public class Fragment4 extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     ImageView call,whats,email;
+    Button coupon,myorders,logout;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
   EditText name_account,mob_account,email_account,pincode_account,place_account,address_account;
     TextView edit_account ;
     public Fragment4() {
@@ -73,7 +76,9 @@ public class Fragment4 extends Fragment {
         place_account = (EditText) rootView.findViewById(R.id.Place_account);
         address_account = (EditText)rootView.findViewById(R.id.edtxtDescr_account);
         edit_account = (TextView)rootView.findViewById(R.id.edit_acount);
-
+        coupon = (Button)rootView.findViewById(R.id.mycoupons);
+        myorders = (Button)rootView.findViewById(R.id.myorders);
+        logout = (Button)rootView.findViewById(R.id.logout);
         edit_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +89,27 @@ public class Fragment4 extends Fragment {
                 place_account.setEnabled(true);place_account.setFocusable(true);
                 address_account.setEnabled(true);address_account.setFocusable(true);
 
+            }
+        });
+        coupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent c = new Intent(getContext(),MyCoupons.class);
+                startActivity(c);
+            }
+        });
+        myorders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent c = new Intent(getContext(),Myorders.class);
+                startActivity(c);
+            }
+        });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent c = new Intent(getContext(),Login.class);
+                startActivity(c);
             }
         });
         return rootView;

@@ -22,7 +22,7 @@ public class CartPage extends AppCompatActivity {
 Toolbar tcart;
     RecyclerView recyclerView_cart;
     CartAdapter customAdapter_cart;
-    ArrayList personNames = new ArrayList<>(Arrays.asList("Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6", "Person 7"));
+    ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3"));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

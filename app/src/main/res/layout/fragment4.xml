@@ -168,7 +168,7 @@ CHERPLASSERY"
 
                         />
                     <Button
-                        android:id="@+id/clearhistory"
+                        android:id="@+id/logout"
                         android:text="Logout"
                         android:layout_marginTop="2dp"
                         android:layout_width="match_parent"

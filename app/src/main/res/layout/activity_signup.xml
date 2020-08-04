@@ -95,12 +95,32 @@
                         android:inputType="number"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/text_input_layout6"
+                    android:id="@+id/text_input_layout_pswd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:textColorHint="@color/black"
                     android:layout_below="@+id/text_input_layout"
+                    app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
+
+                    android:hint="PASSWORD">
+                    <EditText
+                        android:id="@+id/edit_text5_pswd"
+                        android:textSize="14dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/customized_edittext"
+                        android:textColorHighlight="@color/colorPrimary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_layout6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:textColorHint="@color/black"
+                    android:layout_below="@+id/text_input_layout_pswd"
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
 
                     android:hint="ADDRESS">

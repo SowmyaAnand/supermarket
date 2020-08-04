@@ -22,9 +22,9 @@ public class Fragment2 extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    ArrayList Images_offers = new ArrayList<>(Arrays.asList(R.drawable.vegetables, R.drawable.electronics, R.drawable.fashion, R.drawable.cakes, R.drawable.grocery, R.drawable.food));
+    ArrayList Images_offers = new ArrayList<>(Arrays.asList(R.drawable.newvegetable,R.drawable.sweets_cakes_strawberry_chocolate_white_background_564093_1280x1024_removebg_preview_1, R.drawable.brochure_vector_vegetable_2_1, R.drawable.newvegetable, R.drawable.sweets_cakes_strawberry_chocolate_white_background_564093_1280x1024_removebg_preview_1));
 
-    ArrayList personNames_offers = new ArrayList<>(Arrays.asList("Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6", "Person 7"));
+    ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     RecyclerView recyclerView_offers,itemlistingcategory_offers;
     LinearLayoutManager linearLayoutManager_offers,linearLayoutManager2_offers;
     Offers_ItemAdapter customAdapter_offers;

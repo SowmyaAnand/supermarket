@@ -1,40 +1,40 @@
 <resources>
 
-  <string name="app_name">DailyEStore</string>
+    <string name="app_name">DailyEStore</string>
 
-  <string name="navigation_drawer_open">Open navigation drawer</string>
-  <string name="navigation_drawer_close">Close navigation drawer</string>
-  <string name="nav_header_title">Android Studio</string>
-
-
-  <string name="nav_header_subtitle">android.studio@android.com</string>
-  <string name="nav_header_desc">Navigation header</string>
-  <string name="action_settings">Settings</string>
-
-  <string name="menu_home">dailyestore</string>
-  <string name="menu_gallery">Gallery</string>
-  <string name="menu_slideshow">Slideshow</string>
-
-  <string name="home_second">Home Second</string>
-
-  <string name="slide_1_desc">Check out list of Delicious Receipes</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
 
 
-  <string name="slide_2_desc">Upload your favourite receipes</string>
-  <string name="next">NEXT</string>
-  <string name="skip">SKIP</string>
-  <string name="start">GOT IT</string>
-  <string name="title_activity_tabbed">tabbed</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
 
-  <string name="sample">Get products delivered at your door step.Contactless delivery available. </string>
-  <string name="sample2">Dont miss out the great offers on quality products.  </string>
-  <string name="slide_2_title">Cash Back &amp;</string>
-  <string name="slide_2_title2">Exciting Offers..</string>
-  <string name="slide_1_title">Easy Purchase</string>
-  <string name="slide_1_title2"> &amp; Fast Delivery..</string>
-  <string name="tab_text_1">Home</string>
-  <string name="tab_text_2">Offers</string>
-  <string name="tab_text_3">Contact US</string>
-  <string name="tab_text__4">My Account</string>
-  <string name="descriptiontext">Freshly Packed and Premium Quality Onions, that enhance the flavour of any cuisine.We offer  this grade of onion in various packing options as per the requirement of our clients</string>
+    <string name="menu_home">dailyestore</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="home_second">Home Second</string>
+
+    <string name="slide_1_desc">Check out list of Delicious Receipes</string>
+
+
+    <string name="slide_2_desc">Upload your favourite receipes</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+    <string name="title_activity_tabbed">tabbed</string>
+
+    <string name="sample">Get products delivered at your door step.Contactless delivery available. </string>
+    <string name="sample2">Dont miss out the great offers on quality products.  </string>
+    <string name="slide_2_title">Cash Back &amp;</string>
+    <string name="slide_2_title2">Exciting Offers..</string>
+    <string name="slide_1_title">Easy Purchase</string>
+    <string name="slide_1_title2"> &amp; Fast Delivery..</string>
+    <string name="tab_text_1">Home</string>
+    <string name="tab_text_2">Offers</string>
+    <string name="tab_text_3">Contact US</string>
+    <string name="tab_text__4">My Account</string>
+    <string name="descriptiontext">Freshly Packed and Premium Quality Onions, that enhance the flavour of any cuisine.We offer  this grade of onion in various packing options as per the requirement of our clients</string>
 </resources>

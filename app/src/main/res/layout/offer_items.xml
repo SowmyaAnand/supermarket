@@ -85,6 +85,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:layout_toRightOf="@+id/img"
+            android:textSize="15sp"
             android:text="Title"/>
         <TextView
             android:id="@+id/publishNme"
@@ -95,7 +96,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/img"
-            android:text="Quantity:1"
+            android:textSize="15sp"
+            android:text="QUANTITY:1"
             />
 
         <TextView
@@ -103,11 +105,12 @@
             android:layout_below="@+id/publishNme"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/img"
-            android:text="Rs 250"
+            android:textSize="18sp"
+            android:text="RS:25000"
             />
 
 

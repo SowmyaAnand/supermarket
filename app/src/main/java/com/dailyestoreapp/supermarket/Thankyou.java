@@ -20,17 +20,11 @@ ImageView wt,cl;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thankyou);
-        home = (TextView)findViewById(R.id.home);
+
         contactus = (TextView)findViewById(R.id.contact);
         wt= (ImageView)findViewById(R.id.whatsapp_thanks);
         cl= (ImageView)findViewById(R.id.call_thanks);
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent hme = new Intent(Thankyou.this,MainActivity.class);
-                startActivity(hme);
-            }
-        });
+
         wt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

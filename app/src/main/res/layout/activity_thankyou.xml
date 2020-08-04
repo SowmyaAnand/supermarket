@@ -6,21 +6,14 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".Thankyou">
-    <TextView
-        android:id="@+id/home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="HOME"
-        android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
-        />
+
 
 <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textColor="@color/colorPrimary"
     android:fontFamily="@font/roboto_medium"
-    android:textSize="25sp"
+    android:textSize="18sp"
     android:layout_above="@+id/thankq"
     android:layout_marginBottom="20dp"
     android:textAlignment="center"
@@ -31,7 +24,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimary"
         android:fontFamily="@font/roboto_medium"
-        android:textSize="25sp"
+        android:textSize="15sp"
         android:layout_above="@+id/ecommerce"
         android:layout_marginBottom="20dp"
         android:textAlignment="center"

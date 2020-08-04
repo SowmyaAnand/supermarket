@@ -129,14 +129,14 @@
                      android:id="@+id/cart_delivery_val"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
-                     android:text="RS:3000"
+                     android:text="RS:3000.00"
                      android:textAlignment="textEnd"
                      android:layout_marginTop="10dp"
                      android:layout_below="@+id/heading_total"
                      android:layout_toRightOf="@+id/cart_delivery"
                      android:textColor="@color/colorPrimary"
                      android:fontFamily="@font/roboto_light"
-                     android:textSize="20sp"
+                     android:textSize="15sp"
                      android:background="@color/white"/>
 
                  <TextView
@@ -154,7 +154,7 @@
                      android:id="@+id/tot_val2"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
-                     android:text="Rs 3000"
+                     android:text="Rs 3000.00"
                      android:textAlignment="textEnd"
                      android:layout_marginTop="10dp"
                      android:layout_below="@+id/cart_delivery"
@@ -215,34 +215,33 @@
                             android:textColorHighlight="@color/colorPrimary"
                             android:inputType="text"/>
                     </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/text_input_layout3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:textColorHint="@color/black"
-                        android:fontFamily="@font/roboto_light"
-                        android:layout_below="@+id/text_input_layout"
-                        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
-
-                        android:hint="MOBILE">
-                        <EditText
-                            android:id="@+id/edit_text3"
-
-                            android:layout_marginTop="10dp"
-                            android:background="@drawable/customized_edittext"
-                            android:textColorHighlight="@color/colorPrimary"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/text_input_layout_mob"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text"/>
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_below="@+id/head"
+                            android:layout_marginTop="40dp"
+                            android:textColorHint="@color/black"
+                            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
+                            android:hint="MOBILE">
+                            <EditText
+                                android:id="@+id/mobile"
+                                android:fontFamily="@font/roboto_light"
+                                android:layout_marginTop="50dp"
+                                android:background="@drawable/customized_edittext"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColorHighlight="@color/colorPrimary"
+                                android:inputType="text"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/text_input_layout4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"
                         android:textColorHint="@color/black"
-                        android:layout_below="@+id/text_input_layout"
+                        android:layout_below="@+id/text_input_layout_mob"
                         app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
 
                         android:hint="PLACE">

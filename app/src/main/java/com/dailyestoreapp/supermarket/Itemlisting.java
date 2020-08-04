@@ -25,8 +25,9 @@ import java.util.Arrays;
 import java.util.function.ToLongBiFunction;
 
 public class Itemlisting extends AppCompatActivity {
+    ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
 
-    ArrayList personNames = new ArrayList<>(Arrays.asList("Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6", "Person 7"));
+   // ArrayList personNames = new ArrayList<>(Arrays.asList("Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6", "Person 7"));
     RecyclerView recyclerView,itemlistingcategory;
     LinearLayoutManager linearLayoutManager,linearLayoutManager2;
     ItemAdapter customAdapter;
@@ -90,6 +91,26 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
         });
         return true;
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        Log.e("MAin","Item selected ="+item.getItemId());
+        switch (item.getItemId()) {
+            case R.id.cart:
+                Intent cart = new Intent(Itemlisting.this,CartPage.class);
+                startActivity(cart);
+                return true;
+            case R.id.account:
+                // do whatever
+                Intent cartp = new Intent(Itemlisting.this,Login.class);
+                startActivity(cartp);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
 //    @Override
 //    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 //        Intent t = new Intent(getApplicationContext(),MainActivity.class);

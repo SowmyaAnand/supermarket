@@ -31,7 +31,8 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
     Dialog dialog;
-    ArrayList personNames = new ArrayList<>(Arrays.asList("Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6", "Person 7"));
+   // ArrayList personNames = new ArrayList<>(Arrays.asList("Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6", "Person 7"));
+    ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
 
     private AppBarConfiguration mAppBarConfiguration;
     private int[] tabIcons = {
