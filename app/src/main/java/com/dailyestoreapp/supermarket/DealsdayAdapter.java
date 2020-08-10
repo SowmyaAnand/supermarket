@@ -13,7 +13,7 @@ import java.util.List;
 
 public class DealsdayAdapter extends BaseAdapter {
     private LayoutInflater mContext;
-    public Integer[] mThumbIds = {R.drawable.vg, R.drawable.vg, R.drawable.vg, R.drawable.vg};
+    public Integer[] mThumbIds = {R.drawable.dealoftheday, R.drawable.dealoftheday, R.drawable.dealoftheday, R.drawable.dealoftheday};
     private final List<Item> mItems = new ArrayList<Item>();
     @Override
     public int getCount() {
@@ -22,10 +22,10 @@ public class DealsdayAdapter extends BaseAdapter {
 
     public DealsdayAdapter(Context c) {
         mContext = LayoutInflater.from(c);
-        mItems.add(new Item(R.drawable.vg));
-        mItems.add(new Item(R.drawable.vg));
-        mItems.add(new Item(R.drawable.vg));
-        mItems.add(new Item(R.drawable.vg));
+        mItems.add(new Item(R.drawable.dealoftheday));
+        mItems.add(new Item(R.drawable.dealoftheday));
+        mItems.add(new Item(R.drawable.dealoftheday));
+        mItems.add(new Item(R.drawable.dealoftheday));
     }
 
     @Override

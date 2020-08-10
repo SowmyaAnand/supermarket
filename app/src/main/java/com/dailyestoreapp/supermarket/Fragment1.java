@@ -2,8 +2,10 @@ package com.dailyestoreapp.supermarket;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.widget.SearchView;
@@ -14,8 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -92,6 +96,13 @@ public class Fragment1 extends Fragment {
         sr = (SearchView)rootView.findViewById(R.id.searchview);
 
         sr.setQueryHint("Type here to search");
+        sr.setBackgroundColor(getResources().getColor(R.color.white));
+        sr.setIconifiedByDefault(false);
+        EditText txtSearch = ((EditText)sr.findViewById(androidx.appcompat.R.id.search_src_text));
+        txtSearch.setHint("Type here to search");
+        txtSearch.setHintTextColor(Color.LTGRAY);
+        txtSearch.setTextColor(getResources().getColor(R.color.black));
+        txtSearch.setTextSize(12);
 
         flyeradapterview = new Imageadapterforflyers(getContext());
         flyerpager.setAdapter(flyeradapterview);

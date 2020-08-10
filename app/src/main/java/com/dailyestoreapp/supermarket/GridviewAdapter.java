@@ -139,7 +139,7 @@ import java.util.ArrayList;
 import java.util.List;
 public class GridviewAdapter extends BaseAdapter {
     private LayoutInflater mContext;
-    public Integer[] mThumbIds = {R.drawable.vg, R.drawable.vg, R.drawable.vg, R.drawable.vg, R.drawable.vg, R.drawable.vg,R.drawable.vg,R.drawable.vg,R.drawable.vg};
+    public Integer[] mThumbIds = {R.drawable.vg1, R.drawable.vg1, R.drawable.vg1, R.drawable.vg1, R.drawable.vg1, R.drawable.vg1,R.drawable.vg1,R.drawable.vg1,R.drawable.vg1};
     private final List<Item> mItems = new ArrayList<Item>();
     @Override
     public int getCount() {
@@ -148,16 +148,15 @@ public class GridviewAdapter extends BaseAdapter {
 
     public GridviewAdapter(Context c) {
         mContext = LayoutInflater.from(c);
+        mItems.add(new Item(R.drawable.categorypage));
+        mItems.add(new Item(R.drawable.categorypage));
+        mItems.add(new Item(R.drawable.categorypage));
+        mItems.add(new Item(R.drawable.categorypage));
+        mItems.add(new Item(R.drawable.categorypage));
+        mItems.add(new Item(R.drawable.categorypage));
         mItems.add(new Item(R.drawable.vg));
         mItems.add(new Item(R.drawable.vg));
         mItems.add(new Item(R.drawable.vg));
-        mItems.add(new Item(R.drawable.vg));
-        mItems.add(new Item(R.drawable.vg));
-        mItems.add(new Item(R.drawable.vg));
-        mItems.add(new Item(R.drawable.vg));
-        mItems.add(new Item(R.drawable.vg));
-        mItems.add(new Item(R.drawable.vg));
-
 
     }
 

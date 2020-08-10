@@ -32,7 +32,7 @@ public class ImageAdapter extends PagerAdapter {
     }
 
     private int[] slideImageId = new int[]{
-            R.drawable.mainbanner4,R.drawable.mainbanner2,R.drawable.mainbanner5
+            R.drawable.secondflyer,R.drawable.secondflyer,R.drawable.secondflyer
     };
 
     @Override
@@ -41,7 +41,7 @@ public class ImageAdapter extends PagerAdapter {
         ImageView imageview = new ImageView(mcontext);
         // ImageView imageview = new ImageView(mcontext);
         //imageview.setRadius(30);
-        imageview.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        imageview.setScaleType(ImageView.ScaleType.FIT_XY);
 
         imageview.setImageResource(slideImageId[position]);
         ((ViewPager) container).addView(imageview,0);

@@ -26,7 +26,7 @@
 <ImageView
     android:layout_width="match_parent"
     android:layout_height="300dp"
-    android:src="@drawable/oniondesc"
+    android:src="@drawable/descriptionpage"
     android:layout_gravity="center"/>
     <TextView
         android:layout_width="match_parent"
