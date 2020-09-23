@@ -11,7 +11,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">dailyestore</string>
+    <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
 
@@ -37,4 +37,8 @@
     <string name="tab_text_3">Contact US</string>
     <string name="tab_text__4">My Account</string>
     <string name="descriptiontext">Freshly Packed and Premium Quality Onions, that enhance the flavour of any cuisine.We offer  this grade of onion in various packing options as per the requirement of our clients</string>
+    <string name="customer_service">Book orders on call/Whatsapp</string>
+    <string name="my_account">My Account</string>
+    <string name="my_orders">My Orders</string>
+    <string name="today_s_deal">Today\'s Deal</string>
 </resources>

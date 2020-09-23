@@ -1,9 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.home.HomeFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIconTint="@color/tab_selector_file"
+            app:tabTextColor="@color/tab_selector_file"
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabPaddingEnd="0dp"
+            android:clipToPadding="true"
+            app:tabPaddingStart="0dp"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            app:tabTextAppearance="@style/MineCustomizedTab"
+            >
+        </com.google.android.material.tabs.TabLayout>
+    </LinearLayout>
+</RelativeLayout>
