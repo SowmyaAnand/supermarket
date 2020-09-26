@@ -56,6 +56,7 @@ public class Fragment1 extends Fragment {
     ViewPager mviewpager,flyerpager;
     ArrayList<String> categoriesEditCategies = new ArrayList<>();
     ArrayList<String> categoriesEditCategies_image = new ArrayList<>();
+    ArrayList<String> firstflyer_image = new ArrayList<>();
     ArrayList<Integer> categoriescatno_edit = new ArrayList<>();
     public static final String MY_PREFS_NAME = "CustomerApp";
     ImageAdapter adapterview;
@@ -145,6 +146,21 @@ public class Fragment1 extends Fragment {
             }
 
         }
+        SharedPreferences shared_cat_id = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        int intial_cat_id =shared_cat_id.getInt("categories_intial",0);
+        SharedPreferences shared_firstflyer = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String shared_firstflyer_img = shared_firstflyer.getString("first_flyer_new", "");
+        String[] firstflyer_img = shared_firstflyer_img.split(",");//if spaces are uneven, use \\s+ instead of " "
+        for (String ct : firstflyer_img) {
+            if(!(ct.equals("")||ct.equals(null)))
+            {
+                firstflyer_image.add(ct);
+            }
+
+        }
+        int intial_firstflyer_id = shared_firstflyer.getInt("first_flyer_initalval",0);
+
+        Log.e("splash","the catgeories intital flag_ct  ="+intial_cat_id);
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         mviewpager = (ViewPager)rootView.findViewById(R.id.viewpager);
@@ -160,7 +176,7 @@ public class Fragment1 extends Fragment {
         txtSearch.setTextColor(getResources().getColor(R.color.black));
         txtSearch.setTextSize(12);
 
-        flyeradapterview = new Imageadapterforflyers(getContext());
+        flyeradapterview = new Imageadapterforflyers(getContext(),firstflyer_image,intial_firstflyer_id);
         flyerpager.setAdapter(flyeradapterview);
         Timer t = new Timer();
         t.scheduleAtFixedRate(new Mytimertask2(),900,1800);
@@ -169,7 +185,7 @@ public class Fragment1 extends Fragment {
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new Mytimertask(),1500,3000);
         gridview = (ExpandableHeightGridView) rootView.findViewById(R.id.categories);
-        gridview.setAdapter(new GridviewAdapter(rootView.getContext()));
+        gridview.setAdapter(new GridviewAdapter(rootView.getContext(),categoriesEditCategies,categoriesEditCategies_image,categoriescatno_edit,intial_cat_id));
         gridview.setExpanded(true);
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @SuppressWarnings("rawtypes")

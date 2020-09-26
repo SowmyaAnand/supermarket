@@ -1,129 +1,7 @@
-//package com.dailyestoreapp.supermarket;
-//
-//import android.util.Log;
-//import android.view.LayoutInflater;
-//import android.widget.BaseAdapter;
-//import android.content.Context;
-//
-//import android.view.View;
-//import android.view.ViewGroup;
-//
-//import android.widget.GridView;
-//import android.widget.ImageView;
-//import android.widget.TextView;
-//
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.Iterator;
-//import java.util.List;
-//import java.util.Locale;
-//
-//public class GridviewAdapter extends BaseAdapter {
-//    private LayoutInflater mContext;
-//    ArrayList<String> lts=new ArrayList<String>();
-//
-//    public Integer[] mThumbIds = {R.drawable.vegetables, R.drawable.food, R.drawable.cakes, R.drawable.fashion, R.drawable.electronics, R.drawable.grocery};
-//    private final List<Item> mItems = new ArrayList<Item>();
-//    @Override
-//    public int getCount() {
-//        return categorynames.size();
-//    }
-//
-//    public GridviewAdapter(Context c) {
-//        mContext = LayoutInflater.from(c);
-//        mItems.add(new Item(R.drawable.vegetables));
-//        mItems.add(new Item(R.drawable.food));
-//        mItems.add(new Item(R.drawable.cakes));
-//        mItems.add(new Item(R.drawable.fashion));
-//        mItems.add(new Item(R.drawable.electronics));
-//        mItems.add(new Item(R.drawable.grocery));
-//        this.lts.addAll(categorynames);
-//    }
-//
-//    @Override
-//    public Item getItem(int position) {
-//        return mItems.get(position);
-//    }
-//
-//    @Override
-//    public long getItemId(int position) {
-//        return 0;
-//    }
-//
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent) {
-////        ImageView imageView;
-////
-////        if (convertView == null) {
-////
-////           // imageView = new ImageView(mContext);
-////          //  imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-////          //  imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-////            //imageView.setPadding(8, 8, 8, 8);
-////
-////        }
-////        else
-////        {
-////            imageView = (ImageView) convertView;
-////        }
-////        imageView.setImageResource(mThumbIds[position]);
-////        return imageView;
-//
-//        // }
-//        View v = convertView;
-//        ImageView picture;
-//
-//
-//        if (v == null) {
-//            v = mContext.inflate(R.layout.categoriescell, parent, false);
-//            v.setTag(R.id.category, v.findViewById(R.id.category));
-//
-//        }
-//
-//        picture = (ImageView) v.getTag(R.id.category);
-//
-//
-//        Item it = getItem(position);
-//
-//        picture.setImageResource(it.drawableId);
-//
-//
-//        return v;
-//    }
-//
-//    private static class Item {
-//
-//        public final int drawableId;
-//
-//        Item(int drawableId) {
-//
-//            this.drawableId = drawableId;
-//        }
-//    }
-//    public void filter(String charText) {
-//        Log.e("texting if","persons="+charText);
-//        charText = charText.toLowerCase(Locale.getDefault());
-//        Log.e("texting if2","persons="+charText);
-//        categorynames.clear();
-//        Iterator itr=categorynames.iterator();
-//        if (charText.length() == 0) {
-//            Log.e("texting if3","persons="+charText);
-//            categorynames.addAll(lts);
-//        } else {
-//            for(int i =0;i<lts.size();i++) {
-//                Log.e("texting else","persons="+lts.get(i));
-//                String s = (String) lts.get(i);
-//                if (s.toLowerCase(Locale.getDefault()).contains(charText)) {
-//                    categorynames.add(s);
-//                }
-//            }
-//        }
-//        Log.e("text","persons="+categorynames);
-//        notifyDataSetChanged();
-//    }
-//}
+
 package com.dailyestoreapp.supermarket;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.BaseAdapter;
 import android.content.Context;
@@ -135,33 +13,72 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 public class GridviewAdapter extends BaseAdapter {
     private LayoutInflater mContext;
+    private Context context;
     public Integer[] mThumbIds = {R.drawable.vg1, R.drawable.vg1, R.drawable.vg1, R.drawable.vg1, R.drawable.vg1, R.drawable.vg1,R.drawable.vg1,R.drawable.vg1,R.drawable.vg1};
-    private final List<Item> mItems = new ArrayList<Item>();
+    ArrayList mthumb = new ArrayList<>(Arrays.asList("FOOD","VEGETABLES","GROCERY","CAKES","FASHION","MEAT","ELECTRONICS","MOBILE","HOME ACCESSORIES"));
+    ArrayList<String> categories;
+    ArrayList<String> category_image;
+    ArrayList<Integer> cat_id;
+    int cat_int_id;
+    final String url1 = "http://dailyestoreapp.com/dailyestore/";
+   private final List<Item> mItems = new ArrayList<Item>();
+    private final List<Modified_Item> modified_mItems = new ArrayList<Modified_Item>();
     @Override
     public int getCount() {
+if(this.cat_int_id==0)
+{
+return this.categories.size();
+}
         return mThumbIds.length;
     }
 
-    public GridviewAdapter(Context c) {
+    public GridviewAdapter(Context c,ArrayList<String> categories,ArrayList<String> category_image,ArrayList<Integer> cat_id,int cat_initial_id) {
         mContext = LayoutInflater.from(c);
-        mItems.add(new Item(R.drawable.categorypage));
-        mItems.add(new Item(R.drawable.categorypage));
-        mItems.add(new Item(R.drawable.categorypage));
-        mItems.add(new Item(R.drawable.categorypage));
-        mItems.add(new Item(R.drawable.categorypage));
-        mItems.add(new Item(R.drawable.categorypage));
-        mItems.add(new Item(R.drawable.vg));
-        mItems.add(new Item(R.drawable.vg));
-        mItems.add(new Item(R.drawable.vg));
+        context=c;
+        this.categories=categories;
+        this.category_image=category_image;
+        this.cat_id=cat_id;
+       this.cat_int_id=cat_initial_id;
+        Log.e("splash","the catgeories intital flag_ct  ="+cat_initial_id);
+       if(this.cat_int_id==1)
+       {
+           String ct = String.valueOf(mthumb.get(0));
+           Log.e("text","flyer++"+c);
+
+           mItems.add(new Item(R.drawable.categorypage,String.valueOf(mthumb.get(0))));
+           mItems.add(new Item(R.drawable.categorypage,String.valueOf(mthumb.get(1))));
+           mItems.add(new Item(R.drawable.categorypage,String.valueOf(mthumb.get(2))));
+           mItems.add(new Item(R.drawable.categorypage,String.valueOf(mthumb.get(3))));
+           mItems.add(new Item(R.drawable.categorypage,String.valueOf(mthumb.get(4))));
+           mItems.add(new Item(R.drawable.categorypage,String.valueOf(mthumb.get(5))));
+           mItems.add(new Item(R.drawable.vg,String.valueOf(mthumb.get(6))));
+           mItems.add(new Item(R.drawable.vg,String.valueOf(mthumb.get(7))));
+           mItems.add(new Item(R.drawable.vg,String.valueOf(mthumb.get(8))));
+       }
+       else
+       {
+        for(int i=0;i<categories.size();i++)
+            {
+                String imageurl_total = url1 + category_image.get(i);
+                String cat_name_api =this.categories.get(i);
+    modified_mItems.add(new Modified_Item(imageurl_total,cat_name_api));
+            }
+       }
+
 
     }
 
     @Override
     public Item getItem(int position) {
+
         return mItems.get(position);
     }
 
@@ -172,24 +89,7 @@ public class GridviewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-//        ImageView imageView;
-//
-//        if (convertView == null) {
-//
-//           // imageView = new ImageView(mContext);
-//          //  imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-//          //  imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-//            //imageView.setPadding(8, 8, 8, 8);
-//
-//        }
-//        else
-//        {
-//            imageView = (ImageView) convertView;
-//        }
-//        imageView.setImageResource(mThumbIds[position]);
-//        return imageView;
 
-        // }
         View v = convertView;
         ImageView picture;
         TextView name;
@@ -197,27 +97,57 @@ public class GridviewAdapter extends BaseAdapter {
         if (v == null) {
             v = mContext.inflate(R.layout.categoriescell, parent, false);
             v.setTag(R.id.category, v.findViewById(R.id.category));
-            v.setTag(R.id.text, v.findViewById(R.id.text));
+           v.setTag(R.id.cat_name,v.findViewById(R.id.cat_name));
+           // v.setTag(R.id.text, v.findViewById(R.id.text));
         }
 
         picture = (ImageView) v.getTag(R.id.category);
 
+        name=(TextView) v.getTag(R.id.cat_name);
+        Log.e("splash","the catgeories intital flag_ct  ="+this.cat_int_id);
+        if(this.cat_int_id==1)
+        {
+            Item it = getItem(position);
 
-        Item it = getItem(position);
+            picture.setImageResource(it.drawableId);
+            name.setText(it.name);
+        }
+else
+        {
+            Modified_Item mit =getItemModified(position);
+            Glide.with(context).load(mit.img_ct_mod)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(picture);
+            name.setText(mit.name_mod);
 
-        picture.setImageResource(it.drawableId);
+        }
 
 
         return v;
     }
 
+    private Modified_Item getItemModified(int position) {
+        return modified_mItems.get(position);
+    }
+
     private static class Item {
 
         public final int drawableId;
-
-        Item(int drawableId) {
+        public final String name;
+        Item(int drawableId,String nm) {
 
             this.drawableId = drawableId;
+            this.name=nm;
+        }
+    }
+    private static class Modified_Item {
+
+        public final String img_ct_mod;
+        public final String name_mod;
+        Modified_Item(String img_ctt_mod,String namee_mod) {
+
+            this.img_ct_mod = img_ctt_mod;
+            this.name_mod=namee_mod;
         }
     }
 }

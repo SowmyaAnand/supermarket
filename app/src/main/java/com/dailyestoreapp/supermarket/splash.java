@@ -30,7 +30,8 @@ private static int SPLASH_TIME_OUT = 1000;
     ArrayList<String> original_deal_splash = new ArrayList<>();
     ArrayList<String> original_firstpopup_splash = new ArrayList<>();
     private String tag= "splash";
-
+    int initialcategories=1;
+    int intialfirstFlyers=1;
     public static final String MY_PREFS_NAME = "CustomerApp";
 
     @Override
@@ -41,6 +42,7 @@ private static int SPLASH_TIME_OUT = 1000;
     }
     private void FirstViewFlyers()
     {
+
         final StringBuilder frst_flyer_images  = new StringBuilder();
         String url = "http://dailyestoreapp.com/dailyestore/api/";
         final String url1 = "http://dailyestoreapp.com/dailyestore/";
@@ -74,7 +76,13 @@ private static int SPLASH_TIME_OUT = 1000;
                                 String imageurl = response.body().getResponsedata().getData().get(i).getImage();
                                 String imageurl_total=url1+imageurl;
                                 item_image_splash.add(imageurl_total);
+                                String intial_first_flyer =response.body().getResponsedata().getData().get(i).getinitialSetflyersid();
+                                if(intial_first_flyer.equals("0"))
+                                {
+                                    intialfirstFlyers=0;
+                                }
                                 Log.e("fragment1","the imageurl is===="+imageurl);
+
                             }
                             original_item_image_lts_splash.addAll(item_image_splash);
                             Iterator<String> itr_string_image = original_item_image_lts_splash.iterator();
@@ -88,6 +96,7 @@ private static int SPLASH_TIME_OUT = 1000;
                             }
                             SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                             editor_frst.putString("first_flyer_new", frst_flyer_images.toString());
+                            editor_frst.putInt("first_flyer_initalval",intialfirstFlyers);
                             editor_frst.apply();
                             Log.e("fragment1","the imageurl is===="+original_item_image_lts_splash);
 
@@ -158,6 +167,11 @@ private static int SPLASH_TIME_OUT = 1000;
                         String item = catObj1.getCategoryName();
                         String item_image = catObj1.getCategoryImage();
                         int item_no = Integer.parseInt(catObj1.getTypeId());
+                        String intial_cat =catObj1.getinitialSetupflag();
+                        if(intial_cat.equals("0"))
+                        {
+                            initialcategories=0;
+                        }
                         nums.add(item_no);
                         categories.add(item);
                         categories_image.add(item_image);
@@ -211,6 +225,11 @@ private static int SPLASH_TIME_OUT = 1000;
                 editor.putString("categories_new", ct.toString());
                 Log.e("homefragment","the catgeories shared preference are  login  ="+ct.toString());
                 editor.apply();
+
+                SharedPreferences.Editor editor_id = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                editor_id.putInt("categories_intial",initialcategories);
+                editor_id.apply();
+                Log.e("splash","the catgeories intital flag_ct  ="+initialcategories);
                 if(categories_image.size()>0){
                     Log.e(tag,"images array "+ct_images.toString());
                     SharedPreferences.Editor editor3 = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
