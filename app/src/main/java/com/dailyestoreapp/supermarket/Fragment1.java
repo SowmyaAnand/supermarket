@@ -57,9 +57,13 @@ public class Fragment1 extends Fragment {
     ArrayList<String> categoriesEditCategies = new ArrayList<>();
     ArrayList<String> categoriesEditCategies_image = new ArrayList<>();
     ArrayList<String> firstflyer_image = new ArrayList<>();
+    ArrayList<String> secondflyer_image = new ArrayList<>();
+    ArrayList<String> deal_image = new ArrayList<>();
     ArrayList<Integer> categoriescatno_edit = new ArrayList<>();
     public static final String MY_PREFS_NAME = "CustomerApp";
     ImageAdapter adapterview;
+    int firstttflyerid;
+    int secondddflyerid;
     ExpandableHeightGridView gridview,dealsview;
     Imageadapterforflyers flyeradapterview;
     SearchView sr;
@@ -158,10 +162,35 @@ public class Fragment1 extends Fragment {
             }
 
         }
-        int intial_firstflyer_id = shared_firstflyer.getInt("first_flyer_initalval",0);
+        String shared_secondflyer = shared_firstflyer.getString("sec_flyers_images_new", "");
+        String[] shared_secondflyer_img = shared_secondflyer.split(",");//if spaces are uneven, use \\s+ instead of " "
+        for (String ct : shared_secondflyer_img) {
+            if(!(ct.equals("")||ct.equals(null)))
+            {
+                secondflyer_image.add(ct);
+            }
 
+        }
+        String shared_dealflyer = shared_firstflyer.getString("viewalldeals_img", "");
+        String[] shared_dealflyer_img = shared_secondflyer.split(",");//if spaces are uneven, use \\s+ instead of " "
+        for (String ct : shared_dealflyer_img) {
+            if(!(ct.equals("")||ct.equals(null)))
+            {
+                deal_image.add(ct);
+            }
+
+        }
+        int intial_firstflyer_id = shared_firstflyer.getInt("first_flyer_initalval",0);
+        firstttflyerid=intial_firstflyer_id;
         Log.e("splash","the catgeories intital flag_ct  ="+intial_cat_id);
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+        int intial_secondflyer_id = shared_firstflyer.getInt("second_flyer_initalval",0);
+        secondddflyerid=intial_secondflyer_id;
+        Log.e("splash","the catgeories intital flag_ct  ="+intial_cat_id);
+
+        int intial_deal_id = shared_firstflyer.getInt("deal_flyer_initalval",0);
+
 
         mviewpager = (ViewPager)rootView.findViewById(R.id.viewpager);
         flyerpager = (ViewPager)rootView.findViewById(R.id.viewpager2);
@@ -180,7 +209,7 @@ public class Fragment1 extends Fragment {
         flyerpager.setAdapter(flyeradapterview);
         Timer t = new Timer();
         t.scheduleAtFixedRate(new Mytimertask2(),900,1800);
-       adapterview = new ImageAdapter(getContext(),original_item_image_lts);
+       adapterview = new ImageAdapter(getContext(),secondflyer_image,intial_secondflyer_id);
         mviewpager.setAdapter(adapterview);
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new Mytimertask(),1500,3000);
@@ -195,7 +224,7 @@ public class Fragment1 extends Fragment {
             }
         });
         dealsview = (ExpandableHeightGridView) rootView.findViewById(R.id.dealsoftheday);
-        dealsview.setAdapter(new DealsdayAdapter(rootView.getContext()));
+        dealsview.setAdapter(new DealsdayAdapter(rootView.getContext(),deal_image,intial_deal_id));
         dealsview.setExpanded(true);
         dealsview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @SuppressWarnings("rawtypes")
@@ -215,20 +244,47 @@ public class Fragment1 extends Fragment {
                 @Override
                 public void run() {
                     Log.e("text","flyer++"+mviewpager.getCurrentItem());
-                    if(mviewpager.getCurrentItem() ==0)
+                    if(secondddflyerid==1)
                     {
-                        mviewpager.setCurrentItem(1);
-                    }
-                    else if(mviewpager.getCurrentItem()==1)
-                    {
-                        mviewpager.setCurrentItem(2);
+                        if(mviewpager.getCurrentItem() ==0)
+                        {
+                            mviewpager.setCurrentItem(1);
+                        }
+                        else if(mviewpager.getCurrentItem()==1)
+                        {
+                            mviewpager.setCurrentItem(2);
 
-                    }
+                        }
+                        else if(mviewpager.getCurrentItem()==2)
+                        {
+                            mviewpager.setCurrentItem(3);
 
+                        }
+                        else
+                        {
+                            mviewpager.setCurrentItem(0);
+                        }
+                    }
                     else
                     {
-                        mviewpager.setCurrentItem(0);
+                        int sec_length = secondflyer_image.size();
+
+                        if (mviewpager.getCurrentItem() == 0) {
+                            mviewpager.setCurrentItem(1);
+                        }
+                        else if ((mviewpager.getCurrentItem() == 1)&&(sec_length<2)) {
+                            mviewpager.setCurrentItem(2);
+                        }
+                        else if ((mviewpager.getCurrentItem() == 2)&&(sec_length<3)) {
+                            mviewpager.setCurrentItem(3);
+                        }
+                        else
+                        {
+                            mviewpager.setCurrentItem(0);
+
+                        }
                     }
+
                 }
             });
         }
@@ -240,104 +296,44 @@ public class Fragment1 extends Fragment {
                 @Override
                 public void run() {
                     Log.e("text","flyer++"+flyerpager.getCurrentItem());
-                    if(flyerpager.getCurrentItem() ==0)
+                    if(firstttflyerid==1)
                     {
-                        flyerpager.setCurrentItem(1);
-                    }
-                    else if(flyerpager.getCurrentItem()==1)
-                    {
-                        flyerpager.setCurrentItem(2);
+                        if (flyerpager.getCurrentItem() == 0) {
+                            flyerpager.setCurrentItem(1);
+                        } else if (flyerpager.getCurrentItem() == 1) {
+                            flyerpager.setCurrentItem(2);
 
-                    }
-                    else if(flyerpager.getCurrentItem()==2)
-                    {
-                        flyerpager.setCurrentItem(3);
+                        } else if (flyerpager.getCurrentItem() == 2) {
+                            flyerpager.setCurrentItem(3);
 
+                        } else {
+                            flyerpager.setCurrentItem(0);
+                        }
                     }
+                    else {
+
+                       int firstflyer_length = firstflyer_image.size();
+
+                        if (flyerpager.getCurrentItem() == 0) {
+                            flyerpager.setCurrentItem(1);
+                        }
+                        else if ((flyerpager.getCurrentItem() == 1)&&(firstflyer_length<2)) {
+                            flyerpager.setCurrentItem(2);
+                        }
+                       else if ((flyerpager.getCurrentItem() == 2)&&(firstflyer_length<3)) {
+                            flyerpager.setCurrentItem(3);
+                        }
+                        else
+                        {
+                            flyerpager.setCurrentItem(0);
+
+                        }
 
 
-                    else
-                    {
-                        flyerpager.setCurrentItem(0);
-                    }
+                        }
                 }
             });
         }
     }
-    private void FirstViewFlyers(final String tid)
-    {
-        dialog = new ACProgressFlower.Builder(getContext())
-                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
-                .themeColor(Color.WHITE)
-                .borderPadding(1)
 
-                .fadeColor(Color.DKGRAY).build();
-        dialog.show();
-
-
-        String url = "http://dailyestoreapp.com/dailyestore/api/";
-        final String url1 = "http://dailyestoreapp.com/dailyestore/";
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .build();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient)
-                .build();
-        ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
-        if(tid.equals("0"))
-        {
-            Call<CustomerAppResponse> call = mainInterface.allFlyers();
-            call.enqueue(new Callback<CustomerAppResponse>() {
-                @Override
-                public void onResponse(Call<CustomerAppResponse> call, retrofit2.Response<CustomerAppResponse> response) {
-                    CustomerAppResponse listCategoryResponseobject = response.body();
-                    int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
-                    Log.e("firstpop","the succes value is "+listCategoryResponseobject.getResponsedata().getSuccess());
-                    int data_length = response.body().getResponsedata().getData().size();
-
-
-                    try {
-
-
-                        if(success==1) {
-                            for (int i = 0; i < data_length; i++) {
-                                String imageurl = response.body().getResponsedata().getData().get(i).getImage();
-                                String imageurl_total=url1+imageurl;
-                                item_image.add(imageurl_total);
-                                Log.e("fragment1","the imageurl is===="+imageurl);
-                            }
-                            original_item_image_lts.addAll(item_image);
-                            Log.e("fragment1","the imageurl is===="+original_item_image_lts);
-                            adapterview.notifyDataSetChanged();
-
-                        }
-                        else {
-
-                            Toast.makeText(getContext(),"No Data found",Toast.LENGTH_LONG).show();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Toast.makeText(getContext(),"something went wrong",Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<CustomerAppResponse> call, Throwable t) {
-
-                    Toast.makeText(getContext(),t.getMessage(),Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-
-
-
-      //  adapterview.notifyDataSetChanged();
-        dialog.dismiss();
-
-    }
 }

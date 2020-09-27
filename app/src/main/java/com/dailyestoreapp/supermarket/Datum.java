@@ -13,6 +13,9 @@ class Datum {
     @SerializedName("initialSetflyersid")
     @Expose
     private String initialSetflyersid;
+    @SerializedName("initialdealid")
+    @Expose
+    private String initialdealid;
     @SerializedName("itemName")
     @Expose
     private String itemName;
@@ -199,6 +202,13 @@ class Datum {
 
     public void setinitialSetupflag(String initialSetupflag) {
         this.initialSetupflag = initialSetupflag;
+    }
+    public String getinitialdealid() {
+        return initialdealid;
+    }
+
+    public void setinitialdealid(String initialdealid) {
+        this.initialdealid = initialdealid;
     }
     public String getinitialSetflyersid() {
         return initialSetflyersid;

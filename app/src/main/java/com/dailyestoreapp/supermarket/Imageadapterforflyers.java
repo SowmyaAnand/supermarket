@@ -55,32 +55,32 @@ public class Imageadapterforflyers extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container , int position)
     {
-        ImageView imageview = new ImageView(mcontext);
 
-//        View imageLayout = inflater.inflate(R.layout.firstflyerimagelayout, container, false);
-//        final ImageView imageview = (ImageView) imageLayout
-//                .findViewById(R.id.image);
 
-        // ImageView imageview = new ImageView(mcontext);
-      //  imageview.setRadius(30);
+       View imageLayout = inflater.inflate(R.layout.firstflyerimagelayout, container, false);
+        final ImageView imageview = (ImageView) imageLayout.findViewById(R.id.image);
+
+
         if(firstflyerid==0)
         {
-//            imageview.setScaleType(ImageView.ScaleType.FIT_XY);
-//
-//            Glide.with(mcontext).load(firstflyerimage.get(position))
-//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                    .into(imageview);
-//            ((ViewPager) container).addView(imageview,0);
+            imageview.setScaleType(ImageView.ScaleType.FIT_XY);
+
+            Glide.with(mcontext).load(firstflyerimage.get(position))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imageview);
+            ((ViewPager) container).addView(imageview,0);
         }
         else
         {
+            ImageView imageview2 = new ImageView(mcontext);
+            imageview2.setScaleType(ImageView.ScaleType.FIT_XY);
 
+            imageview2.setImageResource(slideImageId[position]);
+            ((ViewPager) container).addView(imageview2,0);
+            return imageview2;
         }
-        imageview.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        imageview.setImageResource(slideImageId[position]);
-        ((ViewPager) container).addView(imageview,0);
-        return imageview;
+       return imageview;
     }
     @Override
     public void destroyItem(ViewGroup container,int position,Object object)

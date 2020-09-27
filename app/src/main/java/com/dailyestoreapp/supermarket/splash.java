@@ -32,6 +32,8 @@ private static int SPLASH_TIME_OUT = 1000;
     private String tag= "splash";
     int initialcategories=1;
     int intialfirstFlyers=1;
+    int  intialsecondFlyers=1;
+    int  intialdealFlyers=1;
     public static final String MY_PREFS_NAME = "CustomerApp";
 
     @Override
@@ -303,7 +305,11 @@ SecondViewFlyers();
                             String imageurl = response.body().getResponsedata().getData().get(i).getImage();
                             String imageurl_total = url1 + imageurl;
                             original_flyer2_splash.add(imageurl_total);
-
+                            String intial_second_flyer =response.body().getResponsedata().getData().get(i).getinitialSetflyersid();
+                            if(intial_second_flyer.equals("0"))
+                            {
+                                intialsecondFlyers=0;
+                            }
 
                         }
                         Iterator<String> itr_string_image = original_flyer2_splash.iterator();
@@ -317,6 +323,7 @@ SecondViewFlyers();
                         }
                         SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                         editor_frst.putString("sec_flyers_images_new", sec_flyers_images.toString());
+                        editor_frst.putInt("second_flyer_initalval",intialsecondFlyers);
                         editor_frst.apply();
 
                     }
@@ -377,7 +384,11 @@ SecondViewFlyers();
                             String imageurl_total=url1+imageurl;
                             Log.e("firstpop","the succes value is "+imageurl_total);
                            original_deal_splash.add(imageurl_total);
-
+                            String intial_deal_flyer =response.body().getResponsedata().getData().get(i).getinitialdealid();
+                            if(intial_deal_flyer.equals("0"))
+                            {
+                                intialdealFlyers=0;
+                            }
                         }
 
                         Iterator<String> itr_string_image = original_flyer2_splash.iterator();
@@ -391,6 +402,7 @@ SecondViewFlyers();
                         }
                         SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                         editor_frst.putString("viewalldeals_img", viewalldeals_img.toString());
+                        editor_frst.putInt("deal_flyer_initalval",intialdealFlyers);
                         editor_frst.apply();
                     }
                     else {

@@ -13,15 +13,24 @@ import java.util.List;
 
 public class DealsdayAdapter extends BaseAdapter {
     private LayoutInflater mContext;
+    int cat_deal_id;
+    ArrayList<String> deal_image;
     public Integer[] mThumbIds = {R.drawable.dealoftheday, R.drawable.dealoftheday, R.drawable.dealoftheday, R.drawable.dealoftheday};
     private final List<Item> mItems = new ArrayList<Item>();
     @Override
     public int getCount() {
+
+        if(this.cat_deal_id==0)
+        {
+            return this.deal_image.size();
+        }
         return mThumbIds.length;
     }
 
-    public DealsdayAdapter(Context c) {
+    public DealsdayAdapter(Context c,ArrayList<String> deal_image,int initalid) {
         mContext = LayoutInflater.from(c);
+        this.cat_deal_id=initalid;
+        this.deal_image=deal_image;
         mItems.add(new Item(R.drawable.dealoftheday));
         mItems.add(new Item(R.drawable.dealoftheday));
         mItems.add(new Item(R.drawable.dealoftheday));
