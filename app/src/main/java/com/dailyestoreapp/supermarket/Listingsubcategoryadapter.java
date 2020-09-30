@@ -4,18 +4,31 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
 public class Listingsubcategoryadapter extends RecyclerView.Adapter<Listingsubcategoryadapter.MyViewHolder> {
     ArrayList personNames;
     Context context;
-    public Listingsubcategoryadapter(Context context, ArrayList personNames) {
+    ArrayList<String> Subcategories;
+    ArrayList<String> Subcategory_image;
+
+
+    ArrayList<Integer> Sub_id;
+    int sub_int_id;
+    public Listingsubcategoryadapter(Context context, ArrayList<String> Subcategories,ArrayList<String> Subcategory_image,ArrayList<Integer> Subcat_id,int sub_initial_id) {
         this.context = context;
-        this.personNames = personNames;
+        this.Subcategories=Subcategories;
+        this.Sub_id=Subcat_id;
+        this.Subcategory_image=Subcategory_image;
+        this.sub_int_id=sub_initial_id;
     }
     @Override
     public Listingsubcategoryadapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -30,7 +43,14 @@ public class Listingsubcategoryadapter extends RecyclerView.Adapter<Listingsubca
     public void onBindViewHolder(Listingsubcategoryadapter.MyViewHolder holder, final int position) {
 
         // set the data in items
-        String name = (String) personNames.get(position);
+        String sb_name = Subcategories.get(position);
+        String Sb_img =Subcategory_image.get(position);
+        holder.name.setText(sb_name);
+        Glide.with(context).load(Sb_img)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.img);
+
+
         // holder.name.setText(name);
         // implement setOnClickListener event on item view.
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -45,12 +65,15 @@ public class Listingsubcategoryadapter extends RecyclerView.Adapter<Listingsubca
 
     @Override
     public int getItemCount() {
-        return personNames.size();
+        return Subcategories.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name;// init the item view's
+        ImageView img;
         public MyViewHolder(View itemView) {
             super(itemView);
+            name = itemView.findViewById(R.id.sbname);
+            img = itemView.findViewById(R.id.sbimg);
             // get the reference of item view's
 
         }

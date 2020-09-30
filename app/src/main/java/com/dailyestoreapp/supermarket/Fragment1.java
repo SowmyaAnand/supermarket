@@ -26,9 +26,17 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -60,10 +68,18 @@ public class Fragment1 extends Fragment {
     ArrayList<String> secondflyer_image = new ArrayList<>();
     ArrayList<String> deal_image = new ArrayList<>();
     ArrayList<Integer> categoriescatno_edit = new ArrayList<>();
+    ArrayList<Integer> Sub_categories_id = new ArrayList<>();
+    private Integer selectedSubCategoryNo;
+    ArrayList<String> Sub_categories = new ArrayList<>();
     public static final String MY_PREFS_NAME = "CustomerApp";
     ImageAdapter adapterview;
     int firstttflyerid;
+    int popupid;
+    int intialsub=1;
+    int cno;
     int secondddflyerid;
+    String popup_img;
+    ArrayList<String> Images_sub = new ArrayList<>();
     ExpandableHeightGridView gridview,dealsview;
     Imageadapterforflyers flyeradapterview;
     SearchView sr;
@@ -180,6 +196,11 @@ public class Fragment1 extends Fragment {
             }
 
         }
+        popup_img = shared_firstflyer.getString("firstpop_img", "");
+        int popup_id = shared_firstflyer.getInt("popup_initalval",0);
+        popupid=popup_id;
+
+
         int intial_firstflyer_id = shared_firstflyer.getInt("first_flyer_initalval",0);
         firstttflyerid=intial_firstflyer_id;
         Log.e("splash","the catgeories intital flag_ct  ="+intial_cat_id);
@@ -219,8 +240,13 @@ public class Fragment1 extends Fragment {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @SuppressWarnings("rawtypes")
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Intent next = new Intent(getContext(),Itemlisting.class);
-                startActivity(next);
+                cno = categoriescatno_edit.get(position);
+                subcategoryactivate();
+//                Intent next = new Intent(getContext(),Itemlisting.class);
+//                String cname = categoriesEditCategies.get(position);
+//                 cno = categoriescatno_edit.get(position);
+//                Log.e("frag1","the category name and no is "+cname+cno);
+//                startActivity(next);
             }
         });
         dealsview = (ExpandableHeightGridView) rootView.findViewById(R.id.dealsoftheday);
@@ -335,5 +361,139 @@ public class Fragment1 extends Fragment {
             });
         }
     }
+
+
+    private void subcategoryactivate()
+    {
+        final StringBuilder strbul  = new StringBuilder();
+        final StringBuilder sb  = new StringBuilder();
+        final StringBuilder sb_images  = new StringBuilder();
+
+        if(Sub_categories.size()>0)
+        {
+            Sub_categories.clear();
+            intialsub=1;
+
+        }
+        if(Sub_categories_id.size()>0)
+        {
+            Sub_categories_id.clear();
+        }
+        if(Images_sub.size()>0)
+        {
+            Images_sub.clear();
+        }
+
+        int type =1;
+        String url = "http://dailyestoreapp.com/dailyestore/api/";
+
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+        ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
+        Log.e("frag1","cno="+cno);
+        Call<CustomerAppResponse> call = mainInterface.SubCategory(cno);
+        call.enqueue(new Callback<CustomerAppResponse>() {
+            @Override
+            public void onResponse(Call<CustomerAppResponse> call, retrofit2.Response<CustomerAppResponse> response) {
+                String res= new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getResponsedata());
+                JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
+                try {
+                    JSONObject jo2 = new JSONObject(obj.toString());
+                    JSONArray categoriesarray = jo2.getJSONArray("data");
+                    Log.e("Fragment4","subcategories="+jo2);
+
+                    for(int i=0; i<categoriesarray.length(); i++)
+                    {
+                        JSONObject j1= categoriesarray.getJSONObject(i);
+                        String sub_name = j1.getString("subName");
+                        String sub_item =j1.getString("subItemImage");
+                        if(!Sub_categories.contains(sub_name))
+                        {
+                            Sub_categories.add(sub_name);
+                            Images_sub.add(sub_item);
+                            int sub_Cat_id = Integer.parseInt(j1.getString("subId"));
+                            Sub_categories_id.add(sub_Cat_id);
+                            String intial_pop =j1.getString("initialSetidSub");
+                            if(intial_pop.equals("0"))
+                            {
+                                intialsub = 0;
+                            }
+                        }
+
+                    }
+
+
+                    Log.e("fragment1","sub_cat inside Activate"+Sub_categories);
+//                    dialog.dismiss();
+                    selectedSubCategoryNo=1;
+                    Iterator<Integer> iter = Sub_categories_id.iterator();
+                    while(iter.hasNext())
+                    {
+                        strbul.append(iter.next());
+                        if(iter.hasNext()){
+                            strbul.append(",");
+                        }
+                    }
+                    strbul.toString();
+
+                    // to store categories
+                    Log.e("res","res="+strbul);
+                    Iterator<String> itr_string = Sub_categories.iterator();
+                    while (itr_string.hasNext())
+                    {
+
+                        sb.append(itr_string.next());
+                        if(itr_string.hasNext()){
+                            sb.append(",");
+                        }
+                    }
+
+
+                    Iterator<String> itr_string_image = Images_sub.iterator();
+                    while (itr_string_image.hasNext())
+                    {
+
+                        sb_images.append(itr_string_image.next());
+                        if(itr_string_image.hasNext()){
+                            sb_images.append(",");
+                        }
+                    }
+                    Intent next = new Intent(getContext(),Itemlisting.class);
+                    Bundle b = new Bundle();
+                    b.putString("subCatName",sb.toString());
+                    b.putString("subCatId",strbul.toString());
+                    b.putString("subCatImage",sb_images.toString());
+                    b.putString("subInitial", String.valueOf(intialsub));
+                   next.putExtras(b);
+                    startActivity(next);
+
+
+                    //personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "frag4ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CustomerAppResponse> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+
+
 
 }

@@ -31,6 +31,10 @@ public class Itemlisting extends AppCompatActivity {
     RecyclerView recyclerView,itemlistingcategory;
     LinearLayoutManager linearLayoutManager,linearLayoutManager2;
     ItemAdapter customAdapter;
+    int initialid;
+    ArrayList<String> SubcategoriesEditCategies = new ArrayList<>();
+    ArrayList<String> SubcategoriesEditCategies_image = new ArrayList<>();
+    ArrayList<Integer> Subcategoriescatno_edit = new ArrayList<>();
     Listingsubcategoryadapter customadapter2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,34 @@ public class Itemlisting extends AppCompatActivity {
         setContentView(R.layout.activity_itemlisting);
 Toolbar t = (Toolbar)findViewById(R.id.toolbar_itemlisting);
         setSupportActionBar(t);
+        Intent in = getIntent();
+        Bundle extras = in.getExtras();
+        String sb_names = extras.getString("subCatName");
+        String sb_id = extras.getString("subCatId");
+        String sb_img = extras.getString("subCatImage");
+        String  sb_inital =extras.getString("subInitial");
+        String[] cats = sb_names.split(",");//if spaces are uneven, use \\s+ instead of " "
+        for (String ct : cats) {
+            if (!(ct.equals("") || ct.equals(null))) {
+                SubcategoriesEditCategies.add(ct);
+            }
+        }
+        String[] numbers = sb_id.split(",");
+        for (String number : numbers) {
+            if(!(numbers.equals("")||numbers.equals(null)))
+            {
+                Subcategoriescatno_edit.add(Integer.valueOf(number));
+            }
+
+        }
+        String[] sb_imagess = sb_img.split(",");//if spaces are uneven, use \\s+ instead of " "
+        for (String ct : sb_imagess) {
+            if (!(ct.equals("") || ct.equals(null))) {
+                SubcategoriesEditCategies_image.add(ct);
+            }
+        }
+        initialid= Integer.parseInt(sb_inital);
+        Log.e("ItemListing","the values are "+sb_names+sb_id+sb_img+sb_inital);
 t.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
 t.setNavigationOnClickListener(new View.OnClickListener() {
     @Override
@@ -54,7 +86,7 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false);
         itemlistingcategory.setLayoutManager(linearLayoutManager2);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        customadapter2 = new Listingsubcategoryadapter(Itemlisting.this, personNames);
+        customadapter2 = new Listingsubcategoryadapter(Itemlisting.this,SubcategoriesEditCategies,SubcategoriesEditCategies_image,Subcategoriescatno_edit,initialid);
         itemlistingcategory.setAdapter(customadapter2);
         //second recyclerview
         recyclerView = (RecyclerView) findViewById(R.id.itemrecycler);

@@ -34,6 +34,7 @@ private static int SPLASH_TIME_OUT = 1000;
     int intialfirstFlyers=1;
     int  intialsecondFlyers=1;
     int  intialdealFlyers=1;
+    int intialpopup=1;
     public static final String MY_PREFS_NAME = "CustomerApp";
 
     @Override
@@ -462,6 +463,11 @@ SecondViewFlyers();
                             String imageurl = response.body().getResponsedata().getData().get(i).getImage();
                             String imageurl_total=url1+imageurl;
                             original_firstpopup_splash.add(imageurl_total);
+                            String intial_pop =response.body().getResponsedata().getData().get(i).getinitialSetflyersid();
+                            if(intial_pop.equals("0"))
+                            {
+                                intialpopup=0;
+                            }
                             
                         }
 
@@ -475,7 +481,8 @@ SecondViewFlyers();
                             }
                         }
                         SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                        editor_frst.putString("viewalldeals_img", firstpopup_img.toString());
+                        editor_frst.putString("firstpop_img", firstpopup_img.toString());
+                        editor_frst.putInt("popup_initalval",intialpopup);
                         editor_frst.apply();
                     }
                     else {
