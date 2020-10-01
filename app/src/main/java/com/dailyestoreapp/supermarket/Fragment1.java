@@ -403,25 +403,24 @@ public class Fragment1 extends Fragment {
         call.enqueue(new Callback<CustomerAppResponse>() {
             @Override
             public void onResponse(Call<CustomerAppResponse> call, retrofit2.Response<CustomerAppResponse> response) {
-                String res= new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getResponsedata());
-                JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
-                try {
-                    JSONObject jo2 = new JSONObject(obj.toString());
-                    JSONArray categoriesarray = jo2.getJSONArray("data");
-                    Log.e("Fragment4","subcategories="+jo2);
+                CustomerAppResponse catObj = response.body();
+                int cat_length = catObj.getResponsedata().getData().size();
 
-                    for(int i=0; i<categoriesarray.length(); i++)
+
+
+                    for(int i=0; i<cat_length; i++)
                     {
-                        JSONObject j1= categoriesarray.getJSONObject(i);
-                        String sub_name = j1.getString("subName");
-                        String sub_item =j1.getString("subItemImage");
+                        Datum catObj1 = catObj.getResponsedata().getData().get(i);
+                        String sub_name = catObj1.getSubName();
+                        String sub_item =catObj1.getsubItemImage();
                         if(!Sub_categories.contains(sub_name))
                         {
                             Sub_categories.add(sub_name);
                             Images_sub.add(sub_item);
-                            int sub_Cat_id = Integer.parseInt(j1.getString("subId"));
+                            int sub_Cat_id = Integer.parseInt(catObj1.getSubId());
                             Sub_categories_id.add(sub_Cat_id);
-                            String intial_pop =j1.getString("initialSetidSub");
+                            String intial_pop =catObj1.getinitialSetidSub();
+                            Log.e("frG1","Values="+catObj1+intial_pop);
                             if(intial_pop.equals("0"))
                             {
                                 intialsub = 0;
@@ -478,9 +477,7 @@ public class Fragment1 extends Fragment {
 
                     //personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "frag4ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+
 
             }
 

@@ -24,6 +24,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.ToLongBiFunction;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class Itemlisting extends AppCompatActivity {
     ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
 
@@ -142,6 +149,128 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
         }
     }
 
+    private void ItemsList(Integer subId ,int st,int lmt)
+    {
+//        dialog = new ACProgressFlower.Builder(getContext())
+//                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+//                .themeColor(Color.WHITE)
+//                .borderPadding(1)
+//
+//                .fadeColor(Color.DKGRAY).build();
+//        dialog.show();
+
+
+        String url = "http://dailyestoreapp.com/dailyestore/api/";
+        final String url1 = "http://dailyestoreapp.com/dailyestore/";
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+        ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
+        Call<CustomerAppResponse> call = mainInterface.Items(subId);
+        call.enqueue(new Callback<CustomerAppResponse>() {
+            @Override
+            public void onResponse(Call<CustomerAppResponse> call, retrofit2.Response<CustomerAppResponse> response) {
+                CustomerAppResponse listCategoryResponseobject = response.body();
+                String success = response.body().getResponsedata().getSuccess();
+              //  dialog.dismiss();
+                Log.e("frag4","success="+success);
+//                if(success==1)
+//                {
+//                    int data_length = response.body().getResponsedata().getData().size();
+//                    String item_name = response.body().getResponsedata().getData().get(1).getItemName();
+//                }
+//                String res= new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getResponsedata());
+//                JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
+//                dialog.dismiss();
+                try {
+//                    JSONObject jo2 = new JSONObject(obj.toString());
+//                    JSONArray categoriesarray = jo2.getJSONArray("data");
+//                    Log.e(tag,"items="+jo2);
+                    Item_categories.clear();
+                    item_image.clear();
+                    Item_Quantity.clear();
+                    Item_Price.clear();
+                    item_id.clear();
+                    item_id_status.clear();
+                    Item_categories_offer_desc.clear();
+                    item_id_offer.clear();
+                    original_Item_categories_lts.clear();
+                    original_Item_Quantity_lts.clear();
+                    original_Item_Price_lts.clear();
+                    original_item_id_lts.clear();
+                    original_item_id_status_lts.clear();
+                    original_item_image_lts.clear();
+                    original_Item_categories_offer_desc_lts.clear();
+                    original_item_id_offer_lts.clear();
+                    if(success.equals("1"))
+                    {
+                        int data_length = response.body().getResponsedata().getData().size();
+
+
+
+                        for(int i=0; i<data_length; i++)
+                        {
+//                        JSONObject j1= categoriesarray.getJSONObject(i);
+//                        String item_name = j1.getString("itemName");
+                            String item_name = response.body().getResponsedata().getData().get(i).getItemName();
+                            int it_id = Integer.parseInt(response.body().getResponsedata().getData().get(i).getItemId());
+
+                            Integer item_quant = Integer.valueOf(response.body().getResponsedata().getData().get(i).getQuantity());
+                            Integer item_price = Integer.valueOf(response.body().getResponsedata().getData().get(i).getPrice());
+                            Integer item_status = Integer.valueOf(response.body().getResponsedata().getData().get(i).getStatus());
+                            String imageurl = response.body().getResponsedata().getData().get(i).getImage();
+                            Integer offer_percent =Integer.valueOf(response.body().getResponsedata().getData().get(i).getoffer());
+                            String offer_desc = response.body().getResponsedata().getData().get(i).getofdescription();
+                            String imageurl_total=url1+imageurl;
+                            Log.e(tag,"imageurl"+url1+imageurl);
+                            Item_categories.add(item_name);
+                            Item_Quantity.add(item_quant);
+                            Item_Price.add(item_price);
+                            item_id.add(it_id);
+                            item_id_status.add(item_status);
+                            item_image.add(imageurl_total);
+                            Item_categories_offer_desc.add(offer_desc);
+                            item_id_offer.add(offer_percent);
+
+
+
+                        }
+                        original_Item_categories_lts.addAll(Item_categories);
+                        original_Item_Quantity_lts.addAll(Item_Quantity);
+                        original_Item_Price_lts.addAll(Item_Price);
+                        original_item_id_lts.addAll(item_id);
+                        original_item_id_status_lts.addAll(item_id_status);
+                        original_item_image_lts.addAll(item_image);
+                        original_Item_categories_offer_desc_lts.addAll(Item_categories_offer_desc);
+                        original_item_id_offer_lts.addAll(item_id_offer);
+                        customAdapter_offers.notifyDataSetChanged();
+                    }
+                    else {
+                        //  Toast.makeText(getContext(),"No data found in next category",Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(),"something went wrong",Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CustomerAppResponse> call, Throwable t) {
+                dialog.dismiss();
+                Toast.makeText(getContext(),t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
 
 //    @Override
 //    public boolean onOptionsItemSelected(@NonNull MenuItem item) {

@@ -12,10 +12,10 @@ class Datum {
     private String initialSetupflag;
     @SerializedName("initialSetflyersid")
     @Expose
-    private String initialSetidSub;
-    @SerializedName("initialSetidSub")
-    @Expose
     private String initialSetflyersid;
+    @SerializedName("intialSetidSub")
+    @Expose
+    private String intialSetidSub;
     @SerializedName("initialdealid")
     @Expose
     private String initialdealid;
@@ -207,11 +207,11 @@ class Datum {
         this.initialSetupflag = initialSetupflag;
     }
     public String getinitialSetidSub() {
-        return initialSetidSub;
+        return intialSetidSub;
     }
 
     public void setinitialSetidSub(String initialSetidSub) {
-        this.initialSetidSub = initialSetidSub;
+        this.intialSetidSub = initialSetidSub;
     }
     public String getinitialdealid() {
         return initialdealid;
@@ -472,8 +472,15 @@ class Datum {
     public String getCreatedBy() {
         return createdBy;
     }
+    public String getsubItemImage()
+    {
+    return subItemImage;
+    }
 
-
+    public void setsubItemImage(String subItemImage)
+    {
+       this.subItemImage =subItemImage;
+    }
 
     public String getItemImage() {
         return itemImage;
