@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.App.Basestyle"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MenuContactUs"></activity>
+        <activity android:name=".DealItemCategoryListing"></activity>
+        <activity android:name=".MenuContactUs" />
         <activity android:name=".Myorders" />
         <activity android:name=".MyCoupons" />
         <activity android:name=".Thankyou" />
@@ -29,7 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".CartPage" />
         <activity android:name=".Signup" />
         <activity android:name=".Login" />

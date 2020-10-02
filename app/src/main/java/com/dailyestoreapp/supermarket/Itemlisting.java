@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
@@ -39,6 +41,9 @@ public class Itemlisting extends AppCompatActivity {
     RecyclerView recyclerView,itemlistingcategory;
     LinearLayoutManager linearLayoutManager,linearLayoutManager2;
     ItemAdapter customAdapter;
+    NestedScrollView nestedScrollView;
+    ProgressBar progressBar;
+    int subidd;
     int initialid;
     ArrayList<String> SubcategoriesEditCategies = new ArrayList<>();
     ArrayList<String> SubcategoriesEditCategies_image = new ArrayList<>();
@@ -70,10 +75,12 @@ public class Itemlisting extends AppCompatActivity {
     ArrayList<Integer> original_item_id_status_lts = new ArrayList<>();
     ArrayList<String> original_Item_categories_offer_desc_lts = new ArrayList<>();
     ArrayList<Integer> original_item_id_offer_lts = new ArrayList<>();
+    int start = 0,limit=5;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itemlisting);
+
 Toolbar t = (Toolbar)findViewById(R.id.toolbar_itemlisting);
         setSupportActionBar(t);
         Intent in = getIntent();
@@ -131,9 +138,19 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
 //        Log.e("names","the names =="+personNames);
 //        customAdapter = new ItemAdapter(Itemlisting.this, personNames);
 //        recyclerView.setAdapter(customAdapter);
-        int subidd = Subcategoriescatno_edit.get(0);
-            ItemsList(subidd,1,1);
-
+        subidd = Subcategoriescatno_edit.get(0);
+            ItemsList(subidd,limit,start);
+//        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+//            @Override
+//            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                if(scrollY== v.getChildAt(0).getMeasuredHeight()-v.getMeasuredHeight())
+//                {
+//                    start=start+5+1;
+//                    progressBar.setVisibility(View.VISIBLE);
+//                    ItemsList(subidd,start,limit);
+//                }
+//            }
+//        });
     }
 
     @Override

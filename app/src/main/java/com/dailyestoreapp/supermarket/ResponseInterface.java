@@ -34,5 +34,11 @@ public interface ResponseInterface {
     @FormUrlEncoded
     @POST("subItemListWithOfferPercentage")
     Call<CustomerAppResponse> Items(@Field("subId") int id);
+    @FormUrlEncoded
+    @POST("subItemListNew")
+    Call<CustomerAppResponse> Items(@Field("subId") int id,
+                                    @Field("start") int start,
+                                    @Field("limit") int limit);
+
 
 }
