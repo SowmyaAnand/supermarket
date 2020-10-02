@@ -1,6 +1,7 @@
 package com.dailyestoreapp.supermarket;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -23,15 +26,17 @@ public class Listingsubcategoryadapter extends RecyclerView.Adapter<Listingsubca
     ArrayList<String> Subcategories;
     ArrayList<String> Subcategory_image;
     public Integer[] mThumbIds = {R.drawable.vg1, R.drawable.vg1, R.drawable.vg1, R.drawable.vg1, R.drawable.vg1, R.drawable.vg1,R.drawable.vg1,R.drawable.vg1,R.drawable.vg1};
-
+int row_index=0;
     ArrayList mthumb = new ArrayList<>(Arrays.asList("FOOD","VEGETABLES","GROCERY","CAKES","FASHION","MEAT","ELECTRONICS","MOBILE","HOME ACCESSORIES"));
     private final List<Item_sub> mItems_sub = new ArrayList<Item_sub>();
     ArrayList<Integer> Sub_id;
     int sub_int_id;
-    public Listingsubcategoryadapter(Context context, ArrayList<String> Subcategories,ArrayList<String> Subcategory_image,ArrayList<Integer> Subcat_id,int sub_initial_id) {
+    SubCategoryClickItem mComminication;
+    public Listingsubcategoryadapter(Context context, ArrayList<String> Subcategories,ArrayList<String> Subcategory_image,ArrayList<Integer> Subcat_id,int sub_initial_id,SubCategoryClickItem communication) {
         this.context = context;
         this.Subcategories=Subcategories;
         this.Sub_id=Subcat_id;
+        this.mComminication=communication;
         this.Subcategory_image=Subcategory_image;
         this.sub_int_id=sub_initial_id;
         Log.e("list","cvalue="+sub_initial_id);
@@ -59,7 +64,7 @@ public class Listingsubcategoryadapter extends RecyclerView.Adapter<Listingsubca
     }
 
     @Override
-    public void onBindViewHolder(Listingsubcategoryadapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final Listingsubcategoryadapter.MyViewHolder holder, final int position) {
         final String url1 = "http://dailyestoreapp.com/dailyestore/";
         // set the data in items
 
@@ -84,7 +89,29 @@ public class Listingsubcategoryadapter extends RecyclerView.Adapter<Listingsubca
 
         }
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                row_index=position;
+                holder.name.setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
+                Integer selectedid = Sub_id.get(position);
+                mComminication.respond(selectedid);
+                notifyDataSetChanged();
+            }
+        });
+        if(row_index==position)
+        {
+            holder.name.setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
+            final Typeface typeface = ResourcesCompat.getFont(context, R.font.roboto_medium);
+            holder.name.setTypeface(typeface);
 
+        }
+        else
+        {
+            holder.name.setTextColor(ContextCompat.getColor(context,R.color.black));
+            final Typeface typeface = ResourcesCompat.getFont(context, R.font.roboto_light);
+            holder.name.setTypeface(typeface);
+        }
     }
 
 

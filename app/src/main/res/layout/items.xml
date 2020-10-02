@@ -16,10 +16,10 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <ImageView
-            android:id="@+id/img"
+            android:id="@+id/img_item"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/onion"
+
             />
 
         <RelativeLayout
@@ -27,6 +27,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:visibility="gone"
+
             android:background="@color/colorAccent">
 
             <ImageView
@@ -84,7 +85,8 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="15sp"
-            android:layout_toRightOf="@+id/img"
+
+            android:layout_toRightOf="@+id/img_item"
             android:text="Title"/>
         <TextView
             android:id="@+id/publishNme"
@@ -94,7 +96,7 @@
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/img_item"
             android:text="QUANTITY:1kg"
             android:textSize="15sp"
             />
@@ -107,7 +109,7 @@
             android:textColor="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/img_item"
             android:textSize="18sp"
             android:text="RS:250.00"
             />

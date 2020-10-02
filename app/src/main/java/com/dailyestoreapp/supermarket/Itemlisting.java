@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -43,6 +44,32 @@ public class Itemlisting extends AppCompatActivity {
     ArrayList<String> SubcategoriesEditCategies_image = new ArrayList<>();
     ArrayList<Integer> Subcategoriescatno_edit = new ArrayList<>();
     Listingsubcategoryadapter customadapter2;
+    ArrayList<String> Images_sub = new ArrayList<>();
+    ArrayList<String> Sub_categories = new ArrayList<>();
+    ArrayList<String> item_image = new ArrayList<>();
+    ArrayList<String> Item_categories = new ArrayList<>();
+    ArrayList<String> Item_categories_offer_desc = new ArrayList<>();
+    ArrayList<Integer> Item_Quantity = new ArrayList<>();
+    ArrayList<Integer> Item_Price = new ArrayList<>();
+    ArrayList<Integer> Sub_categories_id = new ArrayList<>();
+    ArrayList<Integer> item_id = new ArrayList<>();
+    ArrayList<Integer> item_id_offer = new ArrayList<>();
+    ArrayList<Integer> item_id_status = new ArrayList<>();
+    ArrayList<String> original_Item_categories_lts = new ArrayList<>();
+    ArrayList<String> item_image_lts = new ArrayList<>();
+    ArrayList<Integer> Item_Quantity_lts = new ArrayList<>();
+    ArrayList<Integer> Item_Price_lts = new ArrayList<>();
+    ArrayList<Integer> item_id_lts = new ArrayList<>();
+    ArrayList<Integer> item_id_status_lts = new ArrayList<>();
+    ArrayList<String> Item_categories_offer_desc_lts = new ArrayList<>();
+    ArrayList<Integer> item_id_offer_lts = new ArrayList<>();
+    ArrayList<String> original_item_image_lts = new ArrayList<>();
+    ArrayList<Integer> original_Item_Quantity_lts = new ArrayList<>();
+    ArrayList<Integer> original_Item_Price_lts = new ArrayList<>();
+    ArrayList<Integer> original_item_id_lts = new ArrayList<>();
+    ArrayList<Integer> original_item_id_status_lts = new ArrayList<>();
+    ArrayList<String> original_Item_categories_offer_desc_lts = new ArrayList<>();
+    ArrayList<Integer> original_item_id_offer_lts = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,18 +120,19 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false);
         itemlistingcategory.setLayoutManager(linearLayoutManager2);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        customadapter2 = new Listingsubcategoryadapter(Itemlisting.this,SubcategoriesEditCategies,SubcategoriesEditCategies_image,Subcategoriescatno_edit,initialid);
+        customadapter2 = new Listingsubcategoryadapter(Itemlisting.this,SubcategoriesEditCategies,SubcategoriesEditCategies_image,Subcategoriescatno_edit,initialid,communication);
         itemlistingcategory.setAdapter(customadapter2);
         //second recyclerview
         recyclerView = (RecyclerView) findViewById(R.id.itemrecycler);
         // set a LinearLayoutManager with default vertical orientation
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        Log.e("names","the names =="+personNames);
-        customAdapter = new ItemAdapter(Itemlisting.this, personNames);
-        recyclerView.setAdapter(customAdapter);
-
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+//        recyclerView.setLayoutManager(linearLayoutManager);
+//        //  call the constructor of CustomAdapter to send the reference and data to Adapter
+//        Log.e("names","the names =="+personNames);
+//        customAdapter = new ItemAdapter(Itemlisting.this, personNames);
+//        recyclerView.setAdapter(customAdapter);
+        int subidd = Subcategoriescatno_edit.get(0);
+            ItemsList(subidd,1,1);
 
     }
 
@@ -229,7 +257,7 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
                             Integer offer_percent =Integer.valueOf(response.body().getResponsedata().getData().get(i).getoffer());
                             String offer_desc = response.body().getResponsedata().getData().get(i).getofdescription();
                             String imageurl_total=url1+imageurl;
-                            Log.e(tag,"imageurl"+url1+imageurl);
+                            Log.e("itemlisting","imageurl"+url1+imageurl);
                             Item_categories.add(item_name);
                             Item_Quantity.add(item_quant);
                             Item_Price.add(item_price);
@@ -250,32 +278,51 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
                         original_item_image_lts.addAll(item_image);
                         original_Item_categories_offer_desc_lts.addAll(Item_categories_offer_desc);
                         original_item_id_offer_lts.addAll(item_id_offer);
-                        customAdapter_offers.notifyDataSetChanged();
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+                        recyclerView.setLayoutManager(linearLayoutManager);
+                        //  call the constructor of CustomAdapter to send the reference and data to Adapter
+                        Log.e("names","the names =="+personNames);
+                        customAdapter = new ItemAdapter(Itemlisting.this, Item_categories,Item_Quantity,Item_Price,item_id,item_image,Item_categories_offer_desc,item_id_offer);
+                        recyclerView.setAdapter(customAdapter);
+
                     }
                     else {
                         //  Toast.makeText(getContext(),"No data found in next category",Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(getContext(),"something went wrong",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Itemlisting.this,"something went wrong",Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<CustomerAppResponse> call, Throwable t) {
-                dialog.dismiss();
-                Toast.makeText(getContext(),t.getMessage(),Toast.LENGTH_SHORT).show();
+              //  dialog.dismiss();
+               // Toast.makeText(Itemlisting.this,t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
 
 
     }
+    SubCategoryClickItem communication=new SubCategoryClickItem() {
+        @Override
+        public void respond(Integer name) {
+            Log.e("Itemlisting"," sub name is"+name);
+            Item_categories.clear();
+            item_image.clear();
+            Item_Quantity.clear();
+            Item_Price.clear();
+            item_id.clear();
+            item_id_status.clear();
+            Item_categories_offer_desc.clear();
+            item_id_offer.clear();
+            ItemsList(name,0,3);
+            //  customAdapter_offers.notifyDataSetChanged();
 
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        Intent t = new Intent(getApplicationContext(),MainActivity.class);
-//        startActivity(t);
-//        return super.onOptionsItemSelected(item);
-//    }
+
+        }
+
+    };
+
 }

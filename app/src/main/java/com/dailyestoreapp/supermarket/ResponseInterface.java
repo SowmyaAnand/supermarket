@@ -31,6 +31,8 @@ public interface ResponseInterface {
 
     @GET("allOrders")
     Call<CustomerAppResponse> orderslist();
-
+    @FormUrlEncoded
+    @POST("subItemListWithOfferPercentage")
+    Call<CustomerAppResponse> Items(@Field("subId") int id);
 
 }

@@ -7,11 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,10 +28,26 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
     Context context;
     ArrayList<String> lts=new ArrayList<String>();
     ArrayList pnames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
+    ArrayList<String> item_image_adapter = new ArrayList<>();
+    ArrayList<String> Item_categories_adapter = new ArrayList<>();
+    ArrayList<String> Item_categories_offer_desc_adapter = new ArrayList<>();
+    ArrayList<Integer> Item_Quantity_adapter = new ArrayList<>();
+    ArrayList<Integer> Item_Price_adapter = new ArrayList<>();
+    ArrayList<Integer> Sub_categories_id_adapter = new ArrayList<>();
+    ArrayList<Integer> item_id_adapter = new ArrayList<>();
+    ArrayList<Integer> item_id_offer_adapter = new ArrayList<>();
+    ArrayList<Integer> item_id_status_adapter = new ArrayList<>();
     int quantity=1;
-    public ItemAdapter(Context context, ArrayList personNames) {
+    final String url1 = "http://dailyestoreapp.com/dailyestore/";
+    public ItemAdapter(Context context,ArrayList Item_categories_adapter,ArrayList Item_Quantity_adapter,ArrayList Item_Price_adapter,ArrayList item_id_adapter,ArrayList item_image_adapter,ArrayList Item_categories_offer_desc_adapter,ArrayList item_id_offer_adapter) {
         this.context = context;
-        this.personNames = personNames;
+        this.Item_categories_adapter=Item_categories_adapter;
+        this.Item_Quantity_adapter=Item_Quantity_adapter;
+        this.Item_Price_adapter=Item_Price_adapter;
+        this.item_id_adapter=item_id_adapter;
+        this.item_image_adapter=item_image_adapter;
+        this.Item_categories_offer_desc_adapter=Item_categories_offer_desc_adapter;
+        this.item_id_offer_adapter=item_id_offer_adapter;
         this.lts.addAll(personNames);
 
     }
@@ -44,8 +64,32 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         // set the data in items
-        String name = (String) personNames.get(position);
+        String name =  Item_categories_adapter.get(position);
        holder.name.setText(name);
+       String item_qty = "QUANTITY: "+String.valueOf(Item_Quantity_adapter.get(position));
+       holder.item_inital_qty.setText(item_qty);
+       String amt = String.valueOf(Item_Price_adapter.get(position));
+       String at = "RS : "+amt;
+       holder.amont.setText(at);
+       int o = item_id_offer_adapter.get(position);
+
+
+           String offerp = String.valueOf(item_id_offer_adapter.get(position));
+           String offerpercnt = offerp+"% OFF";
+           if(offerpercnt.equals("0% OFF"))
+           {
+               holder.offer_percent.setText("");
+           }
+           else
+           {
+               holder.offer_percent.setText(offerpercnt);
+           }
+
+        String Sb_img =item_image_adapter.get(position);
+        Glide.with(context).load(Sb_img)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.img_item);
+
        holder.addbtn.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -90,11 +134,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
     @Override
     public int getItemCount() {
-        return personNames.size();
+        return Item_categories_adapter.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name,quantityy;// init the item view's
+        TextView name,quantityy,item_inital_qty,amont,offer_percent;// init the item view's
         Button addition,substraction,addbtn;
+        ImageView img_item;
         public MyViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.Title);
@@ -102,6 +147,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
             substraction = (Button) itemView.findViewById(R.id.minus);
             quantityy = (TextView) itemView.findViewById(R.id.quantity);
             addbtn = (Button) itemView.findViewById(R.id.add);
+            item_inital_qty=itemView.findViewById(R.id.publishNme);
+            amont=itemView.findViewById(R.id.prce);
+            offer_percent=itemView.findViewById(R.id.unread_check);
+            img_item=itemView.findViewById(R.id.img_item);
+
             // get the reference of item view's
 
         }
