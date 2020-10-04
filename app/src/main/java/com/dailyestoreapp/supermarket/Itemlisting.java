@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -77,12 +78,15 @@ public class Itemlisting extends AppCompatActivity {
     ArrayList<String> original_Item_categories_offer_desc_lts = new ArrayList<>();
     ArrayList<Integer> original_item_id_offer_lts = new ArrayList<>();
     int start = 0,limit=5;
+    int mCartItemCount = 10;
+    Toolbar t;
+    static TextView txt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itemlisting);
 
-Toolbar t = (Toolbar)findViewById(R.id.toolbar_itemlisting);
+ t = (Toolbar)findViewById(R.id.toolbar_itemlisting);
         setSupportActionBar(t);
         Intent in = getIntent();
         Bundle extras = in.getExtras();
@@ -160,6 +164,9 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         MenuItem menuItem = menu.findItem(R.id.action_search);
+        MenuItem mc =menu.findItem(R.id.cart3);
+        txt = mc.getActionView().findViewById(R.id.cart_badge3);
+        txt.setText("45");
         SearchView searchView = (SearchView)menuItem.getActionView();
         searchView.setQueryHint("Type here to search");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -343,5 +350,16 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
         }
 
     };
-
+    public static void update_counter(String value){
+        try{
+            txt.setText(value);
+        }
+        catch (Exception ex){
+            Log.d("Exception","Exception of type"+ex.getMessage());
+        }
+    }
+    public static Integer Get_counter(){
+        Integer n = Integer.valueOf(txt.getText().toString());
+      return n;
+    }
 }

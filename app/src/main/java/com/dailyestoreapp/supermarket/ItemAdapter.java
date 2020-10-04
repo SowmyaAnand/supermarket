@@ -111,6 +111,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                if(log_in_flag.equals("1"))
                {
                    holder.addbtn.setVisibility(View.GONE);
+                   Integer increment_val = Itemlisting.Get_counter();
+                  String new_val = String.valueOf(++increment_val);
+                   Itemlisting.update_counter(new_val);
                }
                else
                {
@@ -123,16 +126,23 @@ context.startActivity(n);
        holder.addition.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+               Integer increment_val2 = Itemlisting.Get_counter();
+               String new_val2 = String.valueOf(++increment_val2);
+               Itemlisting.update_counter(new_val2);
                String q = String.valueOf(holder.quantityy.getText());
                quantity= Integer.parseInt(q);
                quantity=quantity+1;
                String stringquantity = String.valueOf(quantity);
               holder.quantityy.setText(stringquantity);
+
            }
        });
         holder.substraction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Integer increment_val2 = Itemlisting.Get_counter();
+                String new_val2 = String.valueOf(--increment_val2);
+                Itemlisting.update_counter(new_val2);
                 String q2 = String.valueOf(holder.quantityy.getText());
                 quantity= Integer.parseInt(q2);
                 if(quantity>1)

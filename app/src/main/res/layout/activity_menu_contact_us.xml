@@ -26,7 +26,8 @@ android:background="@color/white"
                     android:elevation="4dp"/>
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
-android:background="@color/white"
+                    app:cardBackgroundColor="@color/white"
+
                     android:elevation="40dp"
                     app:cardCornerRadius="40dp"
                     android:layout_marginLeft="20dp"
@@ -58,6 +59,7 @@ android:background="@color/white"
                             app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
                             android:hint="Name">
                             <EditText
+                                android:textColor="@color/black"
                                 android:id="@+id/edit_text"
                                 android:paddingLeft="40dp"
                                 android:layout_marginTop="50dp"
@@ -77,6 +79,7 @@ android:background="@color/white"
 
                             android:hint="Email">
                             <EditText
+                                android:textColor="@color/black"
                                 android:id="@+id/edit_text2"
                                 android:paddingLeft="40dp"
                                 android:layout_marginTop="10dp"
@@ -98,7 +101,7 @@ android:background="@color/white"
                             <EditText
                                 android:id="@+id/edit_text_mob"
                                 android:paddingLeft="40dp"
-
+                                android:textColor="@color/black"
                                 android:background="@drawable/customized_edittext"
                                 android:textColorHighlight="@color/colorPrimary"
                                 android:layout_width="match_parent"
@@ -118,6 +121,7 @@ android:background="@color/white"
                                 android:id="@+id/edit_text_address"
                                 android:paddingLeft="40dp"
                                 android:layout_marginTop="10dp"
+                                android:textColor="@color/black"
                                 android:background="@drawable/customized_edittext"
                                 android:layout_width="match_parent"
                                 android:textColorHighlight="@color/colorPrimary"
@@ -147,8 +151,8 @@ android:background="@color/white"
                                     android:layout_height="wrap_content"
                                     android:text="Message"
                                     android:paddingLeft="40dp"
+                                    android:textColor="@color/black"
                                     android:background="@drawable/customized_edittext"
-                                    android:textColor="#c5c5c5"
                                     android:textSize="16dp"/>
 
                                 <EditText
