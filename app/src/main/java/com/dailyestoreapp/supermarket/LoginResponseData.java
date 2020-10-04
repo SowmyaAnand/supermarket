@@ -1,18 +1,13 @@
 package com.dailyestoreapp.supermarket;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
-
-class Responsedata {
+public class LoginResponseData {
     @SerializedName("success")
     @Expose
     private String success;
     @SerializedName("data")
     @Expose
-    private List<Datum> data = null;
-
+    private String data;
 
     public String getSuccess() {
         return success;
@@ -22,11 +17,12 @@ class Responsedata {
         this.success = success;
     }
 
-    public List<Datum> getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(List<Datum> data) {
+    public void setData(String data) {
         this.data = data;
     }
+
 }

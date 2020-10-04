@@ -113,7 +113,18 @@
             android:textSize="18sp"
             android:text="RS:250.00"
             />
-
+        <TextView
+            android:id="@+id/offerdescrp"
+            android:layout_below="@+id/prce"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_item"
+            android:textSize="18sp"
+            android:text="RS:250.00"
+            />
 
         <TextView
             android:id="@+id/unread_check"
@@ -128,7 +139,7 @@
            android:id="@+id/priceadd"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:layout_below="@+id/prce"
+           android:layout_below="@+id/offerdescrp"
            android:layout_toRightOf="@+id/img"
 
            >

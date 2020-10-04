@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -36,7 +37,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Itemlisting extends AppCompatActivity {
     ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
-
+    public static final String MY_PREFS_NAME = "CustomerApp";
    // ArrayList personNames = new ArrayList<>(Arrays.asList("Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6", "Person 7"));
     RecyclerView recyclerView,itemlistingcategory;
     LinearLayoutManager linearLayoutManager,linearLayoutManager2;
@@ -85,6 +86,7 @@ Toolbar t = (Toolbar)findViewById(R.id.toolbar_itemlisting);
         setSupportActionBar(t);
         Intent in = getIntent();
         Bundle extras = in.getExtras();
+
         String sb_names = extras.getString("subCatName");
         String sb_id = extras.getString("subCatId");
         String sb_img = extras.getString("subCatImage");

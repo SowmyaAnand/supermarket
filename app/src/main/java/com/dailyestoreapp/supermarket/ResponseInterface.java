@@ -39,6 +39,11 @@ public interface ResponseInterface {
     Call<CustomerAppResponse> Items(@Field("subId") int id,
                                     @Field("start") int start,
                                     @Field("limit") int limit);
-
+    @FormUrlEncoded
+    @POST("loginData")
+    Call<CustomerAppResponseLogin> Loginapi(@Field("username") String usernameres,
+                                 @Field("password") String passwordres,
+                                 @Field("type") String typeres
+    );
 
 }

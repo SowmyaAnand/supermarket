@@ -8,11 +8,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 public class description extends AppCompatActivity {
 Button plus,mnus;
-TextView qnty;
+TextView qnty,itemName,itemPrice,itemDesc;
+ImageView ig;
 int quantity_desc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +26,20 @@ int quantity_desc;
         plus = (Button) findViewById(R.id.plus2);
         mnus = (Button) findViewById(R.id.minus2);
         qnty = (TextView)findViewById(R.id.quantity2);
+        itemName=findViewById(R.id.item_nm);
+        itemPrice=findViewById(R.id.descprice);
+        ig=findViewById(R.id.item_image_desc);
+
+        Intent in = getIntent();
+        Bundle extras = in.getExtras();
+        String sb_names = extras.getString("itemNameBundle");
+        String sb_img = extras.getString("itemImageBundle");
+        String  sb_price = "Rs:" + String.valueOf(extras.getInt("itemPrice"));
+        itemPrice.setText(sb_price);
+        itemName.setText(sb_names);
+        Glide.with(description.this).load(sb_img)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(ig);
         Toolbar desc = (Toolbar)findViewById(R.id.toolbar_itemdesc);
         setSupportActionBar(desc);
         desc.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);

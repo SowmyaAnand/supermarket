@@ -2,6 +2,8 @@ package com.dailyestoreapp.supermarket;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> {
     ArrayList<String> personNames = new ArrayList<String>();
     Context context;
@@ -37,6 +41,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
     ArrayList<Integer> item_id_adapter = new ArrayList<>();
     ArrayList<Integer> item_id_offer_adapter = new ArrayList<>();
     ArrayList<Integer> item_id_status_adapter = new ArrayList<>();
+    public static final String MY_PREFS_NAME = "CustomerApp";
     int quantity=1;
     final String url1 = "http://dailyestoreapp.com/dailyestore/";
     public ItemAdapter(Context context,ArrayList Item_categories_adapter,ArrayList Item_Quantity_adapter,ArrayList Item_Price_adapter,ArrayList item_id_adapter,ArrayList item_image_adapter,ArrayList Item_categories_offer_desc_adapter,ArrayList item_id_offer_adapter) {
@@ -72,6 +77,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
        String at = "RS : "+amt;
        holder.amont.setText(at);
        int o = item_id_offer_adapter.get(position);
+       if(Item_categories_offer_desc_adapter.get(position).matches("")||Item_categories_offer_desc_adapter.get(position).equals("none"))
+       {
+           holder.ofrdec.setText("");
+       }
+       else
+       {
+           holder.ofrdec.setText(Item_categories_offer_desc_adapter.get(position));
+       }
 
 
            String offerp = String.valueOf(item_id_offer_adapter.get(position));
@@ -93,7 +106,18 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
        holder.addbtn.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               holder.addbtn.setVisibility(View.GONE);
+               SharedPreferences login_flag = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+               String log_in_flag = login_flag.getString("logged_in_flag","");
+               if(log_in_flag.equals("1"))
+               {
+                   holder.addbtn.setVisibility(View.GONE);
+               }
+               else
+               {
+                   Toast.makeText(context,"Please Login Before Adding To The Cart",Toast.LENGTH_SHORT).show();
+Intent n = new Intent(context,Login.class);
+context.startActivity(n);
+               }
            }
        });
        holder.addition.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +149,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
             public void onClick(View view) {
                 // display a toast with person name on item click
                 Intent next= new Intent(context,description.class);
+                Bundle b = new Bundle();
+                b.putString("itemNameBundle",Item_categories_adapter.get(position));
+                b.putString("itemImageBundle",item_image_adapter.get(position));
+                b.putInt("itemPrice",Item_Price_adapter.get(position));
+                next.putExtras(b);
                 context.startActivity(next);
 
             }
@@ -137,7 +166,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
         return Item_categories_adapter.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name,quantityy,item_inital_qty,amont,offer_percent;// init the item view's
+        TextView name,quantityy,item_inital_qty,amont,offer_percent,ofrdec;// init the item view's
         Button addition,substraction,addbtn;
         ImageView img_item;
         public MyViewHolder(View itemView) {
@@ -151,7 +180,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
             amont=itemView.findViewById(R.id.prce);
             offer_percent=itemView.findViewById(R.id.unread_check);
             img_item=itemView.findViewById(R.id.img_item);
-
+            ofrdec=itemView.findViewById(R.id.offerdescrp);
             // get the reference of item view's
 
         }
