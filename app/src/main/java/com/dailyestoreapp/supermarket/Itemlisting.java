@@ -165,8 +165,35 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
         getMenuInflater().inflate(R.menu.main, menu);
         MenuItem menuItem = menu.findItem(R.id.action_search);
         MenuItem mc =menu.findItem(R.id.cart3);
+        View v  = mc.getActionView();
         txt = mc.getActionView().findViewById(R.id.cart_badge3);
-        txt.setText("45");
+        SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String itemSingle_name_old = shared.getString("cart_Items_toolbar_count", "");
+        if(itemSingle_name_old.equals(""))
+        {
+            txt.setText("0");
+        }
+        else
+        {
+
+            txt.setText(itemSingle_name_old);
+        }
+
+        txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cart = new Intent(Itemlisting.this,CartPage.class);
+                startActivity(cart);
+
+            }
+        });
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cart = new Intent(Itemlisting.this,CartPage.class);
+                startActivity(cart);
+            }
+        });
         SearchView searchView = (SearchView)menuItem.getActionView();
         searchView.setQueryHint("Type here to search");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -189,7 +216,7 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
     {
         Log.e("MAin","Item selected ="+item.getItemId());
         switch (item.getItemId()) {
-            case R.id.cart:
+            case R.id.cart3:
                 Intent cart = new Intent(Itemlisting.this,CartPage.class);
                 startActivity(cart);
                 return true;
