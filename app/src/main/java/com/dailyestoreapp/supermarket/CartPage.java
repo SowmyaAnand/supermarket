@@ -29,8 +29,10 @@ Toolbar tcart;
     CartNotEligibleAdapter customAdapter_cart2;
     TextView sub_tot,tot,delivery_charge;
     ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3"));
+    ArrayList pincodes = new ArrayList<>(Arrays.asList("400072", "585225"));
     public static final String MY_PREFS_NAME = "CustomerApp";
     final ArrayList<String> items_name_old_cart = new ArrayList<>();
+    final ArrayList<String> items_specific_count_cart = new ArrayList<>();
     final ArrayList<String> items_name_image_cart = new ArrayList<>();
     final ArrayList<String> items_name_quantity_cart = new ArrayList<>();
     final ArrayList<String> items_name_cod_cart = new ArrayList<>();
@@ -56,8 +58,10 @@ Toolbar tcart;
     final ArrayList<String> cod_not_eligible_items_name_price_cart = new ArrayList<>();
     final ArrayList<String> cod_not_eligible_items_name_offer_percentage_cart = new ArrayList<>();
     final ArrayList<String> cod_not_eligible_items_name_count_cart = new ArrayList<>();
+
     private String tag = "cartpage";
-    TextView cod_heading1,cod_heading2;
+    TextView cod_heading1,cod_heading2,pincode;
+
     TextView tot_cart_text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +75,7 @@ Toolbar tcart;
         sub_tot=findViewById(R.id.heading_total_val);
         tot=findViewById(R.id.tot_val2);
         delivery_charge=findViewById(R.id.cart_delivery_val);
-
+pincode = findViewById(R.id.edit_text2);
         delivery_charge.setText(deliverychg1);
 
         SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
@@ -90,6 +94,7 @@ Toolbar tcart;
         cod_heading2 = findViewById(R.id.cod_head2);
         SharedPreferences shared_tot = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String itemSingle_name_old = shared_tot.getString("cart_item_names", "");
+
         if(!(itemSingle_name_old==null)||(itemSingle_name_old.length()==0))
         {
             String[] cats = itemSingle_name_old .split(",");//if spaces are uneven, use \\s+ instead of " "
@@ -100,6 +105,15 @@ Toolbar tcart;
                 }
 
             }
+        }
+
+        for(int i=0;i<items_name_old_cart.size();i++)
+        {
+            String nm = items_name_old_cart.get(i);
+            String sharepreferencename_count = nm+"_count";
+            SharedPreferences shared_new = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+            String itemSingle_name_old_count = shared_new.getString(sharepreferencename_count, "");
+            items_specific_count_cart.add(itemSingle_name_old_count);
         }
 
         SharedPreferences shared13 = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
@@ -164,12 +178,15 @@ Toolbar tcart;
         {
             String tot_price_with_colon = items_name_price_cart.get(l);
             Log.e("cart","the value is "+tot_price_with_colon);
-            String[] separated = tot_price_with_colon.split(":");
+            String[] separated = tot_price_with_colon.split(" ");
             Log.e("cart","the value is "+separated[1] );
           String val = separated[1];
             Log.e("cart","the value is "+val );
           Integer val_price = Integer.valueOf(val);
-         total_price=total_price+val_price;
+          String total_count_specific_item = items_specific_count_cart.get(l);
+          Integer specific_cnt = Integer.valueOf(total_count_specific_item);
+          Integer total_val_prod = specific_cnt*val_price;
+         total_price=total_price+total_val_prod ;
          String string_total_val = String.valueOf(total_price);
           Log.e("cart","the value is "+string_total_val);
         }
@@ -262,8 +279,24 @@ Toolbar tcart;
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent n = new Intent(CartPage.this,Payment.class);
-                startActivity(n);
+               String pin = String.valueOf(pincode.getText());
+               int pin_flag=0;
+               for(int h =0;h<pincodes.size();h++)
+               {
+                   String p = String.valueOf(pincodes.get(h));
+                   if(pin.contains(p))
+                       pin_flag=1;
+               }
+               if(pin_flag==0)
+               {
+                   Toast.makeText(CartPage.this,"Sorry we don't deliver in this pincode area",Toast.LENGTH_SHORT).show();
+               }
+               else
+               {
+                   Intent n = new Intent(CartPage.this,Payment.class);
+                   startActivity(n);
+               }
+
             }
         });
 

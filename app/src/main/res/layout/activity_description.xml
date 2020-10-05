@@ -61,42 +61,7 @@
                 android:layout_toRightOf="@+id/img"
 
                 >
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:gravity="end">
-                    <Button
-                        android:id="@+id/plus2"
-                        android:layout_width="25dp"
-                        android:layout_height="40dp"
 
-                        android:background="@color/colorPrimary"
-                        android:textColor="@color/white"
-                        android:text="+"/>
-                    <TextView
-                        android:id="@+id/quantity2"
-                        android:layout_width="30dp"
-                        android:layout_height="40dp"
-                        android:text="1"
-                        android:gravity="center"
-                        android:textColor="@color/black"
-
-                        android:layout_toRightOf="@+id/plus2"
-
-                        />
-                    <Button
-                        android:id="@+id/minus2"
-                        android:layout_width="30dp"
-                        android:layout_height="40dp"
-                        android:layout_toRightOf="@+id/quantity2"
-
-                        android:background="@color/colorPrimary"
-                        android:textColor="@color/white"
-                        android:text="-"/>
-                </RelativeLayout>
 
 
             </RelativeLayout>

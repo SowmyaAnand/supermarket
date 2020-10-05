@@ -63,18 +63,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
         String cnt =cod_eligible_items_name_count_cartadapter.get(position);
         String pr_initial = cod_eligible_items_name_price_cartadapter.get(position);
-String cnt1 ="QUANTITY :"+cnt;
+String cnt1 ="QUANTITY: "+cnt;
 
-        String[] separated = pr_initial .split(":");
+        String[] separated = pr_initial .split(" ");
         Log.e("cart","the value is "+separated[1] );
         String val = separated[1];
         Log.e("cart","the value is "+val );
         Integer int_pr_initial = Integer.valueOf(val);
         Integer int_cnt = Integer.valueOf(cnt);
         Integer tot_count_price = int_cnt*int_pr_initial;
-        String string_tot_count_price= "Rs : "+String.valueOf(tot_count_price);
+        String string_tot_count_price= "Rs: "+String.valueOf(tot_count_price);
         holder.name_cart.setText(name);
-        holder.price_cart.setText(string_tot_count_price);
+        holder.price_cart.setText(pr_initial);
         holder.qty_cart.setText(cnt1);
 
 

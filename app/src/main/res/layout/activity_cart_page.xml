@@ -231,7 +231,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/black"
                                 android:textColorHighlight="@color/colorPrimary"
-                                android:inputType="text"/>
+                                android:inputType="number"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -253,7 +253,7 @@
                             android:textColorHighlight="@color/colorPrimary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="number"/>
+                            android:inputType="text"/>
                     </com.google.android.material.textfield.TextInputLayout>
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/text_input_layout6"
@@ -296,7 +296,7 @@
                             android:textColorHighlight="@color/colorPrimary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text"/>
+                            android:inputType="number"/>
                     </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

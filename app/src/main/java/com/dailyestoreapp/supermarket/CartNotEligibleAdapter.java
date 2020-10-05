@@ -61,25 +61,24 @@ public class CartNotEligibleAdapter extends RecyclerView.Adapter<CartNotEligible
         // set the data in items
         String name = (String) cod_eligible_items_name_old_cartadapter.get(position);
         String qy = cod_eligible_items_name_quantity_cartadapter.get(position);
-        String pr = cod_eligible_items_name_price_cartadapter.get(position);
+
         String cnt =cod_eligible_items_name_count_cartadapter.get(position);
         String pr_initial = cod_eligible_items_name_price_cartadapter.get(position);
-        String cnt1 ="QUANTITY :"+cnt;
+        String cnt1 ="QUANTITY: "+cnt;
 
-        String[] separated = pr_initial .split(":");
+        String[] separated = pr_initial .split(" ");
         Log.e("cart","the value is "+separated[1] );
         String val = separated[1];
         Log.e("cart","the value is "+val );
         Integer int_pr_initial = Integer.valueOf(val);
         Integer int_cnt = Integer.valueOf(cnt);
         Integer tot_count_price = int_cnt*int_pr_initial;
-        String string_tot_count_price= "Rs : "+String.valueOf(tot_count_price);
+        String string_tot_count_price= "Rs: "+String.valueOf(tot_count_price);
         holder.name_cart.setText(name);
-        holder.price_cart.setText(string_tot_count_price);
+        holder.price_cart.setText(pr_initial);
         holder.qty_cart.setText(cnt1);
-        holder.name_cart.setText(name);
-        holder.price_cart.setText(pr);
-        holder.qty_cart.setText(qy);
+
+
 
         String Sb_img =cod_eligible_items_images_cart.get(position);
         Glide.with(context).load(Sb_img)
@@ -87,15 +86,7 @@ public class CartNotEligibleAdapter extends RecyclerView.Adapter<CartNotEligible
                 .into(holder.img_cart_adapter);
 
         // implement setOnClickListener event on item view.
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // display a toast with person name on item click
-                Intent next= new Intent(context,description.class);
-                context.startActivity(next);
 
-            }
-        });
     }
 
 

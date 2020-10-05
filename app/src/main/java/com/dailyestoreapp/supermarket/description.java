@@ -23,9 +23,7 @@ int quantity_desc;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_description);
-        plus = (Button) findViewById(R.id.plus2);
-        mnus = (Button) findViewById(R.id.minus2);
-        qnty = (TextView)findViewById(R.id.quantity2);
+
         itemName=findViewById(R.id.item_nm);
         itemPrice=findViewById(R.id.descprice);
         ig=findViewById(R.id.item_image_desc);
@@ -62,29 +60,7 @@ itemDesc=findViewById(R.id.itemdesc);
         {
             refund.setText("RETURN/REPLACEMENT NOT ELIGIBLE");
         }
-        plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String q = String.valueOf(qnty.getText());
-                quantity_desc= Integer.parseInt(q);
-                quantity_desc=quantity_desc+1;
-                String stringquantity = String.valueOf(quantity_desc);
-                qnty.setText(stringquantity);
-            }
-        });
-        mnus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String q2 = String.valueOf(qnty.getText());
-                quantity_desc= Integer.parseInt(q2);
-                if(quantity_desc>1)
-                {
-                    quantity_desc=quantity_desc-1;
-                }
-                String stringquantity2 = String.valueOf(quantity_desc);
-                qnty.setText(stringquantity2);
-            }
-        });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
