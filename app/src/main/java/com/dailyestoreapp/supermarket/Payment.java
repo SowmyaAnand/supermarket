@@ -31,6 +31,10 @@ Button order;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
+        Intent in = getIntent();
+        Bundle extras = in.getExtras();
+        String cod_eligible_pay = extras.getString("cod_eligible_pay");
+        Toast.makeText(Payment.this,cod_eligible_pay,Toast.LENGTH_SHORT).show();
         quarantine_yes=(RadioButton)findViewById(R.id.q_yes);
         quarantine_no=(RadioButton)findViewById(R.id.q_no);
         cashondelivery=(RadioButton)findViewById(R.id.cod);

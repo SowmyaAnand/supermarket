@@ -83,7 +83,18 @@ String cnt1 ="QUANTITY: "+cnt;
         Glide.with(context).load(Sb_img)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.img_cart_adapter);
+holder.rm.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        holder.rm.setText("ITEM REMOVED");
+//        cod_eligible_items_name_old_cartadapter.remove(position);
+//        cod_eligible_items_name_price_cartadapter.remove(position);
+//        cod_eligible_items_name_count_cartadapter.remove(position);
+        String delete_price=cod_eligible_items_name_price_cartadapter.get(position);
+        Integer intdelete_price= Integer.valueOf(delete_price);
 
+    }
+});
 
 
     }
@@ -95,14 +106,14 @@ String cnt1 ="QUANTITY: "+cnt;
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name_cart,quantityy,price_cart,qty_cart;// init the item view's
-
+Button rm;
         ImageView img_cart_adapter;
         public MyViewHolder(View itemView) {
             super(itemView);
             name_cart = (TextView) itemView.findViewById(R.id.Title_cart);
             price_cart = (TextView) itemView.findViewById(R.id.prce_cart);
             qty_cart = (TextView) itemView.findViewById(R.id.Qty_cart);
-
+            rm=itemView.findViewById(R.id.remove_btn);
             img_cart_adapter=itemView.findViewById(R.id.img_cart);
             // get the reference of item view's
 

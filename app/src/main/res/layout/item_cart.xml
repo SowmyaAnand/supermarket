@@ -115,13 +115,22 @@
 
 
         <RelativeLayout
-            android:id="@+id/priceadd"
+            android:id="@+id/remove"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/prce_cart"
             android:layout_toRightOf="@+id/img_cart"
 
             >
+            <Button
+                android:id="@+id/remove_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:textColor="@color/black"
+                android:text="REMOVE"
+                android:fontFamily="@font/roboto_light"
+                android:textSize="12sp"/>
 
 
 

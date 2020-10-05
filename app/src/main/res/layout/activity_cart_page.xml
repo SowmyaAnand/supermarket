@@ -277,28 +277,64 @@
                             android:layout_height="wrap_content"
                             android:inputType="text"/>
                     </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/text_input_layout2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:textColorHint="@color/black"
-                        android:layout_below="@+id/text_input_layout"
-                        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/text_input_layout2"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="30dp"-->
+<!--                        android:textColorHint="@color/black"-->
+<!--                        android:layout_below="@+id/text_input_layout"-->
+<!--                        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"-->
 
-                        android:hint="PINCODE">
-                        <EditText
-                            android:id="@+id/edit_text2"
-                            android:fontFamily="@font/roboto_light"
-                            android:layout_marginTop="10dp"
+<!--                        android:hint="PINCODE">-->
+<!--                        <EditText-->
+<!--                            android:id="@+id/edit_text2"-->
+<!--                            android:fontFamily="@font/roboto_light"-->
+<!--                            android:layout_marginTop="10dp"-->
+<!--                            android:textColor="@color/black"-->
+<!--                            android:background="@drawable/customized_edittext"-->
+<!--                            android:textColorHighlight="@color/colorPrimary"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:inputType="number"/>-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
+                        <Spinner
+                            android:id="@+id/spinner_pincode"
+                            android:layout_width="match_parent"
+                            android:layout_margin="20dp"
+                            android:background="@color/gray"
                             android:textColor="@color/black"
-                            android:background="@drawable/customized_edittext"
-                            android:textColorHighlight="@color/colorPrimary"
+                            android:textSize ="16sp"
+                            android:layout_height="50dp"
+                            />
+
+                        <RadioGroup
+                            android:id="@+id/payfirst"
+                            android:layout_margin="20dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="number"/>
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:visibility="gone"
+                            android:orientation="horizontal">
+                            <RadioButton
+                                android:id="@+id/cod_eligiblefirst"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:checked="true"
+                                android:buttonTint="@color/colorPrimary"
+                                android:textColor="@color/colorPrimary"
+                                android:text="PAY COD ELIGIBLE FIRST"/>
+                            <RadioButton
+                                android:id="@+id/cod_not_eligible"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="@color/colorPrimary"
+                                android:textColor="@color/colorPrimary"
+                                android:text="PAY COD NOT ELIGIBLE FIRST"/>
+                        </RadioGroup>
                     </LinearLayout>
+
                 </androidx.cardview.widget.CardView>
                                 <Button
                                     android:id="@+id/checkout"

@@ -9,7 +9,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,15 +26,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class CartPage extends AppCompatActivity {
+public class CartPage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 Toolbar tcart;
 
     RecyclerView recyclerView_cart,recyclerView_cart2;
     CartAdapter customAdapter_cart;
     CartNotEligibleAdapter customAdapter_cart2;
     TextView sub_tot,tot,delivery_charge;
+    String selected_pincode;
+    String selected_radio_button_val="PAY COD ELIGIBLE FIRST";
+    RadioGroup r1;
     ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3"));
     ArrayList pincodes = new ArrayList<>(Arrays.asList("400072", "585225"));
+    String []pincodess = {"SELECT PINCODE","400072","585225"};
     public static final String MY_PREFS_NAME = "CustomerApp";
     final ArrayList<String> items_name_old_cart = new ArrayList<>();
     final ArrayList<String> items_specific_count_cart = new ArrayList<>();
@@ -58,9 +67,9 @@ Toolbar tcart;
     final ArrayList<String> cod_not_eligible_items_name_price_cart = new ArrayList<>();
     final ArrayList<String> cod_not_eligible_items_name_offer_percentage_cart = new ArrayList<>();
     final ArrayList<String> cod_not_eligible_items_name_count_cart = new ArrayList<>();
-
+    Spinner spin;
     private String tag = "cartpage";
-    TextView cod_heading1,cod_heading2,pincode;
+    TextView cod_heading1,cod_heading2;
 
     TextView tot_cart_text;
     @Override
@@ -69,13 +78,26 @@ Toolbar tcart;
         setContentView(R.layout.activity_cart_page);
         tcart = (Toolbar)findViewById(R.id.toolbar_cart);
         setSupportActionBar(tcart);
+        spin = findViewById(R.id.spinner_pincode);
+        r1=findViewById(R.id.payfirst);
+        r1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton rb1 = (RadioButton) findViewById(checkedId);
+                selected_radio_button_val= String.valueOf(rb1.getText());
+            }
+        });
+        spin.setOnItemSelectedListener(this);
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,pincodess);
+        aa.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spin.setAdapter(aa);
         String deliverychg ="110";
         String deliverychg1 ="110.00";
         tot_cart_text=findViewById(R.id.cart_text);
         sub_tot=findViewById(R.id.heading_total_val);
         tot=findViewById(R.id.tot_val2);
         delivery_charge=findViewById(R.id.cart_delivery_val);
-pincode = findViewById(R.id.edit_text2);
+
         delivery_charge.setText(deliverychg1);
 
         SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
@@ -275,32 +297,63 @@ pincode = findViewById(R.id.edit_text2);
        {
            Toast.makeText(CartPage.this,"No items added in cart",Toast.LENGTH_SHORT).show();
        }
+        if(!((cod_eligible_items_name_old_cart.size()==0))&&(!(cod_not_eligible_items_name_old_cart.size()==0)))
+       {
+           r1.setVisibility(View.VISIBLE);
+       }
+        else if(!((cod_eligible_items_name_old_cart.size()==0)))
+        {
+            selected_radio_button_val="PAY COD ELIGIBLE FIRST";
+        }
+        else
+        {
+            selected_radio_button_val="PAY COD NOT ELIGIBLE FIRST";
+        }
         Button checkout= (Button)findViewById(R.id.checkout);
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               String pin = String.valueOf(pincode.getText());
+
                int pin_flag=0;
-               for(int h =0;h<pincodes.size();h++)
-               {
-                   String p = String.valueOf(pincodes.get(h));
-                   if(pin.contains(p))
-                       pin_flag=1;
-               }
-               if(pin_flag==0)
-               {
-                   Toast.makeText(CartPage.this,"Sorry we don't deliver in this pincode area",Toast.LENGTH_SHORT).show();
-               }
-               else
-               {
-                   Intent n = new Intent(CartPage.this,Payment.class);
-                   startActivity(n);
-               }
+              if(selected_pincode.equals("SELECT PINCODE"))
+              {
+                  Toast.makeText(CartPage.this,"Please select pincode",Toast.LENGTH_SHORT).show();
+
+              }
+              else
+              {
+                  if(selected_radio_button_val.equals("PAY COD ELIGIBLE FIRST"))
+                  {
+                      Log.e("cart","the selected pincode is"+spin.getSelectedItemPosition());
+                      Intent n = new Intent(CartPage.this,Payment.class);
+                      Bundle b = new Bundle();
+                      b.putString("cod_eligible_pay","1");
+                      n.putExtras(b);
+                      startActivity(n);
+                  }
+                  else
+                  {
+                      Log.e("cart","the selected pincode is"+spin.getSelectedItemPosition());
+                      Intent n = new Intent(CartPage.this,Payment.class);
+                      Bundle b = new Bundle();
+                      b.putString("cod_eligible_pay","0");
+                      n.putExtras(b);
+                      startActivity(n);
+                  }
+
+              }
+
+
+
 
             }
         });
 
     }
+
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -322,5 +375,24 @@ pincode = findViewById(R.id.edit_text2);
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        selected_pincode=parent.getItemAtPosition(position).toString();
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+    public static void update_total(String value){
+//        try{
+//            txt.setText(value);
+//        }
+//        catch (Exception ex){
+//            Log.d("Exception","Exception of type"+ex.getMessage());
+//        }
     }
 }
