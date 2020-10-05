@@ -34,6 +34,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
     ArrayList pnames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     ArrayList<String> item_image_adapter = new ArrayList<>();
     ArrayList<String> Item_categories_adapter = new ArrayList<>();
+    ArrayList<String> Item_cod_adapter = new ArrayList<>();
+    ArrayList<String> Item_Refunf_adapter = new ArrayList<>();
     ArrayList<String> Item_categories_offer_desc_adapter = new ArrayList<>();
     ArrayList<Integer> Item_Quantity_adapter = new ArrayList<>();
     ArrayList<Integer> Item_Price_adapter = new ArrayList<>();
@@ -41,10 +43,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
     ArrayList<Integer> item_id_adapter = new ArrayList<>();
     ArrayList<Integer> item_id_offer_adapter = new ArrayList<>();
     ArrayList<Integer> item_id_status_adapter = new ArrayList<>();
+    ArrayList<String> Item_description = new ArrayList<>();
     public static final String MY_PREFS_NAME = "CustomerApp";
     int quantity=1;
     final String url1 = "http://dailyestoreapp.com/dailyestore/";
-    public ItemAdapter(Context context,ArrayList Item_categories_adapter,ArrayList Item_Quantity_adapter,ArrayList Item_Price_adapter,ArrayList item_id_adapter,ArrayList item_image_adapter,ArrayList Item_categories_offer_desc_adapter,ArrayList item_id_offer_adapter) {
+    public ItemAdapter(Context context,ArrayList Item_categories_adapter,ArrayList Item_Quantity_adapter,ArrayList Item_Price_adapter,ArrayList item_id_adapter,ArrayList item_image_adapter,ArrayList Item_categories_offer_desc_adapter,ArrayList item_id_offer_adapter, ArrayList Item_cod_adapter,
+    ArrayList Item_Refunf_adapter,  ArrayList Item_description ) {
         this.context = context;
         this.Item_categories_adapter=Item_categories_adapter;
         this.Item_Quantity_adapter=Item_Quantity_adapter;
@@ -54,7 +58,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
         this.Item_categories_offer_desc_adapter=Item_categories_offer_desc_adapter;
         this.item_id_offer_adapter=item_id_offer_adapter;
         this.lts.addAll(personNames);
-
+        this.Item_cod_adapter=Item_cod_adapter;
+        this.Item_Refunf_adapter =Item_Refunf_adapter;
+        this.Item_description = Item_description;
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -68,20 +74,24 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final ArrayList<String> items_name_old = new ArrayList<>();
+        final ArrayList<String> items_name_image= new ArrayList<>();
         final ArrayList<String> items_name_quantity = new ArrayList<>();
         final ArrayList<String> items_name_price = new ArrayList<>();
+        final ArrayList<String> items_name_cod = new ArrayList<>();
         final ArrayList<String> items_name_offer_percentage = new ArrayList<>();
         final StringBuilder it  = new StringBuilder();
         final StringBuilder it_qnty  = new StringBuilder();
+        final StringBuilder it_ig  = new StringBuilder();
         final StringBuilder it_price  = new StringBuilder();
+        final StringBuilder it_cod  = new StringBuilder();
         final StringBuilder it_offer_percnt  = new StringBuilder();
         // set the data in items
         String name =  Item_categories_adapter.get(position);
        holder.name.setText(name);
-       String item_qty = "QUANTITY: "+String.valueOf(Item_Quantity_adapter.get(position));
+       String item_qty = "QUANTITY :"+String.valueOf(Item_Quantity_adapter.get(position));
        holder.item_inital_qty.setText(item_qty);
        String amt = String.valueOf(Item_Price_adapter.get(position));
-       String at = "RS : "+amt;
+       String at = "RS :"+amt;
        holder.amont.setText(at);
        final int o = item_id_offer_adapter.get(position);
        if(Item_categories_offer_desc_adapter.get(position).matches("")||Item_categories_offer_desc_adapter.get(position).equals("none"))
@@ -126,6 +136,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                    Integer increment_val = Itemlisting.Get_counter();
                   String new_val = String.valueOf(++increment_val);
                    Itemlisting.update_counter(new_val);
+
+                   SharedPreferences.Editor editor_tot = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                   editor_tot.putString("total_count_cart", new_val);
+                   editor_tot.apply();
+
                    // check if cart has older values
                    String name_item_nm = String.valueOf(holder.name.getText());
                    String sharepreferencename_count = name_item_nm+"_count";
@@ -152,7 +167,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
                    SharedPreferences shared = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
                    String itemSingle_name_old = shared.getString("cart_item_names", "");
-                   if(!(itemSingle_name_old==null)||(itemSingle_name_old.length()==0))
+                   if(!(itemSingle_name_old.equals(""))||(itemSingle_name_old.length()==0))
                    {
                        String[] cats = itemSingle_name_old .split(",");//if spaces are uneven, use \\s+ instead of " "
                        for (String ct : cats) {
@@ -163,6 +178,22 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
                        }
                    }
+
+
+                   SharedPreferences shared10 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                   String itemSingle_name_old_images = shared10.getString("cart_item_image", "");
+                   if(!(itemSingle_name_old_images.equals(""))||(itemSingle_name_old_images.length()==0))
+                   {
+                       String[] cats = itemSingle_name_old_images .split(",");//if spaces are uneven, use \\s+ instead of " "
+                       for (String ct : cats) {
+                           if(!(ct.equals("")||ct.equals(null)))
+                           {
+                               items_name_image.add(ct);
+                           }
+
+                       }
+                   }
+
                    SharedPreferences shared1 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
                    String itemSingle_qnty_old = shared1.getString("cart_item_qnty", "");
                    if(!(itemSingle_qnty_old==null)||(itemSingle_qnty_old.length()==0))
@@ -185,6 +216,19 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                            if(!(ct.equals("")||ct.equals(null)))
                            {
                                items_name_price.add(ct);
+                           }
+
+                       }
+                   }
+                   SharedPreferences shared7 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                   String itemSingle_name_cod = shared7.getString("cart_item_cod", "");
+                   if(!(itemSingle_name_old==null)||(itemSingle_name_old.length()==0))
+                   {
+                       String[] cats = itemSingle_name_cod .split(",");//if spaces are uneven, use \\s+ instead of " "
+                       for (String ct : cats) {
+                           if(!(ct.equals("")||ct.equals(null)))
+                           {
+                               items_name_cod.add(ct);
                            }
 
                        }
@@ -226,32 +270,83 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
 
 
-                   String qt= String.valueOf(holder.item_inital_qty.getText());
-                   if(!(items_name_quantity.contains(qt)))
-                   {
-                       items_name_quantity.add(nm);
-                   }
 
+                   String images= item_image_adapter.get(position);
+
+                       items_name_image.add(images);
+
+
+                   Iterator<String> itr_string_ig = items_name_image.iterator();
+                   while (itr_string_ig.hasNext())
+                   {
+
+                       it_ig.append(itr_string_ig.next());
+                       if(itr_string_ig.hasNext()){
+                           it_ig.append(",");
+                       }
+                   }
+                   SharedPreferences.Editor editor11 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                   editor11.putString("cart_item_image", it_ig.toString());
+                   editor11.putString("cart_Items_toolbar_count", String.valueOf(items_name_image.size()));
+                   Log.e("homefragment","the catgeories shared preference are  login  ="+it_ig.toString());
+                   editor11.apply();
+
+
+
+
+                   String qt= String.valueOf(holder.item_inital_qty.getText());
+                   Log.e("item","q=="+qt);
+                   Log.e("item","q=="+items_name_quantity);
+
+                       items_name_quantity.add(qt);
+
+                   Log.e("item","q=="+items_name_quantity);
                    Iterator<String> itr_string_qty = items_name_quantity.iterator();
                    while (itr_string_qty.hasNext())
-                   {
+                   {Log.e("item","q=="+itr_string_qty);
 
                        it_qnty.append(itr_string_qty.next());
+                       Log.e("item","q=="+it_qnty);
                        if(itr_string_qty.hasNext()){
                            it_qnty.append(",");
+                           Log.e("item","q=="+it_qnty);
                        }
+                       Log.e("item","q=="+it_qnty);
                    }
                    SharedPreferences.Editor editor2 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                    editor2.putString("cart_item_qnty", it_qnty.toString());
-                   Log.e("homefragment","the catgeories shared preference are  login  ="+it_qnty.toString());
+                   Log.e("homefragment","the catgeories shared preference are  login quantity ="+it_qnty.toString());
                    editor2.apply();
 
 
-                   String pr= String.valueOf(holder.amont.getText());
-                   if(!(items_name_price.contains(pr)))
+
+
+                   String cod_cod= Item_cod_adapter.get(position);
+
+                       items_name_cod.add(cod_cod);
+
+
+                   Iterator<String> itr_string_cod = items_name_cod.iterator();
+                   while (itr_string_cod.hasNext())
                    {
-                       items_name_price.add(pr);
+
+                       it_cod.append(itr_string_cod.next());
+                       if(itr_string_cod.hasNext()){
+                           it_cod.append(",");
+                       }
                    }
+                   SharedPreferences.Editor editor8 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                   editor8.putString("cart_item_cod", it_cod.toString());
+                   Log.e("homefragment","the catgeories shared preference are  login  ="+it_cod.toString());
+                   editor8.apply();
+
+
+
+
+                   String pr= String.valueOf(holder.amont.getText());
+
+                       items_name_price.add(pr);
+
 
                    Iterator<String> itr_string_price = items_name_price.iterator();
                    while (itr_string_price.hasNext())
@@ -269,10 +364,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
 
                    String op= String.valueOf(holder.offer_percent.getText());
-                   if(!(items_name_offer_percentage.contains(op)))
-                   {
+
+
+                       if(op.equals(""))
+                       {
+                           op="0";
+                       }
                        items_name_offer_percentage.add(op);
-                   }
+
 
                    Iterator<String> itr_string_offerpercentage = items_name_offer_percentage.iterator();
                    while (itr_string_offerpercentage.hasNext())
@@ -388,6 +487,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                 b.putString("itemNameBundle",Item_categories_adapter.get(position));
                 b.putString("itemImageBundle",item_image_adapter.get(position));
                 b.putInt("itemPrice",Item_Price_adapter.get(position));
+                b.putString("refund",Item_Refunf_adapter.get(position));
+                b.putString("desc",Item_description.get(position));
                 next.putExtras(b);
                 context.startActivity(next);
 

@@ -55,8 +55,11 @@ public class Itemlisting extends AppCompatActivity {
     ArrayList<String> Sub_categories = new ArrayList<>();
     ArrayList<String> item_image = new ArrayList<>();
     ArrayList<String> Item_categories = new ArrayList<>();
+    ArrayList<String> cod_eligible = new ArrayList<>();
+    ArrayList<String> refund_eligible = new ArrayList<>();
     ArrayList<String> Item_categories_offer_desc = new ArrayList<>();
     ArrayList<Integer> Item_Quantity = new ArrayList<>();
+    ArrayList<String> Item_description = new ArrayList<>();
     ArrayList<Integer> Item_Price = new ArrayList<>();
     ArrayList<Integer> Sub_categories_id = new ArrayList<>();
     ArrayList<Integer> item_id = new ArrayList<>();
@@ -277,6 +280,9 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
                     Item_categories.clear();
                     item_image.clear();
                     Item_Quantity.clear();
+                    Item_description.clear();
+                    cod_eligible.clear();
+                    refund_eligible.clear();
                     Item_Price.clear();
                     item_id.clear();
                     item_id_status.clear();
@@ -309,6 +315,9 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
                             String imageurl = response.body().getResponsedata().getData().get(i).getImage();
                             Integer offer_percent =Integer.valueOf(response.body().getResponsedata().getData().get(i).getoffer());
                             String offer_desc = response.body().getResponsedata().getData().get(i).getofdescription();
+                            String cod_elgble = response.body().getResponsedata().getData().get(i).getCashOnDelivery();
+                            String refund_elgble = response.body().getResponsedata().getData().get(i).getRefund();
+                            String desc = response.body().getResponsedata().getData().get(i).getDescription();
                             String imageurl_total=url1+imageurl;
                             Log.e("itemlisting","imageurl"+url1+imageurl);
                             Item_categories.add(item_name);
@@ -319,8 +328,9 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
                             item_image.add(imageurl_total);
                             Item_categories_offer_desc.add(offer_desc);
                             item_id_offer.add(offer_percent);
-
-
+                            cod_eligible.add(cod_elgble);
+                            refund_eligible.add(refund_elgble);
+                            Item_description.add(desc);
 
                         }
                         original_Item_categories_lts.addAll(Item_categories);
@@ -335,7 +345,7 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
                         recyclerView.setLayoutManager(linearLayoutManager);
                         //  call the constructor of CustomAdapter to send the reference and data to Adapter
                         Log.e("names","the names =="+personNames);
-                        customAdapter = new ItemAdapter(Itemlisting.this, Item_categories,Item_Quantity,Item_Price,item_id,item_image,Item_categories_offer_desc,item_id_offer);
+                        customAdapter = new ItemAdapter(Itemlisting.this, Item_categories,Item_Quantity,Item_Price,item_id,item_image,Item_categories_offer_desc,item_id_offer,cod_eligible,refund_eligible,Item_description);
                         recyclerView.setAdapter(customAdapter);
 
                     }
@@ -365,9 +375,12 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
             Item_categories.clear();
             item_image.clear();
             Item_Quantity.clear();
+            cod_eligible.clear();
+            refund_eligible.clear();
             Item_Price.clear();
             item_id.clear();
             item_id_status.clear();
+            Item_description.clear();
             Item_categories_offer_desc.clear();
             item_id_offer.clear();
             ItemsList(name,0,3);

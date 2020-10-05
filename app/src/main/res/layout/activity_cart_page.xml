@@ -36,63 +36,56 @@
                     android:textSize="15sp"
                     android:layout_below="@+id/toolbar_cart"
                     android:textColor="@color/colorPrimary"/>
+                <TextView
+                    android:id="@+id/cod_head1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="COD ELIGIGBLE ITEMS"
+                    android:visibility="invisible"
+                    android:textAlignment="center"
+                    android:layout_below="@id/cart_text"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:gravity="center_horizontal" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/itemrecycler_cart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/cart_text"
+        android:layout_below="@+id/cod_head1"
 
         android:layout_marginTop="12dp"/>
-       <androidx.cardview.widget.CardView
-           android:id="@+id/voucher"
-           android:layout_marginTop="40dp"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           app:cardBackgroundColor="@color/white"
-           android:layout_below="@+id/itemrecycler_cart"
-           >
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:background="@color/gray"
-               android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/cod_head2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="COD NOT ELIGIGBLE ITEMS"
+                    android:textAlignment="center"
+                    android:layout_marginTop="8dp"
+                    android:visibility="invisible"
+                    android:layout_below="@id/itemrecycler_cart"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:gravity="center_horizontal" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/itemrecycler_cart_cod_not_eligible"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/cod_head2"
 
-             <TextView
-                 android:layout_width="wrap_content"
-                 android:layout_weight="4"
-                 android:text="COUPON CODE"
-                 android:textColor="@color/colorPrimary"
-                 android:gravity="center"
-                 android:fontFamily="@font/roboto_medium"
-                 android:padding="10dp"
-                 android:textAlignment="center"
-                 android:layout_height="wrap_content"/>
-               <EditText
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:textColor="@color/black"
-                   android:layout_margin="4dp"
-                   android:background="@color/white"
-                   android:padding="10dp"
-                   android:layout_weight="6"
-
-                   android:textAlignment="center"
-                   android:textColorHint="@color/black"
-                   />
-
-           </LinearLayout>
-
-       </androidx.cardview.widget.CardView>
+                    android:layout_marginTop="12dp"/>
          <androidx.cardview.widget.CardView
              android:id="@+id/summary"
              android:layout_width="wrap_content"
-             android:layout_below="@+id/voucher"
+             android:layout_below="@+id/itemrecycler_cart_cod_not_eligible"
              android:layout_marginTop="20dp"
              app:cardBackgroundColor="@color/white"
              android:layout_height="wrap_content">
              <RelativeLayout
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
+                 android:padding="30dp"
                  android:orientation="horizontal">
                  <TextView
                  android:id="@+id/heading_total"
@@ -113,7 +106,8 @@
                      android:textColor="@color/colorPrimary"
                      android:fontFamily="@font/roboto_light"
                      android:textSize="15sp"
-                     android:background="@color/white"/>
+                     android:background="@color/white"
+                     android:gravity="end" />
                  <TextView
                      android:id="@+id/cart_delivery"
                      android:layout_width="wrap_content"
@@ -137,13 +131,14 @@
                      android:textColor="@color/colorPrimary"
                      android:fontFamily="@font/roboto_light"
                      android:textSize="15sp"
-                     android:background="@color/white"/>
+                     android:background="@color/white"
+                     android:gravity="end" />
 
                  <TextView
                      android:id="@+id/tot_val"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
-                     android:text="Total"
+                     android:text="TOTAL"
                      android:layout_marginTop="10dp"
                      android:layout_below="@+id/cart_delivery"
                      android:textColor="@color/black"
@@ -163,7 +158,8 @@
                      android:textColor="@color/colorPrimary"
                      android:fontFamily="@font/roboto_light"
                      android:textSize="15sp"
-                     android:background="@color/white"/>
+                     android:background="@color/white"
+                     android:gravity="end" />
 
              </RelativeLayout>
 
@@ -195,7 +191,8 @@
                             android:fontFamily="@font/roboto_light"
                             android:textSize="15sp"
                             android:layout_below="@+id/itemrecycler_cart"
-                            android:text="DELIVERY ADDRESS"/>
+                            android:text="DELIVERY ADDRESS"
+                            android:gravity="center_horizontal" />
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/text_input_layout"
                         android:layout_width="match_parent"
@@ -211,6 +208,7 @@
                             android:layout_marginTop="50dp"
                             android:background="@drawable/customized_edittext"
                             android:layout_width="match_parent"
+                            android:textColor="@color/black"
                             android:layout_height="wrap_content"
                             android:textColorHighlight="@color/colorPrimary"
                             android:inputType="text"/>
@@ -231,6 +229,7 @@
                                 android:background="@drawable/customized_edittext"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/black"
                                 android:textColorHighlight="@color/colorPrimary"
                                 android:inputType="text"/>
                         </com.google.android.material.textfield.TextInputLayout>
@@ -247,7 +246,7 @@
                         android:hint="PLACE">
                         <EditText
                             android:id="@+id/edit_text5"
-
+                            android:textColor="@color/black"
                             android:fontFamily="@font/roboto_light"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/customized_edittext"
@@ -268,6 +267,8 @@
                         android:hint="ADDRESS">
                         <EditText
                             android:id="@+id/edit_text10"
+
+                            android:textColor="@color/black"
                             android:fontFamily="@font/roboto_light"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/customized_edittext"
@@ -290,6 +291,7 @@
                             android:id="@+id/edit_text2"
                             android:fontFamily="@font/roboto_light"
                             android:layout_marginTop="10dp"
+                            android:textColor="@color/black"
                             android:background="@drawable/customized_edittext"
                             android:textColorHighlight="@color/colorPrimary"
                             android:layout_width="match_parent"

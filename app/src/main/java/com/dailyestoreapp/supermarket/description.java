@@ -16,7 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 public class description extends AppCompatActivity {
 Button plus,mnus;
-TextView qnty,itemName,itemPrice,itemDesc;
+TextView qnty,itemName,itemPrice,itemDesc,refund;
 ImageView ig;
 int quantity_desc;
     @Override
@@ -29,11 +29,14 @@ int quantity_desc;
         itemName=findViewById(R.id.item_nm);
         itemPrice=findViewById(R.id.descprice);
         ig=findViewById(R.id.item_image_desc);
-
+refund=findViewById(R.id.refundnotEligigble);
+itemDesc=findViewById(R.id.itemdesc);
         Intent in = getIntent();
         Bundle extras = in.getExtras();
         String sb_names = extras.getString("itemNameBundle");
         String sb_img = extras.getString("itemImageBundle");
+        String refundd = extras.getString("refund");
+        String descc = extras.getString("desc");
         String  sb_price = "Rs:" + String.valueOf(extras.getInt("itemPrice"));
         itemPrice.setText(sb_price);
         itemName.setText(sb_names);
@@ -50,6 +53,15 @@ int quantity_desc;
                 startActivity(prev);
             }
         });
+        itemDesc.setText(descc);
+        if(refundd.equals("1"))
+        {
+            refund.setText("RETURN/REPLACEMENT ELIGIBLE");
+        }
+        else
+        {
+            refund.setText("RETURN/REPLACEMENT NOT ELIGIBLE");
+        }
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

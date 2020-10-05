@@ -28,6 +28,12 @@ class Datum {
     @SerializedName("createdBy")
     @Expose
     private String createdBy;
+    @SerializedName("CashOnDelivery")
+    @Expose
+    private String CashOnDelivery;
+    @SerializedName("Refund")
+    @Expose
+    private String Refund;
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
@@ -171,7 +177,21 @@ class Datum {
     public void setoffer(String offer) {
         this.offer = offer;
     }
+    public String getCashOnDelivery() {
+        return CashOnDelivery;
+    }
 
+    public void setCashOnDelivery(String CashOnDelivery) {
+        this.CashOnDelivery = CashOnDelivery;
+    }
+
+    public String getRefund() {
+        return Refund;
+    }
+
+    public void setRefund(String Refund) {
+        this.Refund = Refund;
+    }
     public String getCouponName() {
         return couponName;
     }

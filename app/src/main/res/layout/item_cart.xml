@@ -15,7 +15,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <ImageView
-            android:id="@+id/img"
+            android:id="@+id/img_cart"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/itemsinsidecategory"
@@ -76,38 +76,38 @@
 
         <TextView
             android:layout_marginRight="30dp"
-            android:id="@+id/Title"
+            android:id="@+id/Title_cart"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/img_cart"
             android:textSize="15sp"
             android:text="Title"/>
         <TextView
-            android:id="@+id/publishNme"
-            android:layout_below="@+id/Title"
+            android:id="@+id/Qty_cart"
+            android:layout_below="@+id/Title_cart"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/img_cart"
             android:textSize="15sp"
             android:text="QUANTITY:1KG"
             />
 
         <TextView
-            android:id="@+id/prce"
-            android:layout_below="@+id/publishNme"
+            android:id="@+id/prce_cart"
+            android:layout_below="@+id/Qty_cart"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/colorPrimary"
             android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/img_cart"
             android:text="RS:250.00"
             />
 
@@ -118,46 +118,11 @@
             android:id="@+id/priceadd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/prce"
-            android:layout_toRightOf="@+id/img"
+            android:layout_below="@+id/prce_cart"
+            android:layout_toRightOf="@+id/img_cart"
 
             >
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:gravity="end">
-                <Button
-                    android:id="@+id/plus_cart"
-                    android:layout_width="25dp"
-                    android:layout_height="40dp"
 
-                    android:background="@color/colorPrimary"
-                    android:textColor="@color/white"
-                    android:text="+"/>
-                <TextView
-                    android:id="@+id/quantity_cart"
-                    android:layout_width="30dp"
-                    android:layout_height="40dp"
-                    android:text="1"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-
-                    android:layout_toRightOf="@+id/plus_cart"
-
-                    />
-                <Button
-                    android:id="@+id/minus_cart"
-                    android:layout_width="30dp"
-                    android:layout_height="40dp"
-                    android:layout_toRightOf="@+id/quantity_cart"
-
-                    android:background="@color/colorPrimary"
-                    android:textColor="@color/white"
-                    android:text="-"/>
-            </RelativeLayout>
 
 
         </RelativeLayout>
