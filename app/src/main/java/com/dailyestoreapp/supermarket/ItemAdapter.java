@@ -85,6 +85,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
         final StringBuilder it_price  = new StringBuilder();
         final StringBuilder it_cod  = new StringBuilder();
         final StringBuilder it_offer_percnt  = new StringBuilder();
+
+        //second addition
+
+
+
+
+
+
         // set the data in items
         String name =  Item_categories_adapter.get(position);
        holder.name.setText(name);
@@ -384,12 +392,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
        holder.addition.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+               final StringBuilder new_it  = new StringBuilder();
+               final StringBuilder new_it_qnty  = new StringBuilder();
+               final StringBuilder new_it_ig  = new StringBuilder();
+               final StringBuilder new_it_price  = new StringBuilder();
+               final StringBuilder new_it_cod  = new StringBuilder();
+               final StringBuilder new_it_offer_percnt  = new StringBuilder();
                Integer item_old_val;
                final StringBuilder it_count  = new StringBuilder();
                final ArrayList<String> items_name_count = new ArrayList<>();
-               Integer increment_val2 = Itemlisting.Get_counter();
-               String new_val2 = String.valueOf(++increment_val2);
-               Itemlisting.update_counter(new_val2);
+
                String q = String.valueOf(holder.quantityy.getText());
                quantity= Integer.parseInt(q);
                quantity=quantity+1;
@@ -418,6 +430,230 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                editor5.putString(sharepreferencename_count, new_count_val);
                Log.e("homefragment","the catgeories shared preference are  login count for   ="+sharepreferencename_count+it_count.toString());
                editor5.apply();
+
+
+
+
+                   // check if cart has older values
+
+                   items_name_old.clear();
+                   SharedPreferences sharednew = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                   String itemSingle_name_old = sharednew.getString("cart_item_names", "");
+                   if(!(itemSingle_name_old.equals(""))||(itemSingle_name_old.length()==0))
+                   {
+                       String[] cats = itemSingle_name_old .split(",");//if spaces are uneven, use \\s+ instead of " "
+                       for (String ct : cats) {
+                           if(!(ct.equals("")||ct.equals(null)))
+                           {
+                               items_name_old.add(ct);
+                           }
+
+                       }
+                   }
+
+               items_name_image.clear();
+                   SharedPreferences shared10 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                   String itemSingle_name_old_images = shared10.getString("cart_item_image", "");
+                   if(!(itemSingle_name_old_images.equals(""))||(itemSingle_name_old_images.length()==0))
+                   {
+                       String[] cats = itemSingle_name_old_images .split(",");//if spaces are uneven, use \\s+ instead of " "
+                       for (String ct : cats) {
+                           if(!(ct.equals("")||ct.equals(null)))
+                           {
+                               items_name_image.add(ct);
+                           }
+
+                       }
+                   }
+               items_name_quantity.clear();
+                   SharedPreferences shared1 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                   String itemSingle_qnty_old = shared1.getString("cart_item_qnty", "");
+                   if(!(itemSingle_qnty_old==null)||(itemSingle_qnty_old.length()==0))
+                   {
+                       String[] cats = itemSingle_qnty_old .split(",");//if spaces are uneven, use \\s+ instead of " "
+                       for (String ct : cats) {
+                           if(!(ct.equals("")||ct.equals(null)))
+                           {
+                               items_name_quantity.add(ct);
+                           }
+
+                       }
+                   }
+
+               items_name_price.clear();
+                   SharedPreferences shared2 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                   String itemSingle_name_price = shared2.getString("cart_item_price", "");
+                   if(!(itemSingle_name_price==null)||(itemSingle_name_price.length()==0))
+                   {
+                       String[] cats = itemSingle_name_price .split(",");//if spaces are uneven, use \\s+ instead of " "
+                       for (String ct : cats) {
+                           if(!(ct.equals("")||ct.equals(null)))
+                           {
+                               items_name_price.add(ct);
+                           }
+
+                       }
+                   }
+               items_name_cod.clear();
+                   SharedPreferences shared7 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                   String itemSingle_name_cod = shared7.getString("cart_item_cod", "");
+                   if(!(itemSingle_name_old==null)||(itemSingle_name_old.length()==0))
+                   {
+                       String[] cats = itemSingle_name_cod .split(",");//if spaces are uneven, use \\s+ instead of " "
+                       for (String ct : cats) {
+                           if(!(ct.equals("")||ct.equals(null)))
+                           {
+                               items_name_cod.add(ct);
+                           }
+
+                       }
+                   }
+
+               items_name_offer_percentage.clear();
+                   SharedPreferences shared3 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                   String itemSingle_name_offerpercent = shared3.getString("cart_item_offer_percent", "");
+                   if(!(itemSingle_name_offerpercent==null)||(itemSingle_name_offerpercent.length()==0))
+                   {
+                       String[] cats = itemSingle_name_offerpercent .split(",");//if spaces are uneven, use \\s+ instead of " "
+                       for (String ct : cats) {
+                           if(!(ct.equals("")||ct.equals(null)))
+                           {
+                               items_name_offer_percentage.add(ct);
+                           }
+
+                       }
+                   }
+                   //add new values
+
+                   String nm= String.valueOf(holder.name.getText());
+                   if(!(items_name_old.contains(nm))) {
+                       items_name_old.add(nm);
+                       Integer increment_val2 = Itemlisting.Get_counter();
+                       String new_val2 = String.valueOf(++increment_val2);
+                       Itemlisting.update_counter(new_val2);
+
+                       Iterator<String> itr_string = items_name_old.iterator();
+                       while (itr_string.hasNext()) {
+
+                           new_it.append(itr_string.next());
+                           if (itr_string.hasNext()) {
+                               new_it.append(",");
+                           }
+                       }
+                       SharedPreferences.Editor editor = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                       editor.putString("cart_item_names", new_it.toString());
+                       editor.putString("cart_Items_toolbar_count", String.valueOf(items_name_old.size()));
+                       Log.e("homefragment", "the catgeories shared preference are  login  =" + new_it.toString());
+                       editor.apply();
+
+
+                       String images = item_image_adapter.get(position);
+                       items_name_image.add(images);
+                       Iterator<String> itr_string_ig = items_name_image.iterator();
+                       while (itr_string_ig.hasNext()) {
+
+                           new_it_ig.append(itr_string_ig.next());
+                           if (itr_string_ig.hasNext()) {
+                               new_it_ig.append(",");
+                           }
+                       }
+                       SharedPreferences.Editor editor11 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                       editor11.putString("cart_item_image", new_it_ig.toString());
+                       editor11.putString("cart_Items_toolbar_count", String.valueOf(items_name_image.size()));
+                       Log.e("homefragment", "the catgeories shared preference are  login  =" + new_it_ig.toString());
+                       editor11.apply();
+
+
+                       String qt = String.valueOf(holder.item_inital_qty.getText());
+                       Log.e("item", "q==" + qt);
+                       Log.e("item", "q==" + items_name_quantity);
+
+                       items_name_quantity.add(qt);
+
+                       Log.e("item", "q==" + items_name_quantity);
+                       Iterator<String> itr_string_qty = items_name_quantity.iterator();
+                       while (itr_string_qty.hasNext()) {
+                           Log.e("item", "q==" + itr_string_qty);
+
+                           new_it_qnty.append(itr_string_qty.next());
+                           Log.e("item", "q==" + it_qnty);
+                           if (itr_string_qty.hasNext()) {
+                               new_it_qnty.append(",");
+                               Log.e("item", "q==" + it_qnty);
+                           }
+                           Log.e("item", "q==" + it_qnty);
+                       }
+                       SharedPreferences.Editor editor2 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                       editor2.putString("cart_item_qnty", new_it_qnty.toString());
+                       Log.e("homefragment", "the catgeories shared preference are  login quantity =" + new_it_qnty.toString());
+                       editor2.apply();
+
+
+                       String cod_cod = Item_cod_adapter.get(position);
+
+                       items_name_cod.add(cod_cod);
+
+
+                       Iterator<String> itr_string_cod = items_name_cod.iterator();
+                       while (itr_string_cod.hasNext()) {
+
+                           new_it_cod.append(itr_string_cod.next());
+                           if (itr_string_cod.hasNext()) {
+                               new_it_cod.append(",");
+                           }
+                       }
+                       SharedPreferences.Editor editor8 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                       editor8.putString("cart_item_cod", new_it_cod.toString());
+                       Log.e("homefragment", "the catgeories shared preference are  login  =" + new_it_cod.toString());
+                       editor8.apply();
+
+
+                       String pr = String.valueOf(holder.amont.getText());
+
+                       items_name_price.add(pr);
+
+
+                       Iterator<String> itr_string_price = items_name_price.iterator();
+                       while (itr_string_price.hasNext()) {
+
+                           new_it_price.append(itr_string_price.next());
+                           if (itr_string_price.hasNext()) {
+                               new_it_price.append(",");
+                           }
+                       }
+                       SharedPreferences.Editor editor3 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                       editor3.putString("cart_item_price", new_it_price.toString());
+                       Log.e("homefragment", "the catgeories shared preference are  login  =" + new_it_price.toString());
+                       editor3.apply();
+
+
+                       String op = String.valueOf(holder.offer_percent.getText());
+
+
+                       if (op.equals("")) {
+                           op = "0";
+                       }
+                       items_name_offer_percentage.add(op);
+
+
+                       Iterator<String> itr_string_offerpercentage = items_name_offer_percentage.iterator();
+                       while (itr_string_offerpercentage.hasNext()) {
+
+                           new_it_offer_percnt.append(itr_string_offerpercentage.next());
+                           if (itr_string_offerpercentage.hasNext()) {
+                               new_it_offer_percnt.append(",");
+                           }
+                       }
+                       SharedPreferences.Editor editor4 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                       editor4.putString("cart_item_offer_percent", new_it_offer_percnt.toString());
+                       Log.e("homefragment", "the catgeories shared preference are  login  =" + new_it_offer_percnt.toString());
+                       editor4.apply();
+                   }
+
+
+
+
+
            }
        });
         holder.substraction.setOnClickListener(new View.OnClickListener() {
@@ -426,15 +662,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                 Integer item_old_val_minus;
                 final StringBuilder it_count_minus  = new StringBuilder();
                 final ArrayList<String> items_name_count_minus = new ArrayList<>();
-                Integer increment_val2 = Itemlisting.Get_counter();
-                String new_val2 = String.valueOf(--increment_val2);
-                Itemlisting.update_counter(new_val2);
+
                 String q2 = String.valueOf(holder.quantityy.getText());
                 quantity= Integer.parseInt(q2);
+
                 if(quantity>1)
                 {
                     quantity=quantity-1;
                 }
+
+
                 String stringquantity2 = String.valueOf(quantity);
                 holder.quantityy.setText(stringquantity2);
                 // get the old values

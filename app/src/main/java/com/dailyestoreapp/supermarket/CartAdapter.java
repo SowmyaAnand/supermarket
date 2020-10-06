@@ -35,9 +35,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     private  ArrayList<String> cod_eligible_items_name_price_cartadapter = new ArrayList<>();
     private  ArrayList<String> cod_eligible_items_name_offer_percentage_cartadapter = new ArrayList<>();
     private  ArrayList<String> cod_eligible_items_name_count_cartadapter = new ArrayList<>();
+
+    private ArrayList<String> items_name_old_cartadapter = new ArrayList<>();
+    private ArrayList<String> items_name_quantity_cartadapter = new ArrayList<>();
+    private ArrayList<String> items_images_cart = new ArrayList<>();
+    private ArrayList<String> items_name_cod_cartadapter = new ArrayList<>();
+    private  ArrayList<String> items_name_price_cartadapter = new ArrayList<>();
+    private  ArrayList<String> items_name_offer_percentage_cartadapter = new ArrayList<>();
+    private  ArrayList<String> items_name_count_cartadapter = new ArrayList<>();
+   private ArrayList<Integer> items_index_eligible_cod = new ArrayList<>();
+
+    int removal_flag;
     ArrayList pnames = new ArrayList<>(Arrays.asList("ITEM NAME", "ITEM NAME", "ITEM NAME" ));
     int quantity=1;
-    public CartAdapter(Context context,ArrayList<String> cod_eligible_items_name_old_cartadapter,ArrayList<String> cod_eligible_items_name_quantity_cartadapter,ArrayList<String> cod_eligible_items_name_cod_cartadapter,ArrayList<String> cod_eligible_items_name_price_cartadapter,ArrayList<String> cod_eligible_items_name_offer_percentage_cartadapter, ArrayList<String> cod_eligible_items_name_count_cartadapter, ArrayList<String> cod_eligible_items_images_cart) {
+    public CartAdapter(Context context,ArrayList<String> cod_eligible_items_name_old_cartadapter,ArrayList<String> cod_eligible_items_name_quantity_cartadapter,ArrayList<String> cod_eligible_items_name_cod_cartadapter,ArrayList<String> cod_eligible_items_name_price_cartadapter,ArrayList<String> cod_eligible_items_name_offer_percentage_cartadapter, ArrayList<String> cod_eligible_items_name_count_cartadapter, ArrayList<String> cod_eligible_items_images_cart,ArrayList<String> items_name_old_cartadapter,ArrayList<String> items_name_quantity_cartadapter,ArrayList<String> items_name_cod_cartadapter,ArrayList<String> items_name_price_cartadapter,ArrayList<String> items_name_offer_percentage_cartadapter, ArrayList<String> items_name_count_cartadapter, ArrayList<String> items_images_cart,ArrayList<Integer> items_index_eligible_cod) {
         this.context = context;
         this.cod_eligible_items_name_old_cartadapter=cod_eligible_items_name_old_cartadapter;
         this.cod_eligible_items_name_quantity_cartadapter=cod_eligible_items_name_quantity_cartadapter;
@@ -46,8 +57,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         this.cod_eligible_items_name_offer_percentage_cartadapter=cod_eligible_items_name_offer_percentage_cartadapter;
         this.cod_eligible_items_name_count_cartadapter=cod_eligible_items_name_count_cartadapter;
         this.cod_eligible_items_images_cart=cod_eligible_items_images_cart;
-        this.lts.addAll(personNames);
 
+        this.items_name_old_cartadapter=items_name_old_cartadapter;
+        this.items_name_quantity_cartadapter=items_name_quantity_cartadapter;
+        this.items_name_cod_cartadapter=items_name_cod_cartadapter;
+        this.items_name_price_cartadapter=items_name_price_cartadapter;
+        this.items_name_offer_percentage_cartadapter=items_name_offer_percentage_cartadapter;
+        this.items_name_count_cartadapter=items_name_count_cartadapter;
+        this.items_images_cart=items_images_cart;
+        this.items_index_eligible_cod=items_index_eligible_cod;
+        this.lts.addAll(personNames);
+         removal_flag = items_name_old_cartadapter.size();
     }
     @Override
     public CartAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -78,7 +98,7 @@ String cnt1 ="QUANTITY: "+cnt;
         Integer tot_count_price = int_cnt*int_pr_initial;
         String string_tot_count_price= "Rs: "+String.valueOf(tot_count_price);
         holder.name_cart.setText(name);
-        holder.price_cart.setText(pr_initial);
+        holder.price_cart.setText(string_tot_count_price);
         holder.qty_cart.setText(cnt1);
 
 
@@ -90,7 +110,26 @@ String cnt1 ="QUANTITY: "+cnt;
 holder.rm.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
+        Integer increment_val2 = Itemlisting.Get_counter();
+        String new_val2 = String.valueOf(--increment_val2);
+        Itemlisting.update_counter(new_val2);
 
+        Integer specific_cnt= Integer.valueOf(cod_eligible_items_name_count_cartadapter.get(position));
+        String pr_initial = cod_eligible_items_name_price_cartadapter.get(position);
+        String[] separated2 = pr_initial .split(" ");
+        Log.e("cart","the value is "+separated2[1] );
+        String val2 = separated2[1];
+        Log.e("cart","the value is "+val2 );
+        Integer int_pr_initial = Integer.valueOf(val2);
+        Integer tot_count_price = specific_cnt*int_pr_initial;
+        CartPage.update_total_values(tot_count_price);
+
+
+
+
+        SharedPreferences.Editor editor_tot = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        editor_tot.putString("total_count_cart", new_val2);
+        editor_tot.apply();
         String delete_price=cod_eligible_items_name_price_cartadapter.get(position);
 
         Log.e("cart","the value is "+delete_price);
@@ -105,122 +144,127 @@ holder.rm.setOnClickListener(new View.OnClickListener() {
         final StringBuilder it_cod  = new StringBuilder();
         final StringBuilder it_offer_percnt  = new StringBuilder();
         holder.rm.setText("ITEM REMOVED");
+        String delete_item_name = String.valueOf(holder.name_cart.getText());
+        int int_new_position = items_name_old_cartadapter.indexOf(delete_item_name);
+//        int new_removal_flag = items_name_old_cartadapter.size();
+//        int diff = removal_flag-new_removal_flag;
+//        int int_new_position_val = items_index_eligible_cod.get(position);
+//        int int_new_position = int_new_position_val-diff;
+        Log.e("cartadapter","text removed"+items_name_old_cartadapter+items_index_eligible_cod+int_new_position);
+
+        String name_item_nm = String.valueOf(holder.name_cart.getText());
+        String sharepreferencename_count = name_item_nm+"_count";
+        SharedPreferences.Editor editor5 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        editor5.putString(sharepreferencename_count,"");
+        editor5.apply();
 
 
-//        String name_item_nm = String.valueOf(holder.name_cart.getText());
-//        String sharepreferencename_count = name_item_nm+"_count";
-//        SharedPreferences.Editor editor5 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-//        editor5.putString(sharepreferencename_count,"");
-//        editor5.apply();
-//
-//
-//        Log.e("cartadapter","cod before remove"+cod_eligible_items_name_old_cartadapter);
-//        cod_eligible_items_name_old_cartadapter.remove(position);
-//        Log.e("cartadapter","cod after remove"+cod_eligible_items_name_old_cartadapter);
-//            Iterator<String> itr_string = cod_eligible_items_name_old_cartadapter.iterator();
-//            while (itr_string.hasNext()) {
-//
-//                it.append(itr_string.next());
-//                if (itr_string.hasNext()) {
-//                    it.append(",");
-//                }
-//            }
-//            SharedPreferences.Editor editor = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-//            editor.putString("cart_item_names", it.toString());
-//            editor.putString("cart_Items_toolbar_count", String.valueOf(cod_eligible_items_name_old_cartadapter.size()));
-//            Log.e("homefragment", "the catgeories shared preference are  login  =" + it.toString());
-//            editor.apply();
-//
-//
-//            String images = cod_eligible_items_images_cart.get(position);
-//        cod_eligible_items_images_cart.remove(position);
-//            Iterator<String> itr_string_ig = cod_eligible_items_images_cart.iterator();
-//            while (itr_string_ig.hasNext()) {
-//
-//                it_ig.append(itr_string_ig.next());
-//                if (itr_string_ig.hasNext()) {
-//                    it_ig.append(",");
-//                }
-//            }
-//            SharedPreferences.Editor editor11 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-//            editor11.putString("cart_item_image", it_ig.toString());
-//            editor11.putString("cart_Items_toolbar_count", String.valueOf(cod_eligible_items_images_cart.size()));
-//            Log.e("homefragment", "the catgeories shared preference are  login  =" + it_ig.toString());
-//            editor11.apply();
-//
-//
-//
-//
-//
-//       cod_eligible_items_name_quantity_cartadapter.remove(position);
-//
-//            Iterator<String> itr_string_qty = cod_eligible_items_name_quantity_cartadapter.iterator();
-//            while (itr_string_qty.hasNext()) {
-//                Log.e("item", "q==" + itr_string_qty);
-//
-//                it_qnty.append(itr_string_qty.next());
-//                Log.e("item", "q==" + it_qnty);
-//                if (itr_string_qty.hasNext()) {
-//                    it_qnty.append(",");
-//                    Log.e("item", "q==" + it_qnty);
-//                }
-//                Log.e("item", "q==" + it_qnty);
-//            }
-//            SharedPreferences.Editor editor2 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-//            editor2.putString("cart_item_qnty", it_qnty.toString());
-//            Log.e("homefragment", "the catgeories shared preference are  login quantity =" + it_qnty.toString());
-//            editor2.apply();
-//
-//
-//
-//        cod_eligible_items_name_cod_cartadapter.remove(position);
-//
-//
-//            Iterator<String> itr_string_cod = cod_eligible_items_name_cod_cartadapter.iterator();
-//            while (itr_string_cod.hasNext()) {
-//
-//                it_cod.append(itr_string_cod.next());
-//                if (itr_string_cod.hasNext()) {
-//                    it_cod.append(",");
-//                }
-//            }
-//            SharedPreferences.Editor editor8 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-//            editor8.putString("cart_item_cod", it_cod.toString());
-//            Log.e("homefragment", "the catgeories shared preference are  login  =" + it_cod.toString());
-//            editor8.apply();
-//
-//
-//
-//
-//        cod_eligible_items_name_price_cartadapter.remove(position);
-//            Iterator<String> itr_string_price = cod_eligible_items_name_price_cartadapter.iterator();
-//            while (itr_string_price.hasNext()) {
-//
-//                it_price.append(itr_string_price.next());
-//                if (itr_string_price.hasNext()) {
-//                    it_price.append(",");
-//                }
-//            }
-//            SharedPreferences.Editor editor3 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-//            editor3.putString("cart_item_price", it_price.toString());
-//            Log.e("homefragment", "the catgeories shared preference are  login  =" + it_price.toString());
-//            editor3.apply();
-//
-//
-//
-//        cod_eligible_items_name_offer_percentage_cartadapter.remove(position);
-//            Iterator<String> itr_string_offerpercentage = cod_eligible_items_name_offer_percentage_cartadapter.iterator();
-//            while (itr_string_offerpercentage.hasNext()) {
-//
-//                it_offer_percnt.append(itr_string_offerpercentage.next());
-//                if (itr_string_offerpercentage.hasNext()) {
-//                    it_offer_percnt.append(",");
-//                }
-//            }
-//            SharedPreferences.Editor editor4 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-//            editor4.putString("cart_item_offer_percent", it_offer_percnt.toString());
-//            Log.e("homefragment", "the catgeories shared preference are  login  =" + it_offer_percnt.toString());
-//            editor4.apply();
+        Log.e("cartadapter","cod before remove"+items_name_old_cartadapter);
+        items_name_old_cartadapter.remove(int_new_position);
+        Log.e("cartadapter","cod after remove"+items_name_old_cartadapter);
+            Iterator<String> itr_string = items_name_old_cartadapter.iterator();
+            while (itr_string.hasNext()) {
+
+                it.append(itr_string.next());
+                if (itr_string.hasNext()) {
+                    it.append(",");
+                }
+            }
+            SharedPreferences.Editor editor = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+            editor.putString("cart_item_names", it.toString());
+            editor.putString("cart_Items_toolbar_count", String.valueOf(items_name_old_cartadapter.size()));
+            Log.e("homefragment", "the catgeories shared preference are  login  =" + it.toString());
+            editor.apply();
+
+
+
+        items_images_cart.remove(int_new_position);
+            Iterator<String> itr_string_ig = items_images_cart.iterator();
+            while (itr_string_ig.hasNext()) {
+
+                it_ig.append(itr_string_ig.next());
+                if (itr_string_ig.hasNext()) {
+                    it_ig.append(",");
+                }
+            }
+            SharedPreferences.Editor editor11 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+            editor11.putString("cart_item_image", it_ig.toString());
+            editor11.putString("cart_Items_toolbar_count", String.valueOf(items_images_cart.size()));
+            Log.e("homefragment", "the catgeories shared preference are  login  =" + it_ig.toString());
+            editor11.apply();
+
+
+
+
+
+      items_name_quantity_cartadapter.remove(int_new_position);
+
+            Iterator<String> itr_string_qty = items_name_quantity_cartadapter.iterator();
+            while (itr_string_qty.hasNext()) {
+                Log.e("item", "q==" + itr_string_qty);
+
+                it_qnty.append(itr_string_qty.next());
+                Log.e("item", "q==" + it_qnty);
+                if (itr_string_qty.hasNext()) {
+                    it_qnty.append(",");
+                    Log.e("item", "q==" + it_qnty);
+                }
+                Log.e("item", "q==" + it_qnty);
+            }
+            SharedPreferences.Editor editor2 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+            editor2.putString("cart_item_qnty", it_qnty.toString());
+            Log.e("homefragment", "the catgeories shared preference are  login quantity =" + it_qnty.toString());
+            editor2.apply();
+
+
+
+        items_name_cod_cartadapter.remove(int_new_position);
+
+
+            Iterator<String> itr_string_cod = items_name_cod_cartadapter.iterator();
+            while (itr_string_cod.hasNext()) {
+
+                it_cod.append(itr_string_cod.next());
+                if (itr_string_cod.hasNext()) {
+                    it_cod.append(",");
+                }
+            }
+            SharedPreferences.Editor editor8 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+            editor8.putString("cart_item_cod", it_cod.toString());
+            Log.e("homefragment", "the catgeories shared preference are  login  =" + it_cod.toString());
+            editor8.apply();
+
+
+
+
+       items_name_price_cartadapter.remove(int_new_position);
+            Iterator<String> itr_string_price = items_name_price_cartadapter.iterator();
+            while (itr_string_price.hasNext()) {
+
+                it_price.append(itr_string_price.next());
+                if (itr_string_price.hasNext()) {
+                    it_price.append(",");
+                }
+            }
+            SharedPreferences.Editor editor3 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+            editor3.putString("cart_item_price", it_price.toString());
+            Log.e("homefragment", "the catgeories shared preference are  login  =" + it_price.toString());
+            editor3.apply();
+
+
+            items_name_offer_percentage_cartadapter.remove(int_new_position);
+            Iterator<String> itr_string_offerpercentage = items_name_offer_percentage_cartadapter.iterator();
+            while (itr_string_offerpercentage.hasNext()) {
+
+                it_offer_percnt.append(itr_string_offerpercentage.next());
+                if (itr_string_offerpercentage.hasNext()) {
+                    it_offer_percnt.append(",");
+                }
+            }
+            SharedPreferences.Editor editor4 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+            editor4.putString("cart_item_offer_percent", it_offer_percnt.toString());
+            Log.e("homefragment", "the catgeories shared preference are  login  =" + it_offer_percnt.toString());
+            editor4.apply();
 
 
 
@@ -282,4 +326,6 @@ Button rm;
         Log.e("text","persons="+personNames);
         notifyDataSetChanged();
     }
+
 }
+

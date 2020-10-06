@@ -32,10 +32,14 @@ Toolbar tcart;
     RecyclerView recyclerView_cart,recyclerView_cart2;
     CartAdapter customAdapter_cart;
     CartNotEligibleAdapter customAdapter_cart2;
-    TextView sub_tot,tot,delivery_charge;
+    static TextView sub_tot;
+    static TextView tot;
+    TextView delivery_charge;
     String selected_pincode;
     String selected_radio_button_val="PAY COD ELIGIBLE FIRST";
     RadioGroup r1;
+    static String deliverychg;
+    static String deliverychg1;
     ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3"));
     ArrayList pincodes = new ArrayList<>(Arrays.asList("400072", "585225"));
     String []pincodess = {"SELECT PINCODE","400072","585225"};
@@ -92,8 +96,8 @@ Toolbar tcart;
         ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,pincodess);
         aa.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spin.setAdapter(aa);
-        String deliverychg ="110";
-        String deliverychg1 ="110.00";
+         deliverychg ="110";
+        deliverychg1 ="110.00";
         tot_cart_text=findViewById(R.id.cart_text);
         sub_tot=findViewById(R.id.heading_total_val);
         tot=findViewById(R.id.tot_val2);
@@ -287,13 +291,13 @@ Toolbar tcart;
         if(cod_eligible_items_name_old_cart.size()>0)
         {
             cod_heading1.setVisibility(View.VISIBLE);
-            customAdapter_cart = new CartAdapter(CartPage.this,cod_eligible_items_name_old_cart,cod_eligible_items_name_quantity_cart,cod_eligible_items_name_cod_cart,cod_eligible_items_name_price_cart,cod_eligible_items_name_offer_percentage_cart, cod_eligible_items_name_count_cart,cod_eligible_items_image_cart);
+            customAdapter_cart = new CartAdapter(CartPage.this,cod_eligible_items_name_old_cart,cod_eligible_items_name_quantity_cart,cod_eligible_items_name_cod_cart,cod_eligible_items_name_price_cart,cod_eligible_items_name_offer_percentage_cart, cod_eligible_items_name_count_cart,cod_eligible_items_image_cart,items_name_old_cart,items_name_quantity_cart,items_name_cod_cart,items_name_price_cart,items_name_offer_percentage_cart,items_name_count_cart,items_name_image_cart,items_index_eligible_cod);
             recyclerView_cart.setAdapter(customAdapter_cart);
         }
         if(cod_not_eligible_items_name_old_cart.size()>0)
         {
             cod_heading2.setVisibility(View.VISIBLE);
-            customAdapter_cart2 = new CartNotEligibleAdapter(CartPage.this,cod_not_eligible_items_name_old_cart,cod_not_eligible_items_name_quantity_cart,cod_not_eligible_items_name_cod_cart,cod_not_eligible_items_name_price_cart,cod_not_eligible_items_name_offer_percentage_cart, cod_not_eligible_items_name_count_cart,cod_not_eligible_items_image_cart);
+            customAdapter_cart2 = new CartNotEligibleAdapter(CartPage.this,cod_not_eligible_items_name_old_cart,cod_not_eligible_items_name_quantity_cart,cod_not_eligible_items_name_cod_cart,cod_not_eligible_items_name_price_cart,cod_not_eligible_items_name_offer_percentage_cart, cod_not_eligible_items_name_count_cart,cod_not_eligible_items_image_cart,items_name_old_cart,items_name_quantity_cart,items_name_cod_cart,items_name_price_cart,items_name_offer_percentage_cart,items_name_count_cart,items_name_image_cart,items_index_not_eligible_cod);
             recyclerView_cart2.setAdapter(customAdapter_cart2);
         }
        if((cod_eligible_items_name_old_cart.size()==0)&&(cod_not_eligible_items_name_old_cart.size()==0))
@@ -398,4 +402,18 @@ Toolbar tcart;
 //            Log.d("Exception","Exception of type"+ex.getMessage());
 //        }
     }
+    public static void update_total_values(Integer value){
+        String tot_price_with_colon = String.valueOf(sub_tot.getText());
+        Log.e("cart","delete="+tot_price_with_colon);
+        Double intval = Double.valueOf(tot_price_with_colon);
+
+        Double newintval = intval-value;
+        String t= String.valueOf(newintval);
+        sub_tot.setText(t);
+        Double d = Double.valueOf(deliverychg1);
+        Double totval = newintval+d;
+        String stringtotval = String.valueOf(totval);
+        tot.setText(stringtotval);
+    }
+
 }
