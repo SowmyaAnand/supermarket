@@ -127,8 +127,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:textColor="@color/black"
+                android:textColor="@color/colorPrimary"
                 android:text="REMOVE"
+                android:textAlignment="textEnd"
+                android:gravity="center_vertical"
                 android:fontFamily="@font/roboto_light"
                 android:textSize="12sp"/>
 

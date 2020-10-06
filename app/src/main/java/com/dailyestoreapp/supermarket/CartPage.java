@@ -48,7 +48,8 @@ Toolbar tcart;
     final ArrayList<String> items_name_price_cart = new ArrayList<>();
     final ArrayList<String> items_name_offer_percentage_cart = new ArrayList<>();
     final ArrayList<String> items_name_count_cart = new ArrayList<>();
-
+    final ArrayList<Integer> items_index_eligible_cod = new ArrayList<>();
+    final ArrayList<Integer> items_index_not_eligible_cod = new ArrayList<>();
     //code eligible
     final ArrayList<String> cod_eligible_items_name_old_cart = new ArrayList<>();
     final ArrayList<String> cod_eligible_items_name_quantity_cart = new ArrayList<>();
@@ -251,16 +252,18 @@ Toolbar tcart;
             String cod_val =items_name_cod_cart.get(k);
             if(cod_val.equals("0"))
             {
+                items_index_not_eligible_cod.add(k);
                  cod_not_eligible_items_name_old_cart.add(items_name_old_cart.get(k));
                  cod_not_eligible_items_name_quantity_cart.add(items_name_quantity_cart.get(k));
                  cod_not_eligible_items_name_cod_cart.add(items_name_cod_cart.get(k));
                 cod_not_eligible_items_name_price_cart.add(items_name_price_cart.get(k));
-              cod_not_eligible_items_name_offer_percentage_cart.add(items_name_offer_percentage_cart.get(k));
+                cod_not_eligible_items_name_offer_percentage_cart.add(items_name_offer_percentage_cart.get(k));
                cod_not_eligible_items_name_count_cart.add(items_name_count_cart.get(k));
                 cod_not_eligible_items_image_cart.add(items_name_image_cart.get(k));
             }
             else
             {
+                items_index_eligible_cod.add(k);
                 cod_eligible_items_name_old_cart.add(items_name_old_cart.get(k));
                  cod_eligible_items_name_quantity_cart.add(items_name_quantity_cart.get(k));
                cod_eligible_items_name_cod_cart.add(items_name_cod_cart.get(k));
