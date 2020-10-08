@@ -467,6 +467,7 @@ public class Fragment1 extends Fragment {
                     }
                     Intent next = new Intent(getContext(),Itemlisting.class);
                     Bundle b = new Bundle();
+                    b.putString("backpressed","0");
                     b.putString("subCatName",sb.toString());
                     b.putString("subCatId",strbul.toString());
                     b.putString("subCatImage",sb_images.toString());

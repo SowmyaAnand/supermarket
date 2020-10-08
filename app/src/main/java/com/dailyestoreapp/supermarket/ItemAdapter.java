@@ -141,13 +141,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                    final ArrayList<String> items_name_count = new ArrayList<>();
 
                    holder.addbtn.setVisibility(View.GONE);
-                   Integer increment_val = Itemlisting.Get_counter();
-                  String new_val = String.valueOf(++increment_val);
-                   Itemlisting.update_counter(new_val);
 
-                   SharedPreferences.Editor editor_tot = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                   editor_tot.putString("total_count_cart", new_val);
-                   editor_tot.apply();
 
                    // check if cart has older values
                    String name_item_nm = String.valueOf(holder.name.getText());
@@ -260,8 +254,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                    String nm= String.valueOf(holder.name.getText());
                    if(!(items_name_old.contains(nm))) {
                        items_name_old.add(nm);
+                       Integer increment_val = Itemlisting.Get_counter();
+                       String new_val = String.valueOf(++increment_val);
+                       Itemlisting.update_counter(new_val);
 
-
+                       SharedPreferences.Editor editor_tot = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                       editor_tot.putString("total_count_cart", new_val);
+                       editor_tot.apply();
                        Iterator<String> itr_string = items_name_old.iterator();
                        while (itr_string.hasNext()) {
 
@@ -679,6 +678,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                 String sharepreferencename_count = name_item_nm+"_count";
                 SharedPreferences shared = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
                 String itemSingle_name_old = shared.getString(sharepreferencename_count, "");
+
                 if(itemSingle_name_old.equals("")||itemSingle_name_old.length()==0)
                 {
                     item_old_val_minus=0;
@@ -687,7 +687,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                 {
                     item_old_val_minus= Integer.valueOf(itemSingle_name_old);
                 }
-                --item_old_val_minus;
+                if(item_old_val_minus>1)
+                {
+                    --item_old_val_minus;
+                }
+
                 //add new volaues
                 String new_count_val = String.valueOf(item_old_val_minus);
 
@@ -697,6 +701,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                 editor5.putString(sharepreferencename_count, new_count_val);
                 Log.e("homefragment","the catgeories shared preference are  login count for   ="+sharepreferencename_count+it_count_minus.toString());
                 editor5.apply();
+
+
+
+
+
             }
         });
         // implement setOnClickListener event on item view.
@@ -764,4 +773,5 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
         Log.e("text","persons="+personNames);
         notifyDataSetChanged();
     }
+
 }

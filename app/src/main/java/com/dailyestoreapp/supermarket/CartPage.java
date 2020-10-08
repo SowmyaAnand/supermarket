@@ -213,6 +213,7 @@ Toolbar tcart;
           String total_count_specific_item = items_specific_count_cart.get(l);
           Integer specific_cnt = Integer.valueOf(total_count_specific_item);
           Integer total_val_prod = specific_cnt*val_price;
+            Log.e("cart","the value summ is "+specific_cnt+val_price );
          total_price=total_price+total_val_prod ;
          String string_total_val = String.valueOf(total_price);
           Log.e("cart","the value is "+string_total_val);
@@ -415,5 +416,6 @@ Toolbar tcart;
         String stringtotval = String.valueOf(totval);
         tot.setText(stringtotval);
     }
+
 
 }

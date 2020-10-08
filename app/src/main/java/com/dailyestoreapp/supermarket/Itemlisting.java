@@ -42,7 +42,7 @@ public class Itemlisting extends AppCompatActivity {
    // ArrayList personNames = new ArrayList<>(Arrays.asList("Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6", "Person 7"));
     RecyclerView recyclerView,itemlistingcategory;
     LinearLayoutManager linearLayoutManager,linearLayoutManager2;
-    ItemAdapter customAdapter;
+    static ItemAdapter customAdapter;
     NestedScrollView nestedScrollView;
     ProgressBar progressBar;
     int subidd;
@@ -83,6 +83,7 @@ public class Itemlisting extends AppCompatActivity {
     int start = 0,limit=5;
     int mCartItemCount = 10;
     Toolbar t;
+    static String flag;
     static TextView txt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,13 +94,13 @@ public class Itemlisting extends AppCompatActivity {
         setSupportActionBar(t);
         Intent in = getIntent();
         Bundle extras = in.getExtras();
-
+         flag= extras.getString("backpressed");
         String sb_names = extras.getString("subCatName");
         String sb_id = extras.getString("subCatId");
         String sb_img = extras.getString("subCatImage");
         String  sb_inital =extras.getString("subInitial");
         String[] cats = sb_names.split(",");//if spaces are uneven, use \\s+ instead of " "
-        for (String ct : cats) {
+               for (String ct : cats) {
             if (!(ct.equals("") || ct.equals(null))) {
                 SubcategoriesEditCategies.add(ct);
             }
@@ -120,6 +121,7 @@ public class Itemlisting extends AppCompatActivity {
         }
         initialid= Integer.parseInt(sb_inital);
         Log.e("ItemListing","the values are "+sb_names+sb_id+sb_img+sb_inital);
+
 t.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
 t.setNavigationOnClickListener(new View.OnClickListener() {
     @Override
@@ -402,4 +404,7 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
         Integer n = Integer.valueOf(txt.getText().toString());
       return n;
     }
+
+
+
 }

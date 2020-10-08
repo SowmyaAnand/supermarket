@@ -107,7 +107,11 @@ String cnt1 ="QUANTITY: "+cnt;
         Glide.with(context).load(Sb_img)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.img_cart_adapter);
-holder.rm.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+        holder.rm.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
         Integer increment_val2 = Itemlisting.Get_counter();
@@ -117,11 +121,13 @@ holder.rm.setOnClickListener(new View.OnClickListener() {
         Integer specific_cnt= Integer.valueOf(cod_eligible_items_name_count_cartadapter.get(position));
         String pr_initial = cod_eligible_items_name_price_cartadapter.get(position);
         String[] separated2 = pr_initial .split(" ");
-        Log.e("cart","the value is "+separated2[1] );
+        Log.e("cart","the value is  "+separated2[1] );
         String val2 = separated2[1];
         Log.e("cart","the value is "+val2 );
         Integer int_pr_initial = Integer.valueOf(val2);
         Integer tot_count_price = specific_cnt*int_pr_initial;
+        Log.e("cart","the value is specific_cnt"+specific_cnt );
+        Log.e("cart","the value is int_pr_initial "+int_pr_initial);
         CartPage.update_total_values(tot_count_price);
 
 
