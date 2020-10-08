@@ -74,12 +74,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final ArrayList<String> items_name_old = new ArrayList<>();
+        final ArrayList<Integer> items_name_old_idd = new ArrayList<>();
         final ArrayList<String> items_name_image= new ArrayList<>();
         final ArrayList<String> items_name_quantity = new ArrayList<>();
         final ArrayList<String> items_name_price = new ArrayList<>();
         final ArrayList<String> items_name_cod = new ArrayList<>();
         final ArrayList<String> items_name_offer_percentage = new ArrayList<>();
         final StringBuilder it  = new StringBuilder();
+        final StringBuilder it_id  = new StringBuilder();
         final StringBuilder it_qnty  = new StringBuilder();
         final StringBuilder it_ig  = new StringBuilder();
         final StringBuilder it_price  = new StringBuilder();
@@ -183,6 +185,22 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                        }
                    }
 
+                   SharedPreferences shared_id = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                   String itemSingle_name_old_id = shared_id.getString("cart_item_names_id", "");
+                   if(!(itemSingle_name_old_id.equals(""))||(itemSingle_name_old_id.length()==0))
+                   {
+                       String[] cats = itemSingle_name_old_id .split(",");//if spaces are uneven, use \\s+ instead of " "
+                       for (String ct : cats) {
+                           if(!(ct.equals("")||ct.equals(null)))
+                           {
+                               Integer c= Integer.valueOf(ct);
+
+                               items_name_old_idd.add(c);
+                           }
+
+                       }
+                   }
+
 
                    SharedPreferences shared10 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
                    String itemSingle_name_old_images = shared10.getString("cart_item_image", "");
@@ -254,6 +272,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                    String nm= String.valueOf(holder.name.getText());
                    if(!(items_name_old.contains(nm))) {
                        items_name_old.add(nm);
+                       Integer adapter_id  =  item_id_adapter.get(position);
+                       items_name_old_idd.add(adapter_id);
                        Integer increment_val = Itemlisting.Get_counter();
                        String new_val = String.valueOf(++increment_val);
                        Itemlisting.update_counter(new_val);
@@ -275,6 +295,17 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                        Log.e("homefragment", "the catgeories shared preference are  login  =" + it.toString());
                        editor.apply();
 
+                       Iterator<Integer> itr_string_id = items_name_old_idd.iterator();
+                       while (itr_string_id.hasNext()) {
+
+                           it_id.append(itr_string_id.next());
+                           if (itr_string_id.hasNext()) {
+                               it_id.append(",");
+                           }
+                       }
+                       SharedPreferences.Editor editor_id = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                       editor.putString("cart_item_names_id", it_id.toString());
+                       editor.apply();
 
                        String images = item_image_adapter.get(position);
                        items_name_image.add(images);
@@ -392,6 +423,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
            @Override
            public void onClick(View v) {
                final StringBuilder new_it  = new StringBuilder();
+               final StringBuilder new_it_id  = new StringBuilder();
                final StringBuilder new_it_qnty  = new StringBuilder();
                final StringBuilder new_it_ig  = new StringBuilder();
                final StringBuilder new_it_price  = new StringBuilder();
@@ -449,6 +481,22 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
                        }
                    }
+
+                   items_name_old_idd.clear();
+               SharedPreferences sharednew_idd = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+               String itemSingle_name_old_idd = sharednew_idd.getString("cart_item_names_id", "");
+               if(!(itemSingle_name_old_idd.equals(""))||(itemSingle_name_old_idd.length()==0))
+               {
+                   String[] cats = itemSingle_name_old_idd .split(",");//if spaces are uneven, use \\s+ instead of " "
+                   for (String ct : cats) {
+                       if(!(ct.equals("")||ct.equals(null)))
+                       {
+                           Integer iddd = Integer.valueOf(ct);
+                           items_name_old_idd.add(iddd);
+                       }
+
+                   }
+               }
 
                items_name_image.clear();
                    SharedPreferences shared10 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
@@ -527,6 +575,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                    String nm= String.valueOf(holder.name.getText());
                    if(!(items_name_old.contains(nm))) {
                        items_name_old.add(nm);
+                       Integer idd = item_id_adapter.get(position);
+                       items_name_old_idd.add(idd);
                        Integer increment_val2 = Itemlisting.Get_counter();
                        String new_val2 = String.valueOf(++increment_val2);
                        Itemlisting.update_counter(new_val2);
@@ -539,9 +589,19 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                                new_it.append(",");
                            }
                        }
+
+                       Iterator<Integer> itr_string_id = items_name_old_idd.iterator();
+                       while (itr_string_id.hasNext()) {
+
+                           new_it_id.append(itr_string_id.next());
+                           if (itr_string_id.hasNext()) {
+                               new_it_id.append(",");
+                           }
+                       }
+
                        SharedPreferences.Editor editor = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                       editor.putString("cart_item_names", new_it.toString());
-                       editor.putString("cart_Items_toolbar_count", String.valueOf(items_name_old.size()));
+                       editor.putString("cart_item_names_id", new_it_id.toString());
+
                        Log.e("homefragment", "the catgeories shared preference are  login  =" + new_it.toString());
                        editor.apply();
 

@@ -74,7 +74,7 @@ sngup.setOnClickListener(new View.OnClickListener() {
     }
     void login_call(String usname, String pass)
     {
-        String login_type="1";
+        String login_type="0";
         String url = "http://dailyestoreapp.com/dailyestore/api/";
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

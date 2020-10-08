@@ -3,6 +3,7 @@ package com.dailyestoreapp.supermarket;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class CartPage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 Toolbar tcart;
 
@@ -45,16 +53,20 @@ Toolbar tcart;
     String []pincodess = {"SELECT PINCODE","400072","585225"};
     public static final String MY_PREFS_NAME = "CustomerApp";
     final ArrayList<String> items_name_old_cart = new ArrayList<>();
+    final ArrayList<Integer> items_name_old_cart_id = new ArrayList<>();
     final ArrayList<String> items_specific_count_cart = new ArrayList<>();
     final ArrayList<String> items_name_image_cart = new ArrayList<>();
     final ArrayList<String> items_name_quantity_cart = new ArrayList<>();
+    final ArrayList<String> items_name_quantity_cart_new = new ArrayList<>();
     final ArrayList<String> items_name_cod_cart = new ArrayList<>();
     final ArrayList<String> items_name_price_cart = new ArrayList<>();
     final ArrayList<String> items_name_offer_percentage_cart = new ArrayList<>();
     final ArrayList<String> items_name_count_cart = new ArrayList<>();
+    final ArrayList<Integer> items_name_count_cart_integer = new ArrayList<>();
     final ArrayList<Integer> items_index_eligible_cod = new ArrayList<>();
     final ArrayList<Integer> items_index_not_eligible_cod = new ArrayList<>();
     //code eligible
+    final ArrayList<Integer> cod_eligible_items_name_old_cart_id = new ArrayList<>();
     final ArrayList<String> cod_eligible_items_name_old_cart = new ArrayList<>();
     final ArrayList<String> cod_eligible_items_name_quantity_cart = new ArrayList<>();
     final ArrayList<String> cod_eligible_items_image_cart = new ArrayList<>();
@@ -64,7 +76,7 @@ Toolbar tcart;
     final ArrayList<String> cod_eligible_items_name_count_cart = new ArrayList<>();
 
     // cod not eligible
-
+    final ArrayList<Integer> cod_not_eligible_items_name_old_cart_id = new ArrayList<>();
     final ArrayList<String> cod_not_eligible_items_name_old_cart = new ArrayList<>();
     final ArrayList<String> cod_not_eligible_items_name_quantity_cart = new ArrayList<>();
     final ArrayList<String> cod_not_eligible_items_image_cart = new ArrayList<>();
@@ -133,6 +145,23 @@ Toolbar tcart;
 
             }
         }
+
+        SharedPreferences shared_tot_id = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String itemSingle_name_old_id = shared_tot_id.getString("cart_item_names_id", "");
+
+        if(!(itemSingle_name_old_id==null)||(itemSingle_name_old_id.length()==0))
+        {
+            String[] cats = itemSingle_name_old_id .split(",");//if spaces are uneven, use \\s+ instead of " "
+            for (String ct : cats) {
+                if(!(ct.equals("")||ct.equals(null)))
+                {
+                    Integer v = Integer.valueOf(ct);
+                    items_name_old_cart_id.add(v);
+                }
+
+            }
+        }
+
 
         for(int i=0;i<items_name_old_cart.size();i++)
         {
@@ -258,6 +287,7 @@ Toolbar tcart;
             if(cod_val.equals("0"))
             {
                 items_index_not_eligible_cod.add(k);
+                cod_not_eligible_items_name_old_cart_id.add(items_name_old_cart_id.get(k));
                  cod_not_eligible_items_name_old_cart.add(items_name_old_cart.get(k));
                  cod_not_eligible_items_name_quantity_cart.add(items_name_quantity_cart.get(k));
                  cod_not_eligible_items_name_cod_cart.add(items_name_cod_cart.get(k));
@@ -269,6 +299,7 @@ Toolbar tcart;
             else
             {
                 items_index_eligible_cod.add(k);
+                cod_eligible_items_name_old_cart_id.add(items_name_old_cart_id.get(k));
                 cod_eligible_items_name_old_cart.add(items_name_old_cart.get(k));
                  cod_eligible_items_name_quantity_cart.add(items_name_quantity_cart.get(k));
                cod_eligible_items_name_cod_cart.add(items_name_cod_cart.get(k));
@@ -322,34 +353,102 @@ Toolbar tcart;
             @Override
             public void onClick(View v) {
 
-               int pin_flag=0;
-              if(selected_pincode.equals("SELECT PINCODE"))
-              {
-                  Toast.makeText(CartPage.this,"Please select pincode",Toast.LENGTH_SHORT).show();
 
-              }
-              else
-              {
-                  if(selected_radio_button_val.equals("PAY COD ELIGIBLE FIRST"))
-                  {
-                      Log.e("cart","the selected pincode is"+spin.getSelectedItemPosition());
-                      Intent n = new Intent(CartPage.this,Payment.class);
-                      Bundle b = new Bundle();
-                      b.putString("cod_eligible_pay","1");
-                      n.putExtras(b);
-                      startActivity(n);
-                  }
-                  else
-                  {
-                      Log.e("cart","the selected pincode is"+spin.getSelectedItemPosition());
-                      Intent n = new Intent(CartPage.this,Payment.class);
-                      Bundle b = new Bundle();
-                      b.putString("cod_eligible_pay","0");
-                      n.putExtras(b);
-                      startActivity(n);
-                  }
+                    String login_type="0";
+                    String url = "http://dailyestoreapp.com/dailyestore/api/";
+                    HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+                    loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                    OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                            .addInterceptor(loggingInterceptor)
+                            .build();
 
-              }
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(url)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .client(okHttpClient)
+                            .build();
+                    ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
+                items_name_count_cart_integer.clear();
+                   for(int k=0;k<items_name_count_cart.size();k++)
+                   {
+                    Integer g = Integer.valueOf(items_name_count_cart.get(k));
+                       items_name_count_cart_integer.add(g);
+                   }
+                items_name_quantity_cart_new.clear();
+                   for(int l=0;l<items_name_quantity_cart.size();l++)
+                   {
+                       String q =items_name_quantity_cart.get(l);
+                       String[] separated = q.split(" ");
+                       Log.e("cart","the value is "+separated[1] );
+                       String val = separated[1];
+                       items_name_quantity_cart_new.add(val);
+                   }
+                   Log.e("cart","checkout param=    itemid ====>"+items_name_old_cart_id);
+                Log.e("cart","checkout param=    count====>"+items_name_count_cart_integer);
+                        Log.e("cart","checkout param=    quantity ====>"+items_name_quantity_cart_new);
+                                Log.e("cart","checkout param=    type ====>"+0);
+                                        Log.e("cart","checkout param=    userid ====>"+4);
+                                                Log.e("cart","checkout param=    address ====> abc");
+                                                        Log.e("cart","checkout param=    itemid ====>585225");
+
+                    Call<CustomerAppResponseLogin> call = mainInterface.checkoutapi(items_name_old_cart_id,items_name_count_cart_integer,items_name_quantity_cart,0,4,"abc","585225");
+                    call.enqueue(new Callback<CustomerAppResponseLogin>() {
+                        @Override
+                        public void onResponse(Call<CustomerAppResponseLogin> call, retrofit2.Response<CustomerAppResponseLogin> response) {
+                            CustomerAppResponseLogin obj =response.body();
+                            Log.e("login","success="+response.body().getResponsedata());
+                            int success = Integer.parseInt(obj.getResponsedata().getSuccess());
+                            Log.e("login","success="+success);
+
+                            if(success==1)
+                            {
+
+
+                            }
+                            else
+                            {
+
+                                Toast.makeText(CartPage.this,"Invalid Username and Password",Toast.LENGTH_SHORT).show();
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<CustomerAppResponseLogin> call, Throwable t) {
+                            Toast.makeText(CartPage.this,t.getMessage(),Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+
+//               int pin_flag=0;
+//              if(selected_pincode.equals("SELECT PINCODE"))
+//              {
+//                  Toast.makeText(CartPage.this,"Please select pincode",Toast.LENGTH_SHORT).show();
+//
+//              }
+//              else
+//              {
+//                  if(selected_radio_button_val.equals("PAY COD ELIGIBLE FIRST"))
+//                  {
+//                      Log.e("cart","the selected pincode is"+spin.getSelectedItemPosition());
+//                      Intent n = new Intent(CartPage.this,Payment.class);
+//                      Bundle b = new Bundle();
+//                      b.putString("cod_eligible_pay","1");
+//                      n.putExtras(b);
+//                      startActivity(n);
+//                  }
+//                  else
+//                  {
+//                      Log.e("cart","the selected pincode is"+spin.getSelectedItemPosition());
+//                      Intent n = new Intent(CartPage.this,Payment.class);
+//                      Bundle b = new Bundle();
+//                      b.putString("cod_eligible_pay","0");
+//                      n.putExtras(b);
+//                      startActivity(n);
+//                  }
+//
+//              }
 
 
 

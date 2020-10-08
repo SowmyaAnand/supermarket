@@ -1,5 +1,7 @@
 package com.dailyestoreapp.supermarket;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -46,4 +48,14 @@ public interface ResponseInterface {
                                  @Field("type") String typeres
     );
 
+    @FormUrlEncoded
+    @POST("checkout")
+    Call<CustomerAppResponseLogin> checkoutapi(@Field("ItemId []") ArrayList<Integer> ItemId ,
+                                          @Field("count []") ArrayList<Integer> count,
+                                          @Field("quantity []") ArrayList<String> quantity,
+                                          @Field("type") int type,
+                                          @Field("UserId") int id,
+                                          @Field("address") String address,
+                                          @Field("postcode") String postcode
+                                          );
 }
