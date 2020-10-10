@@ -34,6 +34,7 @@ Button order;
         Intent in = getIntent();
         Bundle extras = in.getExtras();
         String cod_eligible_pay = extras.getString("cod_eligible_pay");
+
         Toast.makeText(Payment.this,cod_eligible_pay,Toast.LENGTH_SHORT).show();
         quarantine_yes=(RadioButton)findViewById(R.id.q_yes);
         quarantine_no=(RadioButton)findViewById(R.id.q_no);
@@ -42,7 +43,14 @@ Button order;
         payment=(RadioGroup) findViewById(R.id.payment_radio);
         quarantine=(RadioGroup) findViewById(R.id.quarantine_radio);
         order = (Button)findViewById(R.id.proceed);
-
+        if(cod_eligible_pay.equals("1"))
+        {
+        cashondelivery.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            cashondelivery.setVisibility(View.INVISIBLE);
+        }
         payment.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

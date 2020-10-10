@@ -353,102 +353,37 @@ Toolbar tcart;
             @Override
             public void onClick(View v) {
 
-
-                    String login_type="0";
-                    String url = "http://dailyestoreapp.com/dailyestore/api/";
-                    HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-                    loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-                    OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                            .addInterceptor(loggingInterceptor)
-                            .build();
-
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl(url)
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .client(okHttpClient)
-                            .build();
-                    ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
-                items_name_count_cart_integer.clear();
-                   for(int k=0;k<items_name_count_cart.size();k++)
-                   {
-                    Integer g = Integer.valueOf(items_name_count_cart.get(k));
-                       items_name_count_cart_integer.add(g);
-                   }
-                items_name_quantity_cart_new.clear();
-                   for(int l=0;l<items_name_quantity_cart.size();l++)
-                   {
-                       String q =items_name_quantity_cart.get(l);
-                       String[] separated = q.split(" ");
-                       Log.e("cart","the value is "+separated[1] );
-                       String val = separated[1];
-                       items_name_quantity_cart_new.add(val);
-                   }
-                   Log.e("cart","checkout param=    itemid ====>"+items_name_old_cart_id);
-                Log.e("cart","checkout param=    count====>"+items_name_count_cart_integer);
-                        Log.e("cart","checkout param=    quantity ====>"+items_name_quantity_cart_new);
-                                Log.e("cart","checkout param=    type ====>"+0);
-                                        Log.e("cart","checkout param=    userid ====>"+4);
-                                                Log.e("cart","checkout param=    address ====> abc");
-                                                        Log.e("cart","checkout param=    itemid ====>585225");
-
-                    Call<CustomerAppResponseLogin> call = mainInterface.checkoutapi(items_name_old_cart_id,items_name_count_cart_integer,items_name_quantity_cart,0,4,"abc","585225");
-                    call.enqueue(new Callback<CustomerAppResponseLogin>() {
-                        @Override
-                        public void onResponse(Call<CustomerAppResponseLogin> call, retrofit2.Response<CustomerAppResponseLogin> response) {
-                            CustomerAppResponseLogin obj =response.body();
-                            Log.e("login","success="+response.body().getResponsedata());
-                            int success = Integer.parseInt(obj.getResponsedata().getSuccess());
-                            Log.e("login","success="+success);
-
-                            if(success==1)
-                            {
+                Book_now();
 
 
-                            }
-                            else
-                            {
+               int pin_flag=0;
+              if(selected_pincode.equals("SELECT PINCODE"))
+              {
+                  Toast.makeText(CartPage.this,"Please select pincode",Toast.LENGTH_SHORT).show();
 
-                                Toast.makeText(CartPage.this,"Invalid Username and Password",Toast.LENGTH_SHORT).show();
+              }
+              else
+              {
+                  if(selected_radio_button_val.equals("PAY COD ELIGIBLE FIRST"))
+                  {
+                      Log.e("cart","the selected pincode is"+spin.getSelectedItemPosition());
+                      Intent n = new Intent(CartPage.this,Payment.class);
+                      Bundle b = new Bundle();
+                      b.putString("cod_eligible_pay","1");
+                      n.putExtras(b);
+                      startActivity(n);
+                  }
+                  else
+                  {
+                      Log.e("cart","the selected pincode is"+spin.getSelectedItemPosition());
+                      Intent n = new Intent(CartPage.this,Payment.class);
+                      Bundle b = new Bundle();
+                      b.putString("cod_eligible_pay","0");
+                      n.putExtras(b);
+                      startActivity(n);
+                  }
 
-                            }
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<CustomerAppResponseLogin> call, Throwable t) {
-                            Toast.makeText(CartPage.this,t.getMessage(),Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
-
-//               int pin_flag=0;
-//              if(selected_pincode.equals("SELECT PINCODE"))
-//              {
-//                  Toast.makeText(CartPage.this,"Please select pincode",Toast.LENGTH_SHORT).show();
-//
-//              }
-//              else
-//              {
-//                  if(selected_radio_button_val.equals("PAY COD ELIGIBLE FIRST"))
-//                  {
-//                      Log.e("cart","the selected pincode is"+spin.getSelectedItemPosition());
-//                      Intent n = new Intent(CartPage.this,Payment.class);
-//                      Bundle b = new Bundle();
-//                      b.putString("cod_eligible_pay","1");
-//                      n.putExtras(b);
-//                      startActivity(n);
-//                  }
-//                  else
-//                  {
-//                      Log.e("cart","the selected pincode is"+spin.getSelectedItemPosition());
-//                      Intent n = new Intent(CartPage.this,Payment.class);
-//                      Bundle b = new Bundle();
-//                      b.putString("cod_eligible_pay","0");
-//                      n.putExtras(b);
-//                      startActivity(n);
-//                  }
-//
-//              }
+              }
 
 
 
@@ -515,6 +450,73 @@ Toolbar tcart;
         String stringtotval = String.valueOf(totval);
         tot.setText(stringtotval);
     }
+public void Book_now() {
+    String login_type="0";
+    String url = "http://dailyestoreapp.com/dailyestore/api/";
+    HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+    loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+    OkHttpClient okHttpClient = new OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .build();
+
+    Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build();
+    ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
+    items_name_count_cart_integer.clear();
+    for(int k=0;k<items_name_count_cart.size();k++)
+    {
+        Integer g = Integer.valueOf(items_name_count_cart.get(k));
+        items_name_count_cart_integer.add(g);
+    }
+    items_name_quantity_cart_new.clear();
+    for(int l=0;l<items_name_quantity_cart.size();l++)
+    {
+        String q =items_name_quantity_cart.get(l);
+        String[] separated = q.split(" ");
+        Log.e("cart","the value is "+separated[1] );
+        String val = separated[1];
+        items_name_quantity_cart_new.add(val);
+    }
+    Log.e("cart","checkout param=    itemid ====>"+items_name_old_cart_id);
+    Log.e("cart","checkout param=    count====>"+items_name_count_cart_integer);
+    Log.e("cart","checkout param=    quantity ====>"+items_name_quantity_cart_new);
+    Log.e("cart","checkout param=    type ====>"+0);
+    Log.e("cart","checkout param=    userid ====>"+4);
+    Log.e("cart","checkout param=    address ====> abc");
+    Log.e("cart","checkout param=    itemid ====>585225");
+
+    Call<CustomerAppResponseLogin> call = mainInterface.checkoutapi(items_name_old_cart_id,items_name_count_cart_integer,items_name_quantity_cart,0,4,"abc","585225");
+    call.enqueue(new Callback<CustomerAppResponseLogin>() {
+        @Override
+        public void onResponse(Call<CustomerAppResponseLogin> call, retrofit2.Response<CustomerAppResponseLogin> response) {
+            CustomerAppResponseLogin obj =response.body();
+            Log.e("login","success="+response.body().getResponsedata());
+            int success = Integer.parseInt(obj.getResponsedata().getSuccess());
+            Log.e("login","success="+success);
+
+            if(success==1)
+            {
 
 
+            }
+            else
+            {
+
+                Toast.makeText(CartPage.this,"Invalid Username and Password",Toast.LENGTH_SHORT).show();
+
+            }
+
+        }
+
+        @Override
+        public void onFailure(Call<CustomerAppResponseLogin> call, Throwable t) {
+            Toast.makeText(CartPage.this,t.getMessage(),Toast.LENGTH_SHORT).show();
+
+        }
+    });
+
+}
 }

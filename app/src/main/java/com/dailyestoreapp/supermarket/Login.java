@@ -101,6 +101,7 @@ sngup.setOnClickListener(new View.OnClickListener() {
                 {
 
                     Toast.makeText(Login.this,"Login Successful",Toast.LENGTH_SHORT).show();
+
                     SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                     editor_frst.putString("logged_in_flag", "1");
                     editor_frst.apply();

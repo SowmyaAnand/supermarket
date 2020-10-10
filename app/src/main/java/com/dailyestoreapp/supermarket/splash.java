@@ -370,7 +370,7 @@ SecondViewFlyers();
             public void onResponse(Call<CustomerAppResponse> call, retrofit2.Response<CustomerAppResponse> response) {
                 CustomerAppResponse listCategoryResponseobject = response.body();
                 int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
-                Log.e("firstpop","the succes value is "+listCategoryResponseobject.getResponsedata().getSuccess());
+                Log.e("deals","the succes value is "+response);
                 int data_length = response.body().getResponsedata().getData().size();
                 try {
 

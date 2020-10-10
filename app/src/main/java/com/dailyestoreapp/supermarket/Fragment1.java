@@ -82,6 +82,7 @@ public class Fragment1 extends Fragment {
     ArrayList<String> Images_sub = new ArrayList<>();
     ExpandableHeightGridView gridview,dealsview;
     Imageadapterforflyers flyeradapterview;
+    Imageadapterforflyers testflyeradapterview;
     SearchView sr;
     ArrayList<String> item_image = new ArrayList<>();
     ArrayList<String> original_item_image_lts = new ArrayList<>();
@@ -230,7 +231,8 @@ public class Fragment1 extends Fragment {
         flyerpager.setAdapter(flyeradapterview);
         Timer t = new Timer();
         t.scheduleAtFixedRate(new Mytimertask2(),900,1800);
-       adapterview = new ImageAdapter(getContext(),secondflyer_image,intial_secondflyer_id);
+      adapterview = new ImageAdapter(getContext(),secondflyer_image,intial_secondflyer_id);
+       // testflyeradapterview = new Imageadapterforflyers(getContext(),secondflyer_image,intial_secondflyer_id);
         mviewpager.setAdapter(adapterview);
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new Mytimertask(),1500,3000);
@@ -321,7 +323,7 @@ public class Fragment1 extends Fragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.e("text","flyer++"+flyerpager.getCurrentItem());
+                    Log.e("text","flyer2++"+flyerpager.getCurrentItem());
                     if(firstttflyerid==1)
                     {
                         if (flyerpager.getCurrentItem() == 0) {
@@ -338,7 +340,7 @@ public class Fragment1 extends Fragment {
                     }
                     else {
 
-                       int firstflyer_length = firstflyer_image.size();
+                        int firstflyer_length = firstflyer_image.size();
 
                         if (flyerpager.getCurrentItem() == 0) {
                             flyerpager.setCurrentItem(1);
@@ -346,7 +348,7 @@ public class Fragment1 extends Fragment {
                         else if ((flyerpager.getCurrentItem() == 1)&&(firstflyer_length<2)) {
                             flyerpager.setCurrentItem(2);
                         }
-                       else if ((flyerpager.getCurrentItem() == 2)&&(firstflyer_length<3)) {
+                        else if ((flyerpager.getCurrentItem() == 2)&&(firstflyer_length<3)) {
                             flyerpager.setCurrentItem(3);
                         }
                         else
@@ -356,7 +358,7 @@ public class Fragment1 extends Fragment {
                         }
 
 
-                        }
+                    }
                 }
             });
         }
@@ -408,75 +410,75 @@ public class Fragment1 extends Fragment {
 
 
 
-                    for(int i=0; i<cat_length; i++)
+                for(int i=0; i<cat_length; i++)
+                {
+                    Datum catObj1 = catObj.getResponsedata().getData().get(i);
+                    String sub_name = catObj1.getSubName();
+                    String sub_item =catObj1.getsubItemImage();
+                    if(!Sub_categories.contains(sub_name))
                     {
-                        Datum catObj1 = catObj.getResponsedata().getData().get(i);
-                        String sub_name = catObj1.getSubName();
-                        String sub_item =catObj1.getsubItemImage();
-                        if(!Sub_categories.contains(sub_name))
+                        Sub_categories.add(sub_name);
+                        Images_sub.add(sub_item);
+                        int sub_Cat_id = Integer.parseInt(catObj1.getSubId());
+                        Sub_categories_id.add(sub_Cat_id);
+                        String intial_pop =catObj1.getinitialSetidSub();
+                        Log.e("frG1","Values="+catObj1+intial_pop);
+                        if(intial_pop.equals("0"))
                         {
-                            Sub_categories.add(sub_name);
-                            Images_sub.add(sub_item);
-                            int sub_Cat_id = Integer.parseInt(catObj1.getSubId());
-                            Sub_categories_id.add(sub_Cat_id);
-                            String intial_pop =catObj1.getinitialSetidSub();
-                            Log.e("frG1","Values="+catObj1+intial_pop);
-                            if(intial_pop.equals("0"))
-                            {
-                                intialsub = 0;
-                            }
+                            intialsub = 0;
                         }
-
                     }
 
+                }
 
-                    Log.e("fragment1","sub_cat inside Activate"+Sub_categories);
+
+                Log.e("fragment1","sub_cat inside Activate"+Sub_categories);
 //                    dialog.dismiss();
-                    selectedSubCategoryNo=1;
-                    Iterator<Integer> iter = Sub_categories_id.iterator();
-                    while(iter.hasNext())
-                    {
-                        strbul.append(iter.next());
-                        if(iter.hasNext()){
-                            strbul.append(",");
-                        }
+                selectedSubCategoryNo=1;
+                Iterator<Integer> iter = Sub_categories_id.iterator();
+                while(iter.hasNext())
+                {
+                    strbul.append(iter.next());
+                    if(iter.hasNext()){
+                        strbul.append(",");
                     }
-                    strbul.toString();
+                }
+                strbul.toString();
 
-                    // to store categories
-                    Log.e("res","res="+strbul);
-                    Iterator<String> itr_string = Sub_categories.iterator();
-                    while (itr_string.hasNext())
-                    {
+                // to store categories
+                Log.e("res","res="+strbul);
+                Iterator<String> itr_string = Sub_categories.iterator();
+                while (itr_string.hasNext())
+                {
 
-                        sb.append(itr_string.next());
-                        if(itr_string.hasNext()){
-                            sb.append(",");
-                        }
+                    sb.append(itr_string.next());
+                    if(itr_string.hasNext()){
+                        sb.append(",");
                     }
+                }
 
 
-                    Iterator<String> itr_string_image = Images_sub.iterator();
-                    while (itr_string_image.hasNext())
-                    {
+                Iterator<String> itr_string_image = Images_sub.iterator();
+                while (itr_string_image.hasNext())
+                {
 
-                        sb_images.append(itr_string_image.next());
-                        if(itr_string_image.hasNext()){
-                            sb_images.append(",");
-                        }
+                    sb_images.append(itr_string_image.next());
+                    if(itr_string_image.hasNext()){
+                        sb_images.append(",");
                     }
-                    Intent next = new Intent(getContext(),Itemlisting.class);
-                    Bundle b = new Bundle();
-                    b.putString("backpressed","0");
-                    b.putString("subCatName",sb.toString());
-                    b.putString("subCatId",strbul.toString());
-                    b.putString("subCatImage",sb_images.toString());
-                    b.putString("subInitial", String.valueOf(intialsub));
-                   next.putExtras(b);
-                    startActivity(next);
+                }
+                Intent next = new Intent(getContext(),Itemlisting.class);
+                Bundle b = new Bundle();
+                b.putString("backpressed","0");
+                b.putString("subCatName",sb.toString());
+                b.putString("subCatId",strbul.toString());
+                b.putString("subCatImage",sb_images.toString());
+                b.putString("subInitial", String.valueOf(intialsub));
+                next.putExtras(b);
+                startActivity(next);
 
 
-                    //personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "frag4ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
+                //personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "frag4ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
 
 
 
