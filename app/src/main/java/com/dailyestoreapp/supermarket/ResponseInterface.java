@@ -47,7 +47,19 @@ public interface ResponseInterface {
                                  @Field("password") String passwordres,
                                  @Field("type") String typeres
     );
-
+    @FormUrlEncoded
+    @POST("userRegister")
+    Call<CustomerAppResponseLogin> signUpapi(@Field("firstName") String fname,
+                                            @Field("lastName") String lname,
+                                            @Field("email") String email,
+                                            @Field("phone") int phone_num,
+                                            @Field("address") String address,
+                                            @Field("pinCode") int pincode,
+                                            @Field("dob") String dob,
+                                            @Field("username") String usernme,
+                                            @Field("password") String pswd,
+                                            @Field("type") String type
+    );
     @FormUrlEncoded
     @POST("checkout")
     Call<CustomerAppResponseLogin> checkoutapi(@Field("ItemId []") ArrayList<Integer> ItemId ,

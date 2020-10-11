@@ -45,8 +45,9 @@
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
                     android:hint="FIRST NAME">
                     <EditText
-                        android:id="@+id/edit_text"
+                        android:id="@+id/edit_text_firstname"
                         android:textSize="14dp"
+                        android:textColor="@color/black"
                         android:layout_marginTop="50dp"
                         android:background="@drawable/customized_edittext"
                         android:layout_width="match_parent"
@@ -64,8 +65,9 @@
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
                     android:hint="SECOND NAME">
                     <EditText
-                        android:id="@+id/edit_text_sec"
+                        android:id="@+id/edit_text_sec_lastname"
                         android:textSize="14dp"
+                        android:textColor="@color/black"
                         android:layout_marginTop="50dp"
                         android:background="@drawable/customized_edittext"
                         android:layout_width="match_parent"
@@ -84,8 +86,9 @@
 
                     android:hint="EMAIL">
                     <EditText
-                        android:id="@+id/edit_text3"
+                        android:id="@+id/edit_text3_email"
                         android:textSize="14dp"
+                        android:textColor="@color/black"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/customized_edittext"
                         android:textColorHighlight="@color/colorPrimary"
@@ -104,14 +107,36 @@
 
                     android:hint="MOBILE">
                     <EditText
-                        android:id="@+id/edit_text5"
+                        android:id="@+id/edit_text5_mobile"
                         android:textSize="14dp"
+                        android:textColor="@color/black"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/customized_edittext"
                         android:textColorHighlight="@color/colorPrimary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_layout_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:textColorHint="@color/black"
+                    android:layout_below="@+id/text_input_layout"
+                    app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
+
+                    android:hint="USERNAME">
+                <EditText
+                    android:id="@+id/edit_text5_username"
+                    android:textSize="14dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/customized_edittext"
+                    android:textColorHighlight="@color/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/black"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_input_layout_pswd"
@@ -126,6 +151,7 @@
                     <EditText
                         android:id="@+id/edit_text5_pswd"
                         android:textSize="14dp"
+                        android:textColor="@color/black"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/customized_edittext"
                         android:textColorHighlight="@color/colorPrimary"
@@ -144,8 +170,9 @@
 
                     android:hint="ADDRESS">
                     <EditText
-                        android:id="@+id/edit_text10"
+                        android:id="@+id/edit_text10_address"
                         android:textSize="14dp"
+                        android:textColor="@color/black"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/customized_edittext"
                         android:textColorHighlight="@color/colorPrimary"
@@ -164,8 +191,9 @@
 
                     android:hint="PINCODE">
                     <EditText
-                        android:id="@+id/edit_text2"
+                        android:id="@+id/edit_text2_pincode"
                         android:textSize="14dp"
+                        android:textColor="@color/black"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/customized_edittext"
                         android:textColorHighlight="@color/colorPrimary"
@@ -176,6 +204,7 @@
 
 
                 <Button
+                    android:id="@+id/edit_text2_signup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="SIGNUP"
