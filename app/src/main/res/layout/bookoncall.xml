@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimary"
+        android:textAlignment="center"
+        android:fontFamily="@font/roboto_medium"
+        android:text="YOUR JUST ONE CLICK AWAY !!!!"
+        android:gravity="center_horizontal" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+android:layout_gravity="center_vertical"
+        android:elevation="40dp"
+        app:cardBackgroundColor="@color/white"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="80dp"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/cuctomercare"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_light"
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical"
+                android:text="Place your orders on call"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_gravity="center_vertical"
+        android:elevation="40dp"
+        android:layout_marginTop="80dp"
+        app:cardBackgroundColor="@color/white"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:padding="12dp"
+                android:src="@drawable/whatsappimg"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginLeft="3dp"
+                android:fontFamily="@font/roboto_light"
+                android:layout_gravity="center_vertical"
+                android:text="Place your orders on WhatsApp"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

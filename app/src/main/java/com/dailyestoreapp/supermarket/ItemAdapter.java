@@ -30,6 +30,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> {
     ArrayList<String> personNames = new ArrayList<String>();
     Context context;
+    String fullusername_global;
     ArrayList<String> lts=new ArrayList<String>();
     ArrayList pnames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     ArrayList<String> item_image_adapter = new ArrayList<>();
@@ -87,7 +88,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
         final StringBuilder it_price  = new StringBuilder();
         final StringBuilder it_cod  = new StringBuilder();
         final StringBuilder it_offer_percnt  = new StringBuilder();
-
+        final SharedPreferences fullname_shared = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        fullusername_global = fullname_shared.getString("fullusername","");
         //second addition
 
 
@@ -146,9 +148,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
 
                    // check if cart has older values
-                   String name_item_nm = String.valueOf(holder.name.getText());
-                   String sharepreferencename_count = name_item_nm+"_count";
                    SharedPreferences shared_new = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                   String fullname = shared_new.getString("fullusername","");
+                   String name_item_nm = String.valueOf(holder.name.getText());
+                   String sharepreferencename_count = fullname+name_item_nm+"_count";
+
                    String itemSingle_name_old_count = shared_new.getString(sharepreferencename_count, "");
                    if(itemSingle_name_old_count.equals("")||itemSingle_name_old_count.length()==0)
                    {
@@ -158,7 +162,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                    {
                        item_old_val= Integer.valueOf(itemSingle_name_old_count);
                    }
-                   ++item_old_val;
+                   Integer qty_vl_from_text = Item_Quantity_adapter.get(position);
+                   Log.e("itemadapter","the integer val for add qty is "+qty_vl_from_text);
+                  // item_old_val=item_old_val+qty_vl_from_text;
+                  ++item_old_val;
 
 
                    //add new volaues
@@ -172,7 +179,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                    editor5.apply();
 
                    SharedPreferences shared = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-                   String itemSingle_name_old = shared.getString("cart_item_names", "");
+                   String fullname2 = shared_new.getString("fullusername","");
+                   String cart_item_names = fullname2+"cart_item_names";
+                   String itemSingle_name_old = shared.getString(cart_item_names, "");
                    if(!(itemSingle_name_old.equals(""))||(itemSingle_name_old.length()==0))
                    {
                        String[] cats = itemSingle_name_old .split(",");//if spaces are uneven, use \\s+ instead of " "
@@ -184,9 +193,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
                        }
                    }
-
+Log.e("itemadapter","first befre add  add btn "+cart_item_names+items_name_old);
                    SharedPreferences shared_id = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-                   String itemSingle_name_old_id = shared_id.getString("cart_item_names_id", "");
+                   String fullname3 = shared_new.getString("fullusername","");
+                   String shared_cart_item_names_id = fullname3+"cart_item_names_id";
+                   String itemSingle_name_old_id = shared_id.getString(shared_cart_item_names_id, "");
                    if(!(itemSingle_name_old_id.equals(""))||(itemSingle_name_old_id.length()==0))
                    {
                        String[] cats = itemSingle_name_old_id .split(",");//if spaces are uneven, use \\s+ instead of " "
@@ -203,7 +214,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
 
                    SharedPreferences shared10 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-                   String itemSingle_name_old_images = shared10.getString("cart_item_image", "");
+                   String fullname4 = shared_new.getString("fullusername","");
+                   String shared_cart_item_image = fullname4+"cart_item_image";
+                   String itemSingle_name_old_images = shared10.getString(shared_cart_item_image, "");
                    if(!(itemSingle_name_old_images.equals(""))||(itemSingle_name_old_images.length()==0))
                    {
                        String[] cats = itemSingle_name_old_images .split(",");//if spaces are uneven, use \\s+ instead of " "
@@ -217,7 +230,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                    }
 
                    SharedPreferences shared1 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-                   String itemSingle_qnty_old = shared1.getString("cart_item_qnty", "");
+                   String fullname5 = shared_new.getString("fullusername","");
+                   String cart_item_qty = fullname5+"cart_item_qnty";
+                   String itemSingle_qnty_old = shared1.getString(cart_item_qty, "");
                    if(!(itemSingle_qnty_old==null)||(itemSingle_qnty_old.length()==0))
                    {
                        String[] cats = itemSingle_qnty_old .split(",");//if spaces are uneven, use \\s+ instead of " "
@@ -230,7 +245,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                        }
                    }
                    SharedPreferences shared2 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-                   String itemSingle_name_price = shared2.getString("cart_item_price", "");
+                   String fullname6 = shared_new.getString("fullusername","");
+                   String cart_item_price=fullname6+"cart_item_price";
+                   String itemSingle_name_price = shared2.getString(cart_item_price, "");
                    if(!(itemSingle_name_price==null)||(itemSingle_name_price.length()==0))
                    {
                        String[] cats = itemSingle_name_price .split(",");//if spaces are uneven, use \\s+ instead of " "
@@ -243,8 +260,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                        }
                    }
                    SharedPreferences shared7 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-                   String itemSingle_name_cod = shared7.getString("cart_item_cod", "");
-                   if(!(itemSingle_name_old==null)||(itemSingle_name_old.length()==0))
+                   String fullname7 = shared_new.getString("fullusername","");
+                   String cart_item_cod = fullname7+"cart_item_cod";
+                   String itemSingle_name_cod = shared7.getString(cart_item_cod, "");
+                   if(!(itemSingle_name_cod==null)||(itemSingle_name_cod.length()==0))
                    {
                        String[] cats = itemSingle_name_cod .split(",");//if spaces are uneven, use \\s+ instead of " "
                        for (String ct : cats) {
@@ -256,7 +275,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                        }
                    }
                    SharedPreferences shared3 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-                   String itemSingle_name_offerpercent = shared3.getString("cart_item_offer_percent", "");
+                   String fullname8 = shared_new.getString("fullusername","");
+                   String cart_item_offer_percent = fullname8+"cart_item_offer_percent";
+                   String itemSingle_name_offerpercent = shared3.getString(cart_item_offer_percent, "");
                    if(!(itemSingle_name_offerpercent==null)||(itemSingle_name_offerpercent.length()==0))
                    {
                        String[] cats = itemSingle_name_offerpercent .split(",");//if spaces are uneven, use \\s+ instead of " "
@@ -268,6 +289,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
                        }
                    }
+
+                   Log.e("itemadapter","the inittal cvalues of cart item in first add"+items_name_old);
+                   Log.e("itemadapter","the inittal cvalues of cart item in first add"+items_name_old_idd);
+                   Log.e("itemadapter","the inittal cvalues of cart item in first add"+items_name_offer_percentage);
+                   Log.e("itemadapter","the inittal cvalues of cart item in first add"+items_name_cod);
+                   Log.e("itemadapter","the inittal cvalues of cart item in first add"+items_name_image);
+                   Log.e("itemadapter","the inittal cvalues of cart item in first add"+items_name_count);
+                   Log.e("itemadapter","the inittal cvalues of cart item in first add"+items_name_price);
+                   Log.e("itemadapter","the inittal cvalues of cart item in first add"+items_name_quantity);
+
                    //add new values
                    String nm= String.valueOf(holder.name.getText());
                    if(!(items_name_old.contains(nm))) {
@@ -277,9 +308,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                        Integer increment_val = Itemlisting.Get_counter();
                        String new_val = String.valueOf(++increment_val);
                        Itemlisting.update_counter(new_val);
-
+                       Main2Activity.update_counter(new_val);
                        SharedPreferences.Editor editor_tot = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                       editor_tot.putString("total_count_cart", new_val);
+                       String fullname9 = shared_new.getString("fullusername","");
+                       String total_count_cart = fullname9+"total_count_cart";
+                       editor_tot.putString(total_count_cart, new_val);
                        editor_tot.apply();
                        Iterator<String> itr_string = items_name_old.iterator();
                        while (itr_string.hasNext()) {
@@ -290,8 +323,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                            }
                        }
                        SharedPreferences.Editor editor = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                       editor.putString("cart_item_names", it.toString());
-                       editor.putString("cart_Items_toolbar_count", String.valueOf(items_name_old.size()));
+                       String fullname10 = shared_new.getString("fullusername","");
+                       String cart_item_names_put = fullname10+"cart_item_names";
+                       String cart_Items_toolbar_count = fullname10+"cart_Items_toolbar_count";
+                       editor.putString(cart_item_names_put, it.toString());
+                       editor.putString(cart_Items_toolbar_count, String.valueOf(items_name_old.size()));
+                       Log.e("itemadapter","first after add add btn "+cart_item_names+items_name_old);
+
                        Log.e("homefragment", "the catgeories shared preference are  login  =" + it.toString());
                        editor.apply();
 
@@ -304,8 +342,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                            }
                        }
                        SharedPreferences.Editor editor_id = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                       editor.putString("cart_item_names_id", it_id.toString());
-                       editor.apply();
+                     String cart_item_names_id_shared = fullusername_global+"cart_item_names_id";
+                       editor_id.putString(cart_item_names_id_shared, it_id.toString());
+                       editor_id.apply();
 
                        String images = item_image_adapter.get(position);
                        items_name_image.add(images);
@@ -318,8 +357,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                            }
                        }
                        SharedPreferences.Editor editor11 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                       editor11.putString("cart_item_image", it_ig.toString());
-                       editor11.putString("cart_Items_toolbar_count", String.valueOf(items_name_image.size()));
+                      String cart_item_image_shared =fullusername_global+"cart_item_image";
+                      String cart_Items_toolbar_count_shared=fullusername_global+"cart_Items_toolbar_count";
+                       editor11.putString(cart_item_image_shared, it_ig.toString());
+                       editor11.putString(cart_Items_toolbar_count_shared, String.valueOf(items_name_image.size()));
                        Log.e("homefragment", "the catgeories shared preference are  login  =" + it_ig.toString());
                        editor11.apply();
 
@@ -344,7 +385,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                            Log.e("item", "q==" + it_qnty);
                        }
                        SharedPreferences.Editor editor2 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                       editor2.putString("cart_item_qnty", it_qnty.toString());
+                      String cart_item_qnty_shared =fullusername_global+"cart_item_qnty";
+                       editor2.putString(cart_item_qnty_shared, it_qnty.toString());
                        Log.e("homefragment", "the catgeories shared preference are  login quantity =" + it_qnty.toString());
                        editor2.apply();
 
@@ -353,6 +395,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
                        items_name_cod.add(cod_cod);
 
+                       Log.e("homefragment", "the catgeories shared preference are  login  cod =" + items_name_cod+cod_cod);
 
                        Iterator<String> itr_string_cod = items_name_cod.iterator();
                        while (itr_string_cod.hasNext()) {
@@ -363,8 +406,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                            }
                        }
                        SharedPreferences.Editor editor8 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                       editor8.putString("cart_item_cod", it_cod.toString());
-                       Log.e("homefragment", "the catgeories shared preference are  login  =" + it_cod.toString());
+                      String cart_item_cod_shared =fullusername_global+"cart_item_cod";
+                       editor8.putString(cart_item_cod_shared, it_cod.toString());
+                       Log.e("homefragment", "the catgeories shared preference are  login  cod =" + it_cod.toString());
                        editor8.apply();
 
 
@@ -382,7 +426,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                            }
                        }
                        SharedPreferences.Editor editor3 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                       editor3.putString("cart_item_price", it_price.toString());
+                       String cart_item_price_shared =fullusername_global+"cart_item_price";
+                       editor3.putString(cart_item_price_shared, it_price.toString());
                        Log.e("homefragment", "the catgeories shared preference are  login  =" + it_price.toString());
                        editor3.apply();
 
@@ -405,7 +450,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                            }
                        }
                        SharedPreferences.Editor editor4 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                       editor4.putString("cart_item_offer_percent", it_offer_percnt.toString());
+                       String cart_item_offer_percent_shared = fullusername_global+"cart_item_offer_percent";
+                       editor4.putString(cart_item_offer_percent_shared, it_offer_percnt.toString());
                        Log.e("homefragment", "the catgeories shared preference are  login  =" + it_offer_percnt.toString());
                        editor4.apply();
                    }
@@ -440,7 +486,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
               holder.quantityy.setText(stringquantity);
               // get the old values
                String name_item_nm = String.valueOf(holder.name.getText());
-               String sharepreferencename_count = name_item_nm+"_count";
+
+               String sharepreferencename_count = fullusername_global+name_item_nm+"_count";
                SharedPreferences shared = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
                String itemSingle_name_old_count = shared.getString(sharepreferencename_count, "");
                if(itemSingle_name_old_count.equals("")||itemSingle_name_old_count.length()==0)
@@ -451,6 +498,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                {
                    item_old_val= Integer.valueOf(itemSingle_name_old_count);
                }
+               Integer qty_vl_from_text = Item_Quantity_adapter.get(position);
+               Log.e("itemadapter","the integer val for add qty is "+qty_vl_from_text);
+               //item_old_val=item_old_val+qty_vl_from_text;
                ++item_old_val;
                //add new volaues
                String new_count_val = String.valueOf(item_old_val);
@@ -459,7 +509,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
                SharedPreferences.Editor editor5 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                editor5.putString(sharepreferencename_count, new_count_val);
-               Log.e("homefragment","the catgeories shared preference are  login count for   ="+sharepreferencename_count+it_count.toString());
+               Log.e("homefragment","the catgeories shared preference are  specific count for   ="+sharepreferencename_count+new_count_val);
                editor5.apply();
 
 
@@ -469,7 +519,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
                    items_name_old.clear();
                    SharedPreferences sharednew = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-                   String itemSingle_name_old = sharednew.getString("cart_item_names", "");
+                   String cart_item_names_shared2 = fullusername_global+"cart_item_names";
+                   String itemSingle_name_old = sharednew.getString(cart_item_names_shared2, "");
                    if(!(itemSingle_name_old.equals(""))||(itemSingle_name_old.length()==0))
                    {
                        String[] cats = itemSingle_name_old .split(",");//if spaces are uneven, use \\s+ instead of " "
@@ -481,10 +532,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
                        }
                    }
+               Log.e("itemadapter","sec befre add  add btn "+cart_item_names_shared2 +items_name_old);
 
                    items_name_old_idd.clear();
                SharedPreferences sharednew_idd = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-               String itemSingle_name_old_idd = sharednew_idd.getString("cart_item_names_id", "");
+               String cart_item_names_id_shared2 = fullusername_global+"cart_item_names_id";
+               String itemSingle_name_old_idd = sharednew_idd.getString(cart_item_names_id_shared2, "");
+               Log.e("homefragment", "the catgeories shared preference are  login before adding  id  =" +itemSingle_name_old_idd);
                if(!(itemSingle_name_old_idd.equals(""))||(itemSingle_name_old_idd.length()==0))
                {
                    String[] cats = itemSingle_name_old_idd .split(",");//if spaces are uneven, use \\s+ instead of " "
@@ -500,7 +554,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
                items_name_image.clear();
                    SharedPreferences shared10 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-                   String itemSingle_name_old_images = shared10.getString("cart_item_image", "");
+                   String cart_item_image_shared2 = fullusername_global+"cart_item_image";
+                   String itemSingle_name_old_images = shared10.getString(cart_item_image_shared2, "");
                    if(!(itemSingle_name_old_images.equals(""))||(itemSingle_name_old_images.length()==0))
                    {
                        String[] cats = itemSingle_name_old_images .split(",");//if spaces are uneven, use \\s+ instead of " "
@@ -514,7 +569,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                    }
                items_name_quantity.clear();
                    SharedPreferences shared1 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-                   String itemSingle_qnty_old = shared1.getString("cart_item_qnty", "");
+                   String cart_item_qnty_Shared2 = fullusername_global+"cart_item_qnty";
+                   String itemSingle_qnty_old = shared1.getString(cart_item_qnty_Shared2, "");
                    if(!(itemSingle_qnty_old==null)||(itemSingle_qnty_old.length()==0))
                    {
                        String[] cats = itemSingle_qnty_old .split(",");//if spaces are uneven, use \\s+ instead of " "
@@ -529,7 +585,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
                items_name_price.clear();
                    SharedPreferences shared2 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-                   String itemSingle_name_price = shared2.getString("cart_item_price", "");
+                   String cart_item_price_shared2 =fullusername_global+"cart_item_price";
+                   String itemSingle_name_price = shared2.getString(cart_item_price_shared2, "");
                    if(!(itemSingle_name_price==null)||(itemSingle_name_price.length()==0))
                    {
                        String[] cats = itemSingle_name_price .split(",");//if spaces are uneven, use \\s+ instead of " "
@@ -543,7 +600,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                    }
                items_name_cod.clear();
                    SharedPreferences shared7 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-                   String itemSingle_name_cod = shared7.getString("cart_item_cod", "");
+                   String cart_item_cod_shared2 = fullusername_global+"cart_item_cod";
+                   String itemSingle_name_cod = shared7.getString(cart_item_cod_shared2, "");
                    if(!(itemSingle_name_old==null)||(itemSingle_name_old.length()==0))
                    {
                        String[] cats = itemSingle_name_cod .split(",");//if spaces are uneven, use \\s+ instead of " "
@@ -558,7 +616,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
                items_name_offer_percentage.clear();
                    SharedPreferences shared3 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-                   String itemSingle_name_offerpercent = shared3.getString("cart_item_offer_percent", "");
+                   String cart_item_offer_percent_shared = fullusername_global+"cart_item_offer_percent";
+                   String itemSingle_name_offerpercent = shared3.getString(cart_item_offer_percent_shared, "");
                    if(!(itemSingle_name_offerpercent==null)||(itemSingle_name_offerpercent.length()==0))
                    {
                        String[] cats = itemSingle_name_offerpercent .split(",");//if spaces are uneven, use \\s+ instead of " "
@@ -575,12 +634,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                    String nm= String.valueOf(holder.name.getText());
                    if(!(items_name_old.contains(nm))) {
                        items_name_old.add(nm);
+                       Log.e("homefragment", "the catgeories shared preference are  login before adding  id  =" +items_name_old_idd+items_name_old);
+
                        Integer idd = item_id_adapter.get(position);
                        items_name_old_idd.add(idd);
+                       Log.e("Itemadapter ","added id "+idd+items_name_old_idd);
                        Integer increment_val2 = Itemlisting.Get_counter();
                        String new_val2 = String.valueOf(++increment_val2);
                        Itemlisting.update_counter(new_val2);
-
+                        Main2Activity.update_counter(new_val2);
                        Iterator<String> itr_string = items_name_old.iterator();
                        while (itr_string.hasNext()) {
 
@@ -589,6 +651,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                                new_it.append(",");
                            }
                        }
+                       SharedPreferences.Editor editor_nm = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                       String cart_item_names_shared3  = fullusername_global+"cart_item_names";
+                       editor_nm.putString(cart_item_names_shared3, new_it.toString());
+
+                       Log.e("homefragment", "the catgeories shared preference are  login  =" + new_it.toString());
+                       editor_nm.apply();
 
                        Iterator<Integer> itr_string_id = items_name_old_idd.iterator();
                        while (itr_string_id.hasNext()) {
@@ -600,9 +668,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                        }
 
                        SharedPreferences.Editor editor = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                       editor.putString("cart_item_names_id", new_it_id.toString());
+                       String cart_item_names_id_shared3  = fullusername_global+"cart_item_names_id";
+                       editor.putString(cart_item_names_id_shared3, new_it_id.toString());
 
-                       Log.e("homefragment", "the catgeories shared preference are  login  =" + new_it.toString());
+                       Log.e("homefragment", "the catgeories shared preference are  login after adding  id  =" + new_it_id.toString()+cart_item_names_id_shared3+items_name_old_idd);
                        editor.apply();
 
 
@@ -617,8 +686,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                            }
                        }
                        SharedPreferences.Editor editor11 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                       editor11.putString("cart_item_image", new_it_ig.toString());
-                       editor11.putString("cart_Items_toolbar_count", String.valueOf(items_name_image.size()));
+                      String cart_item_image_shared3 = fullusername_global+"cart_item_image";
+                      String cart_Items_toolbar_count_shared3 = fullusername_global+"cart_Items_toolbar_count";
+                       editor11.putString(cart_item_image_shared3, new_it_ig.toString());
+                       editor11.putString(cart_Items_toolbar_count_shared3, String.valueOf(items_name_image.size()));
                        Log.e("homefragment", "the catgeories shared preference are  login  =" + new_it_ig.toString());
                        editor11.apply();
 
@@ -643,7 +714,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                            Log.e("item", "q==" + it_qnty);
                        }
                        SharedPreferences.Editor editor2 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                       editor2.putString("cart_item_qnty", new_it_qnty.toString());
+                      String cart_item_qnty_shared3= fullusername_global+"cart_item_qnty";
+                       editor2.putString(cart_item_qnty_shared3, new_it_qnty.toString());
                        Log.e("homefragment", "the catgeories shared preference are  login quantity =" + new_it_qnty.toString());
                        editor2.apply();
 
@@ -652,6 +724,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
                        items_name_cod.add(cod_cod);
 
+                       Log.e("homefragment", "the catgeories shared preference are  login   cod buton=" + items_name_cod+cod_cod+Item_cod_adapter);
 
                        Iterator<String> itr_string_cod = items_name_cod.iterator();
                        while (itr_string_cod.hasNext()) {
@@ -662,8 +735,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                            }
                        }
                        SharedPreferences.Editor editor8 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                       editor8.putString("cart_item_cod", new_it_cod.toString());
-                       Log.e("homefragment", "the catgeories shared preference are  login  =" + new_it_cod.toString());
+                      String cart_item_cod = fullusername_global+"cart_item_cod";
+                       editor8.putString(cart_item_cod, new_it_cod.toString());
+                       Log.e("homefragment", "the catgeories shared preference are  login   cod buton=" + new_it_cod.toString());
                        editor8.apply();
 
 
@@ -681,7 +755,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                            }
                        }
                        SharedPreferences.Editor editor3 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                       editor3.putString("cart_item_price", new_it_price.toString());
+                       String cart_item_price = fullusername_global+"cart_item_price";
+                       editor3.putString(cart_item_price, new_it_price.toString());
                        Log.e("homefragment", "the catgeories shared preference are  login  =" + new_it_price.toString());
                        editor3.apply();
 
@@ -704,8 +779,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                            }
                        }
                        SharedPreferences.Editor editor4 = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                       editor4.putString("cart_item_offer_percent", new_it_offer_percnt.toString());
-                       Log.e("homefragment", "the catgeories shared preference are  login  =" + new_it_offer_percnt.toString());
+                      String cart_item_offer_percent_shared5 = fullusername_global+"cart_item_offer_percent";
+                       editor4.putString(cart_item_offer_percent_shared5, new_it_offer_percnt.toString());
+                       Log.e("homefragment", "the catgeories shared preference are  login offerpercentage  =" + new_it_offer_percnt.toString());
                        editor4.apply();
                    }
 
@@ -735,7 +811,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                 holder.quantityy.setText(stringquantity2);
                 // get the old values
                 String name_item_nm = String.valueOf(holder.name.getText());
-                String sharepreferencename_count = name_item_nm+"_count";
+                String sharepreferencename_count = fullusername_global+name_item_nm+"_count";
                 SharedPreferences shared = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
                 String itemSingle_name_old = shared.getString(sharepreferencename_count, "");
 
@@ -749,6 +825,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                 }
                 if(item_old_val_minus>1)
                 {
+
                     --item_old_val_minus;
                 }
 

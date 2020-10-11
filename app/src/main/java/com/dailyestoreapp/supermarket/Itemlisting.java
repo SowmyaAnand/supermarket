@@ -83,13 +83,15 @@ public class Itemlisting extends AppCompatActivity {
     int start = 0,limit=5;
     int mCartItemCount = 10;
     Toolbar t;
+    String fullname;
     static String flag;
     static TextView txt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itemlisting);
-
+        final SharedPreferences fullname_shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        fullname = fullname_shared.getString("fullusername","");
  t = (Toolbar)findViewById(R.id.toolbar_itemlisting);
         setSupportActionBar(t);
         Intent in = getIntent();
@@ -173,7 +175,9 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
         View v  = mc.getActionView();
         txt = mc.getActionView().findViewById(R.id.cart_badge3);
         SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        String itemSingle_name_old = shared.getString("cart_Items_toolbar_count", "");
+
+        String cart_Items_toolbar_count = fullname+"cart_Items_toolbar_count";
+        String itemSingle_name_old = shared.getString(cart_Items_toolbar_count, "");
         if(itemSingle_name_old.equals(""))
         {
             txt.setText("0");
@@ -188,6 +192,9 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent cart = new Intent(Itemlisting.this,CartPage.class);
+                Bundle b = new Bundle();
+                b.putString("from_item_flag","1");
+                cart.putExtras(b);
                 startActivity(cart);
 
             }
@@ -196,6 +203,9 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent cart = new Intent(Itemlisting.this,CartPage.class);
+                Bundle b = new Bundle();
+                b.putString("from_item_flag","1");
+                cart.putExtras(b);
                 startActivity(cart);
             }
         });
@@ -223,6 +233,9 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
         switch (item.getItemId()) {
             case R.id.cart3:
                 Intent cart = new Intent(Itemlisting.this,CartPage.class);
+                Bundle b = new Bundle();
+                b.putString("from_item_flag","1");
+                cart.putExtras(b);
                 startActivity(cart);
                 return true;
             case R.id.account:

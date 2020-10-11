@@ -16,7 +16,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3,R.string.tab_text__4};
+    //private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3,R.string.tab_text__4};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1,R.string.tab_text_3,R.string.tab_text__4};
+
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -41,7 +43,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 2 total pages.
-        return 4;
+        return 3;
     }
     public void addFragment(Fragment fragment, String title) {
         mFragmentList.add(fragment);

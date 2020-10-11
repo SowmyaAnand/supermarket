@@ -69,46 +69,46 @@ EditText ed,ed2;
                              Bundle savedInstanceState) {
         final String number = "+917510237377";
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment3, container, false);
-        call = (ImageView) rootView.findViewById(R.id.call);
-        whats = (ImageView) rootView.findViewById(R.id.whatsapp);
-        email = (ImageView) rootView.findViewById(R.id.email);
-        email.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendMail();
-            }
-        });
-        whats.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PackageManager pm=getContext().getPackageManager();
-                try {
-                    PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
-                    Uri uri = Uri.parse("smsto:" + number);
-                    Intent i = new Intent(Intent.ACTION_SENDTO, uri);
-                    i.setPackage("com.whatsapp");
-                    startActivity(Intent.createChooser(i, ""));
-                }
-                catch (PackageManager.NameNotFoundException e) {
-                    Toast.makeText(getContext(), "WhatsApp not Installed", Toast.LENGTH_SHORT)
-                            .show();
-                }
-
-            }
-        });
-        call.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                 try {
-                   String ph = "+917510237377";
-                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + ph));
-                 startActivity(intent);
-                  } catch (Exception e) {
-                     Toast.makeText(getContext(),""+e,Toast.LENGTH_SHORT);
-                  }
-            }
-        });
+        View rootView = inflater.inflate(R.layout.bookoncall, container, false);
+//        call = (ImageView) rootView.findViewById(R.id.call);
+//        whats = (ImageView) rootView.findViewById(R.id.whatsapp);
+//        email = (ImageView) rootView.findViewById(R.id.email);
+//        email.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                sendMail();
+//            }
+//        });
+//        whats.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                PackageManager pm=getContext().getPackageManager();
+//                try {
+//                    PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+//                    Uri uri = Uri.parse("smsto:" + number);
+//                    Intent i = new Intent(Intent.ACTION_SENDTO, uri);
+//                    i.setPackage("com.whatsapp");
+//                    startActivity(Intent.createChooser(i, ""));
+//                }
+//                catch (PackageManager.NameNotFoundException e) {
+//                    Toast.makeText(getContext(), "WhatsApp not Installed", Toast.LENGTH_SHORT)
+//                            .show();
+//                }
+//
+//            }
+//        });
+//        call.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                 try {
+//                   String ph = "+917510237377";
+//                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + ph));
+//                 startActivity(intent);
+//                  } catch (Exception e) {
+//                     Toast.makeText(getContext(),""+e,Toast.LENGTH_SHORT);
+//                  }
+//            }
+//        });
 
         return rootView;
     }

@@ -96,7 +96,8 @@ sngup.setOnClickListener(new View.OnClickListener() {
                 Log.e("login","success="+response.body().getResponsedata());
                 int success = Integer.parseInt(obj.getResponsedata().getSuccess());
                 Log.e("login","success="+success);
-
+                String userid = obj.getResponsedata().getData();
+                String fullusername = "username"+userid;
                 if(success==1)
                 {
 
@@ -104,9 +105,11 @@ sngup.setOnClickListener(new View.OnClickListener() {
 
                     SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                     editor_frst.putString("logged_in_flag", "1");
+                    editor_frst.putString("fullusername",fullusername);
                     editor_frst.apply();
                     Intent next = new Intent(Login.this,Main2Activity.class);
                     startActivity(next);
+
                 }
                 else
                 {
