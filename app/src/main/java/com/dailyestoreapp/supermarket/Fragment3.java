@@ -1,5 +1,6 @@
 package com.dailyestoreapp.supermarket;
 
+import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -18,6 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -25,6 +29,7 @@ public class Fragment3 extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 ImageView call,whats,email;
+CardView call_card,whatsapp_card;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -70,6 +75,37 @@ EditText ed,ed2;
         final String number = "+917510237377";
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.bookoncall, container, false);
+        call_card=rootView.findViewById(R.id.oncall);
+        whatsapp_card=rootView.findViewById(R.id.onwhatsapp);
+        call_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                   String ph = "+917510237377";
+                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + ph));
+                 startActivity(intent);
+                  } catch (Exception e) {
+                     Toast.makeText(getContext(),""+e,Toast.LENGTH_SHORT).show();
+                  }
+            }
+        });
+        whatsapp_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PackageManager pm=getContext().getPackageManager();
+                try {
+                    PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+                    Uri uri = Uri.parse("smsto:" + number);
+                    Intent i = new Intent(Intent.ACTION_SENDTO, uri);
+                    i.setPackage("com.whatsapp");
+                    startActivity(Intent.createChooser(i, ""));
+                }
+                catch (PackageManager.NameNotFoundException e) {
+                    Toast.makeText(getContext(), "WhatsApp not Installed", Toast.LENGTH_SHORT)
+                            .show();
+                }
+            }
+        });
 //        call = (ImageView) rootView.findViewById(R.id.call);
 //        whats = (ImageView) rootView.findViewById(R.id.whatsapp);
 //        email = (ImageView) rootView.findViewById(R.id.email);
@@ -133,6 +169,8 @@ EditText ed,ed2;
                     .show();
         }
     }
+
+
 
 }
 

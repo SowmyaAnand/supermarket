@@ -1,5 +1,6 @@
 package com.dailyestoreapp.supermarket;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,6 +14,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -20,21 +28,36 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Login extends AppCompatActivity {
+public class Login extends AppCompatActivity  {
 RelativeLayout r;
 Button login;
 EditText usr,pswd;
+    Button google_login;
+    private GoogleSignInClient mGoogleSignInClient;
+    private static final int RC_SIGN_IN = 1;
     public static final String MY_PREFS_NAME = "CustomerApp";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+google_login= findViewById(R.id.google_login);
 TextView sngup= (TextView) findViewById(R.id.newuser);
 login =findViewById(R.id.login_btn);
 usr=findViewById(R.id.edit_text_user_login);
 pswd = findViewById(R.id.edit_text2_pswd_login);
-
+google_login.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+});
 login.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -129,5 +152,38 @@ sngup.setOnClickListener(new View.OnClickListener() {
         login.setClickable(true);
         login.setEnabled(true);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+    }
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            Log.e("google account","google account"+account.getEmail());
+            // Signed in successfully, show authenticated UI.
+            Toast.makeText(getApplicationContext(),"Logged in Successfully",Toast.LENGTH_LONG).show();
+            SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+            editor_frst.putString("logged_in_flag", "1");
+            editor_frst.putString("fullusername", account.getEmail());
+            editor_frst.apply();
+            Intent next = new Intent(Login.this,Main2Activity.class);
+            startActivity(next);
+            Log.e("google account","google account"+account.getEmail());
+            //gotoProfile();
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.e("Log.e", "signInResult:failed code=" + e.getStatusCode());
+            Toast.makeText(getApplicationContext(),"Sign in cancel",Toast.LENGTH_LONG).show();
+
+        }
     }
 }
