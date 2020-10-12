@@ -40,14 +40,40 @@ Button sgnup;
                 final String lastname_val = lname.getText().toString();
                 final String email_val =email.getText().toString();
                 String ph =phone_num.getText().toString();
-                final int phone_num_val = Integer.parseInt(ph);
-                final String address_val =address.getText().toString();
+                final int phone_num_val;
+                if(ph.length()==0)
+                {
+                   phone_num_val=0;
+                }
+                else
+                {
+                    phone_num_val = Integer.parseInt(ph);
+                }
                 String pin = pincode.getText().toString();
-                final int pincode_val = Integer.parseInt(pin);
+                final int pincode_val;
+                if(pin.length()==0)
+                {
+                    pincode_val=0;
+                }
+                else
+                {
+                   pincode_val= Integer.parseInt(pin);
+                }
+                final String address_val =address.getText().toString();
+
+
                 final String dob_val ="00-00-0000";
                 final String usernme_val =usernme.getText().toString();
                 final String pswd_val =pswd.getText().toString();
-                Signup_call(firstname_val,lastname_val,email_val,phone_num_val,address_val,pincode_val,dob_val,usernme_val,pswd_val);
+                if((firstname_val.length()==0||(lastname_val.length()==0)||(email_val.length()==0)||(address_val.length()==0)||(dob_val.length()==0)||(usernme_val.length()==0)||(pswd_val.length()==0)))
+                {
+                    Toast.makeText(Signup.this,"Please fill all details",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Signup_call(firstname_val,lastname_val,email_val,phone_num_val,address_val,pincode_val,dob_val,usernme_val,pswd_val);
+
+                }
 
             }
         });

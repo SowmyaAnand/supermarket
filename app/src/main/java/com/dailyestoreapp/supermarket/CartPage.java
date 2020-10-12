@@ -519,8 +519,18 @@ public void Book_now() {
     Log.e("cart","checkout param=    userid ====>"+4);
     Log.e("cart","checkout param=    address ====> abc");
     Log.e("cart","checkout param=    itemid ====>585225");
+    SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+    String useridd = shared.getString("logged_in_userId","");
+    int user_int_id = Integer.parseInt(useridd);
+    final ArrayList<Integer> user_cart_id = new ArrayList<>();
+    final ArrayList<Integer> type_cart_id = new ArrayList<>();
+    for(int g =0;g<items_name_old_cart_id.size();g++)
+    {
+        user_cart_id.add(user_int_id);
+        type_cart_id.add(0);
+    }
 
-    Call<CustomerAppResponseLogin> call = mainInterface.checkoutapi(items_name_old_cart_id,items_name_count_cart_integer,items_name_quantity_cart,0,4,"abc","585225");
+    Call<CustomerAppResponseLogin> call = mainInterface.checkoutapi(items_name_old_cart_id,items_name_count_cart_integer,items_name_quantity_cart,type_cart_id,user_cart_id,"abc","585225");
     call.enqueue(new Callback<CustomerAppResponseLogin>() {
         @Override
         public void onResponse(Call<CustomerAppResponseLogin> call, retrofit2.Response<CustomerAppResponseLogin> response) {

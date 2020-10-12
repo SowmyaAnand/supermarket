@@ -29,8 +29,12 @@ public interface ResponseInterface {
     @POST("listSubCategory")
     Call<CustomerAppResponse> SubCategory(@Field("typeId") int id);
 
-
-
+    @FormUrlEncoded
+    @POST("userDetails")
+    Call<CustomerAppResponseMyAccount> userDetails(@Field("userId") int userId);
+    @FormUrlEncoded
+    @POST("userOrders")
+    Call<CustomerAppResponseMyAccount> userOrders(@Field("userId") int userId);
     @GET("allOrders")
     Call<CustomerAppResponse> orderslist();
     @FormUrlEncoded
@@ -44,8 +48,14 @@ public interface ResponseInterface {
     @FormUrlEncoded
     @POST("loginData")
     Call<CustomerAppResponseLogin> Loginapi(@Field("username") String usernameres,
-                                 @Field("password") String passwordres,
-                                 @Field("type") String typeres
+                                            @Field("password") String passwordres,
+                                            @Field("type") String typeres
+            );
+
+    @FormUrlEncoded
+    @POST("forgotPassword")
+    Call<CustomerAppResponseLogin> Forgot_pswdapi(@Field("email") String email
+
     );
     @FormUrlEncoded
     @POST("userRegister")
@@ -61,13 +71,25 @@ public interface ResponseInterface {
                                             @Field("type") String type
     );
     @FormUrlEncoded
+    @POST("updateProfile")
+    Call<CustomerAppResponseLogin> update(@Field("userId") int userId,
+            @Field("firstName") String fname,
+                                             @Field("lastName") String lname,
+                                             @Field("email") String email,
+                                             @Field("phone") int phone_num,
+                                             @Field("address") String address,
+                                             @Field("pinCode") int pincode,
+                                             @Field("dob") String dob
+
+    );
+    @FormUrlEncoded
     @POST("checkout")
-    Call<CustomerAppResponseLogin> checkoutapi(@Field("ItemId []") ArrayList<Integer> ItemId ,
-                                          @Field("count []") ArrayList<Integer> count,
-                                          @Field("quantity []") ArrayList<String> quantity,
-                                          @Field("type") int type,
-                                          @Field("UserId") int id,
+    Call<CustomerAppResponseLogin> checkoutapi(@Field("itemId[]") ArrayList<Integer> ItemId ,
+                                          @Field("count[]") ArrayList<Integer> count,
+                                          @Field("quantity[]") ArrayList<String> quantity,
+                                          @Field("type[]") ArrayList<Integer> type,
+                                          @Field("userId[]") ArrayList<Integer> id,
                                           @Field("address") String address,
-                                          @Field("postcode") String postcode
+                                          @Field("postCode") String postcode
                                           );
 }
