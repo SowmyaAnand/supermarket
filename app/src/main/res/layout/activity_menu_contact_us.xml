@@ -82,7 +82,7 @@
                             android:hint="Email">
                             <EditText
                                 android:textColor="@color/black"
-                                android:id="@+id/edit_text2"
+                                android:id="@+id/edit_text2_contactus_email"
                                 android:paddingLeft="40dp"
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/customized_edittext"
@@ -101,7 +101,7 @@
                             android:textColorHint="@color/gray"
                             android:hint="Mobile ">
                             <EditText
-                                android:id="@+id/edit_text_mob"
+                                android:id="@+id/edit_text_mob_contactus"
                                 android:paddingLeft="40dp"
                                 android:textColor="@color/black"
                                 android:background="@drawable/customized_edittext"
@@ -120,7 +120,7 @@
                             android:textColorHint="@color/gray"
                             android:hint="Address">
                             <EditText
-                                android:id="@+id/edit_text_address"
+                                android:id="@+id/edit_text_address_contactus"
                                 android:paddingLeft="40dp"
                                 android:layout_marginTop="10dp"
                                 android:textColor="@color/black"
@@ -160,18 +160,30 @@
 
                                 <EditText
                                     android:padding="15dp"
-                                    android:id="@+id/edtxtDescr"
+                                    android:id="@+id/edtxtDescr_contactus"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:lines="6"
+                                    android:textColor="@color/black"
                                     android:hint="Type your message here"
                                     android:background="@android:color/transparent"
                                     android:gravity="left"
                                     android:layout_marginTop="20dp"
                                     android:maxLength="600"/>
+
                             </LinearLayout>
 
+
                         </androidx.cardview.widget.CardView>
+
+                        <Button
+                            android:id="@+id/msg_send"
+                            android:text="SEND"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:background="@color/colorPrimary"
+                            android:layout_below="@+id/descriptionCard"/>
                         <LinearLayout
                             android:id="@+id/options"
                             android:layout_width="match_parent"
@@ -179,7 +191,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="40dp"
 
-                            android:layout_below="@+id/descriptionCard">
+                            android:layout_below="@+id/msg_send">
 
                             <ImageView
                                 android:id="@+id/call"

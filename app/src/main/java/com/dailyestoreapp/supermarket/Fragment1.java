@@ -189,7 +189,7 @@ public class Fragment1 extends Fragment {
 
         }
         String shared_dealflyer = shared_firstflyer.getString("viewalldeals_img", "");
-        String[] shared_dealflyer_img = shared_secondflyer.split(",");//if spaces are uneven, use \\s+ instead of " "
+        String[] shared_dealflyer_img = shared_dealflyer.split(",");//if spaces are uneven, use \\s+ instead of " "
         for (String ct : shared_dealflyer_img) {
             if(!(ct.equals("")||ct.equals(null)))
             {

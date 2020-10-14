@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -12,11 +13,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MenuContactUs extends AppCompatActivity {
     ImageView call,whats,email;
+    Button msg_send;
+    EditText address,email_id,mobile,msg;
+    public static final String MY_PREFS_NAME = "CustomerApp";
     final String number = "+917510237377";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +41,25 @@ public class MenuContactUs extends AppCompatActivity {
         setSupportActionBar(toolbar);
         call = (ImageView)findViewById(R.id.call);
         whats = (ImageView)findViewById(R.id.whatsapp);
+        msg_send=findViewById(R.id.msg_send);
+        address = findViewById(R.id.edit_text_address_contactus);
+        email_id=findViewById(R.id.edit_text2_contactus_email);
+        mobile=findViewById(R.id.edit_text_mob_contactus);
+        msg=findViewById(R.id.edtxtDescr_contactus);
         email = (ImageView) findViewById(R.id.email);
+        msg_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                String useridd = shared.getString("logged_in_userId","");
+                int user_idd = Integer.parseInt(useridd);
+                String email_text = email_id.getText().toString();
+                String address_text = address.getText().toString();
+                String mobile_text = mobile.getText().toString();
+                String msg_text = msg.getText().toString();
+                contactus(user_idd,email_text,address_text,mobile_text,msg_text);
+            }
+        });
         email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,5 +129,64 @@ public class MenuContactUs extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+    void contactus(int useridd,String email,String address,String mobile,String messages)
+    {    ArrayList<String> contactus_string = new ArrayList<>();
 
+        String url = "http://dailyestoreapp.com/dailyestore/api/";
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+        ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
+        int mob_num = Integer.parseInt(mobile);
+        String userid = String.valueOf(useridd);
+        contactus_string.add(userid);
+        contactus_string.add(email);
+        contactus_string.add(mobile);
+        contactus_string.add(address);
+        contactus_string.add(messages);
+
+        Call<CustomerAppResponseLogin> call = mainInterface.contactus_send(useridd,email,mob_num,address,messages);
+        call.enqueue(new Callback<CustomerAppResponseLogin>() {
+            @Override
+            public void onResponse(Call<CustomerAppResponseLogin> call, retrofit2.Response<CustomerAppResponseLogin> response) {
+                CustomerAppResponseLogin obj =response.body();
+                Log.e("login","success="+response.body().getResponsedata());
+                int success = Integer.parseInt(obj.getResponsedata().getSuccess());
+                Log.e("login","success="+success);
+                String userid = obj.getResponsedata().getData();
+                String fullusername = "username"+userid;
+                if(success==1)
+                {
+
+                    Toast.makeText(MenuContactUs.this,"Message Sent",Toast.LENGTH_SHORT).show();
+
+
+
+                }
+                else
+                {
+
+                    Toast.makeText(MenuContactUs.this,"Error Please try after some time",Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CustomerAppResponseLogin> call, Throwable t) {
+              //  Toast.makeText(MenuContactUs.this,t.getMessage(),Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
+    }
 }

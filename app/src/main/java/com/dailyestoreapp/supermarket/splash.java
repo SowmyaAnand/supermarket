@@ -370,7 +370,7 @@ SecondViewFlyers();
             public void onResponse(Call<CustomerAppResponse> call, retrofit2.Response<CustomerAppResponse> response) {
                 CustomerAppResponse listCategoryResponseobject = response.body();
                 int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
-                Log.e("deals","the succes value is "+response);
+                Log.e("deals","the succes value is "+response.body().getResponsedata().getData());
                 int data_length = response.body().getResponsedata().getData().size();
                 try {
 
@@ -383,7 +383,7 @@ SecondViewFlyers();
                             String imageurl = response.body().getResponsedata().getData().get(i).getImage();
                             String did = response.body().getResponsedata().getData().get(i).getDealId();
                             String imageurl_total=url1+imageurl;
-                            Log.e("firstpop","the succes value is "+imageurl_total);
+                            Log.e("firstpop","the deal succes value is "+imageurl_total);
                            original_deal_splash.add(imageurl_total);
                             String intial_deal_flyer =response.body().getResponsedata().getData().get(i).getinitialdealid();
                             if(intial_deal_flyer.equals("0"))
@@ -392,7 +392,7 @@ SecondViewFlyers();
                             }
                         }
 
-                        Iterator<String> itr_string_image = original_flyer2_splash.iterator();
+                        Iterator<String> itr_string_image = original_deal_splash.iterator();
                         while (itr_string_image.hasNext())
                         {
 

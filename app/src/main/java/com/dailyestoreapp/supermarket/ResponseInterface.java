@@ -52,6 +52,20 @@ public interface ResponseInterface {
                                             @Field("password") String passwordres,
                                             @Field("type") String typeres
             );
+    @FormUrlEncoded
+    @POST("contactUs")
+    Call<CustomerAppResponseLogin> contactus_send(@Field("userId") int userId,
+                                            @Field("email") String email,
+                                            @Field("mobile") int mobile,
+                                                  @Field("address")String address,
+                                                  @Field("message") String msg
+    );
+
+//    @FormUrlEncoded
+//    @POST("loginData")
+//    Call<CustomerAppResponseLogin> contactus_send(@Field("data[]") ArrayList<String> data
+//
+//    );
 
     @FormUrlEncoded
     @POST("forgotPassword")
