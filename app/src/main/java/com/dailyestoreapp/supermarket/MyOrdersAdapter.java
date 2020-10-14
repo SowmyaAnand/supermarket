@@ -21,14 +21,20 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
 
     ArrayList<String> personNames = new ArrayList<String>();
     Context context;
+
     ArrayList<String> lts=new ArrayList<String>();
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity=1;
-    public MyOrdersAdapter(Context context, ArrayList personNames) {
+    ArrayList<String> items_name_myorders; ArrayList<String>items_name_quantity_myorders;ArrayList<Integer> items_name_status_myorders;ArrayList<Integer> items_count_myorders;
+    public MyOrdersAdapter(Context context,ArrayList<String> items_name_myorders, ArrayList<String>items_name_quantity_myorders,ArrayList<Integer> items_name_status_myorders,ArrayList<Integer> items_count_myorders) {
         this.context = context;
         this.personNames = personNames;
         this.lts.addAll(personNames);
-
+        this.items_name_myorders=items_name_myorders;
+        this.items_count_myorders=items_count_myorders;
+        this.items_name_quantity_myorders=items_name_quantity_myorders;
+        this.items_name_status_myorders=items_name_status_myorders;
+        Log.e("myorders","adapter orders are ="+items_name_quantity_myorders);
     }
     @Override
     public MyOrdersAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -43,36 +49,52 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
     public void onBindViewHolder(final MyOrdersAdapter.MyViewHolder holder, final int position) {
 
         // set the data in items
-        String name = (String) personNames.get(position);
+        String name = (String) items_name_myorders.get(position);
+        String quan = (String) items_name_quantity_myorders.get(position);
+        Integer count = items_count_myorders.get(position);
+        Integer st = items_name_status_myorders.get(position);
+        holder.name.setText(name);
+        holder.quantityy.setText(quan);
+        String cntt = "COUNT :"+count;
+        holder.count.setText(cntt);
+        if(st==0)
+        {
+
+        holder.status.setText("PENDING FOR APPROVAL");
+        }
+        else if(st==1)
+        {
+            holder.status.setText("APPROVED");
+        }
 
 
         // implement setOnClickListener event on item view.
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // display a toast with person name on item click
-                Intent next= new Intent(context,description.class);
-                context.startActivity(next);
-
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // display a toast with person name on item click
+//                Intent next= new Intent(context,description.class);
+//                context.startActivity(next);
+//
+//            }
+//        });
     }
 
 
     @Override
     public int getItemCount() {
-        return personNames.size();
+        return items_name_myorders.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name,quantityy;// init the item view's
+        TextView name,quantityy,price,status,count;// init the item view's
         Button addition,substraction,addbtn;
         public MyViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.Title);
-            addition=(Button) itemView.findViewById(R.id.plus);
-            substraction = (Button) itemView.findViewById(R.id.minus);
-            quantityy = (TextView) itemView.findViewById(R.id.quantity);
-            addbtn = (Button) itemView.findViewById(R.id.add);
+            name = (TextView) itemView.findViewById(R.id.Title_myorder);
+            quantityy = (TextView) itemView.findViewById(R.id.qty_myorder);
+           price=(TextView) itemView.findViewById(R.id.prce_myorder);
+           status=(TextView) itemView.findViewById(R.id.status_myorder);
+           count=(TextView) itemView.findViewById(R.id.count_myorder);
             // get the reference of item view's
 
         }

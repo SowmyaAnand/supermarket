@@ -46,7 +46,7 @@ public class Fragment4 extends Fragment {
   EditText name_account,mob_account,email_account,pincode_account,address_account;
     TextView edit_account,save_account ;
     String firstname_main;
-    String lastname_main;String email_main;int phone_num_main;String address_main;int pincode_main;String dob_main;
+    String lastname_main;String email_main;String phone_num_main;String address_main;String pincode_main;String dob_main;
     public Fragment4() {
         // Required empty public constructor
     }
@@ -146,12 +146,15 @@ public class Fragment4 extends Fragment {
                 address_account.setEnabled(false);address_account.setFocusable(false);
                 firstname_main= String.valueOf(name_account.getText());
                 email_main=String.valueOf(email_account.getText());
-                int p = Integer.parseInt(mob_account.getText().toString());
-                phone_num_main=p;
+
+                phone_num_main= String.valueOf(mob_account.getText());
                 address_main=String.valueOf(address_account.getText());
-                int pc = Integer.parseInt(pincode_account.getText().toString());
-                pincode_main=pc;
-                update(firstname_main,lastname_main,email_main,phone_num_main,address_main,pincode_main,dob_main);
+
+                pincode_main= String.valueOf(pincode_account.getText());
+                SharedPreferences shared = getContext().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                String useridd = shared.getString("logged_in_userId","");
+                int idd = Integer.parseInt(useridd);
+                userdetailsEdit(idd,firstname_main,lastname_main,email_main,phone_num_main,address_main,pincode_main,dob_main);
 
 
             }
@@ -231,26 +234,12 @@ public class Fragment4 extends Fragment {
                         lastname_main=lastname;
                         String totl_name = firstname;
                         String ph_no = listCategoryResponseobject.getResponsedata().getData().getPhone();
-                        if(ph_no.length()==0)
-                        {
-                            phone_num_main=0;
-                        }
-                        else
-                        {
-                            phone_num_main= Integer.parseInt(ph_no);
-                        }
+
 
                         String email = listCategoryResponseobject.getResponsedata().getData().getEmail();
                         email_main=email;
                         String pincode = listCategoryResponseobject.getResponsedata().getData().getPinCode();
-                        if(pincode.length()==0)
-                        {
-                            pincode_main=0;
-                        }
-                        else
-                        {
-                            pincode_main= Integer.parseInt(pincode);
-                        }
+
                         String address = listCategoryResponseobject.getResponsedata().getData().getAddress();
                         address_main=address;
                         String dobb =listCategoryResponseobject.getResponsedata().getData().getDob();
@@ -282,66 +271,60 @@ public class Fragment4 extends Fragment {
     }
 
 
-    void update(String firstname,String lastname,String email,int phone_num,String address,int pincode,String dob)
+    private void userdetailsEdit(final int Id, String firstname, final String lastname, final String email,final String phone,final String address,final String pincode,final String dob)
     {
-        String signup_type="0";
-        SharedPreferences shared = getContext().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        String useridd = shared.getString("logged_in_userId","");
-        int user_idd = Integer.parseInt(useridd);
+
+
+
         String url = "http://dailyestoreapp.com/dailyestore/api/";
+        final String url1 = "http://dailyestoreapp.com/dailyestore/";
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .build();
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
         ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
-        Call<CustomerAppResponseLogin> call = mainInterface.update(user_idd,firstname,lastname,email,phone_num,address,pincode,dob);
+        Call<CustomerAppResponseLogin> call = mainInterface.UpdateMyaccount(Id,firstname,lastname,email,phone,address,pincode,dob);
         call.enqueue(new Callback<CustomerAppResponseLogin>() {
             @Override
             public void onResponse(Call<CustomerAppResponseLogin> call, retrofit2.Response<CustomerAppResponseLogin> response) {
-                CustomerAppResponseLogin obj =response.body();
-                Log.e("login","success="+response.body().getResponsedata());
-                int success = Integer.parseInt(obj.getResponsedata().getSuccess());
-                Log.e("login","success="+success);
-                String userid = obj.getResponsedata().getData();
-                String fullusername = "username"+userid;
-                if(success==1)
-                {
+                CustomerAppResponseLogin listCategoryResponseobject = response.body();
+                String success = response.body().getResponsedata().getSuccess();
+                Log.e("frag4","error"+success);
+                Toast.makeText(getContext(),"Profile Updated",Toast.LENGTH_LONG).show();
+                try {
+//
 
-                    Toast.makeText(getContext(),"Successfully Saved",Toast.LENGTH_SHORT).show();
+                    if(success.equals("1"))
+                    {
+                        Toast.makeText(getContext(),"Profile Updated",Toast.LENGTH_LONG).show();
+//
 
-//                    SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-//                    editor_frst.putString("logged_in_flag", "1");
-//                    editor_frst.putString("fullusername",fullusername);
-//                    editor_frst.apply();
-//                    Intent next = new Intent(Login.this,Main2Activity.class);
-//                    startActivity(next);
+                    }
 
-                }
-                else
-                {
+                } catch (Exception e) {
+                    e.printStackTrace();
 
-                    Toast.makeText(getContext(),"Invalid Username and Password",Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(getContext(),"something went wrong",Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<CustomerAppResponseLogin> call, Throwable t) {
+                Log.e("frag4","error"+t.getMessage());
                 Toast.makeText(getContext(),t.getMessage(),Toast.LENGTH_SHORT).show();
-
             }
         });
 
 
     }
+
 //    @Override
 //    public void onResume() {
 //        super.onResume();

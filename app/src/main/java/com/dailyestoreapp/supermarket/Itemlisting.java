@@ -283,9 +283,9 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
 //                if(success==1)
 //                {
 //                    int data_length = response.body().getResponsedata().getData().size();
-//                    String item_name = response.body().getResponsedata().getData().get(1).getItemName();
-//                }
-//                String res= new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getResponsedata());
+//                    S
+//                String rtring item_name = response.body().getResponsedata().getData().get(1).getItemName();
+////                }es= new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getResponsedata());
 //                JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
 //                dialog.dismiss();
                 try {

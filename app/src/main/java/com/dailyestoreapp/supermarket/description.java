@@ -54,11 +54,11 @@ itemDesc=findViewById(R.id.itemdesc);
         itemDesc.setText(descc);
         if(refundd.equals("1"))
         {
-            refund.setText("RETURN/REPLACEMENT ELIGIBLE");
+            refund.setText("REPLACEMENT ELIGIBLE");
         }
         else
         {
-            refund.setText("RETURN/REPLACEMENT NOT ELIGIBLE");
+            refund.setText("REPLACEMENT NOT ELIGIBLE");
         }
 
     }

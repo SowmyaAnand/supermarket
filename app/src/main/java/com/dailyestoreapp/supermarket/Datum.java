@@ -61,6 +61,7 @@ class Datum {
     @SerializedName("quantity")
     @Expose
     private String quantity;
+
     @SerializedName("price")
     @Expose
     private String price;
@@ -464,6 +465,7 @@ class Datum {
     public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
+
 
     public String getPrice() {
         return price;

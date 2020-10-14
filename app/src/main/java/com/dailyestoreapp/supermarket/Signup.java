@@ -65,7 +65,7 @@ Button sgnup;
                 final String dob_val ="00-00-0000";
                 final String usernme_val =usernme.getText().toString();
                 final String pswd_val =pswd.getText().toString();
-                if((firstname_val.length()==0||(lastname_val.length()==0)||(email_val.length()==0)||(address_val.length()==0)||(dob_val.length()==0)||(usernme_val.length()==0)||(pswd_val.length()==0)))
+                if((firstname_val.length()==0||(lastname_val.length()==0)||(email_val.length()==0)||(pin.length()==0)||(ph.length()==0)||(address_val.length()==0)||(dob_val.length()==0)||(usernme_val.length()==0)||(pswd_val.length()==0)))
                 {
                     Toast.makeText(Signup.this,"Please fill all details",Toast.LENGTH_SHORT).show();
                 }
