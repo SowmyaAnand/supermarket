@@ -100,17 +100,7 @@
                 android:textSize="12sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/roboto_light"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:text="ADD"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-           android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:background="@color/colorPrimary"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true" />
+
         </RelativeLayout>
     </LinearLayout>
 

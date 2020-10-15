@@ -97,19 +97,19 @@ RecyclerView orders;
                         int it_id = Integer.parseInt(response.body().getResponsedata().getData().get(i).getItemId());
 
                         String item_quant = response.body().getResponsedata().getData().get(i).getQuantity();
-                       // Integer item_price = Integer.valueOf(response.body().getResponsedata().getData().get(i).getPrice());
+                        String item_price = response.body().getResponsedata().getData().get(i).getPrice();
                         Integer item_status = Integer.valueOf(response.body().getResponsedata().getData().get(i).getStatus());
-                       // String imageurl = response.body().getResponsedata().getData().get(i).getImage();
+                        String imageurl = response.body().getResponsedata().getData().get(i).getImage();
                        Integer cnt = Integer.valueOf(response.body().getResponsedata().getData().get(i).getCount());
-                        //String imageurl_total=url1+imageurl;
-                        //Log.e("itemlisting","imageurl"+url1+imageurl);
+                        String imageurl_total=url1+imageurl;
+                        Log.e("itemlisting","imageurl"+url1+imageurl);
 
                         items_name_quantity_myorders.add(item_quant);
-                       // items_name_price_myorders.add(item_price);
+                        items_name_price_myorders.add(item_price);
                        items_name_myorders.add(item_name);
                         items_name_status_myorders.add(item_status);
                         items_count_myorders.add(cnt);
-                      //  items_image_myorders.add(imageurl_total);
+                        items_image_myorders.add(imageurl_total);
 
 
                     }
@@ -118,7 +118,7 @@ RecyclerView orders;
 
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                     orders.setLayoutManager(linearLayoutManager);
-                    customAdapter_offers = new MyOrdersAdapter(Myorders.this, items_name_myorders,items_name_quantity_myorders,items_name_status_myorders,items_count_myorders);
+                    customAdapter_offers = new MyOrdersAdapter(Myorders.this, items_name_myorders,items_name_quantity_myorders,items_name_status_myorders,items_count_myorders,items_name_price_myorders,items_image_myorders);
                     orders.setAdapter(customAdapter_offers);
                 }
 

@@ -15,7 +15,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <ImageView
-            android:id="@+id/img"
+            android:id="@+id/img_myorder"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/onion"
@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/img_myorder"
             android:textSize="15sp"
             android:text="Title"/>
         <TextView
@@ -93,7 +93,7 @@
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/img_myorder"
             android:textSize="15sp"
             android:text="QUANTITY:1KG"
             />
@@ -107,7 +107,7 @@
             android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/img_myorder"
             android:text="count :"
             />
         <TextView
@@ -119,7 +119,7 @@
             android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/img_myorder"
             android:text="RS:250.00"
             />
 
@@ -133,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="COMPLETED"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/img_myorder"
             />
 
 
@@ -143,7 +143,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/prce"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/img_myorder"
 
             >
 

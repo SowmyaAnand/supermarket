@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -20,26 +21,64 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class Payment extends AppCompatActivity {
 RadioButton quarantine_yes,quarantine_no,cashondelivery,gpay;
 RadioGroup quarantine,payment;
 Button order;
+    public static final String MY_PREFS_NAME = "CustomerApp";
 TextView total,sub_total,delivery;
     final int GOOGLE_PAY_REQUEST_CODE = 123;
     String upi = "anandc17@okaxis";
     boolean gpay_value=false;
     boolean payment_selected=false;
     boolean quarantine_selected=false;
+    String address_booking;
+    String pincode_booking;
+     ArrayList<Integer> cod_items_name_count_cart_integer = new ArrayList<>();
+     ArrayList<String> cod_eligible_items_name_count_cart = new ArrayList<>();
+   ArrayList<String> cod_eligible_items_name_quantity_cart_new = new ArrayList<>();
+    ArrayList<String> cod_eligible_items_name_quantity_cart = new ArrayList<>();
+    ArrayList<Integer> cod_eligible_items_name_old_cart_id = new ArrayList<>();
+     ArrayList<String> cod_eligible_items_name_price_cart = new ArrayList<>();
+    String cod_eligible_pay;
+
+    ArrayList<Integer> cod_not_items_name_count_cart_integer = new ArrayList<>();
+    ArrayList<String> cod_not_eligible_items_name_count_cart = new ArrayList<>();
+    ArrayList<String> cod_not_eligible_items_name_quantity_cart_new = new ArrayList<>();
+    ArrayList<String> cod_not_eligible_items_name_quantity_cart = new ArrayList<>();
+    ArrayList<Integer> cod_not_eligible_items_name_old_cart_id = new ArrayList<>();
+    ArrayList<String> cod_not_eligible_items_name_price_cart = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
         Intent in = getIntent();
         Bundle extras = in.getExtras();
-        final String cod_eligible_pay = extras.getString("cod_eligible_pay");
+         cod_eligible_pay = extras.getString("cod_eligible_pay");
         String sb_tot =extras.getString("sub_txt_val");
         String tot_tot =extras.getString("tot_val");
         String delivery_tot =extras.getString("delivery");
+        address_booking =extras.getString("book_address");
+        pincode_booking =extras.getString("pincode_book");
+        cod_eligible_items_name_count_cart = (ArrayList<String>)extras.getSerializable("cod_eligible_items_name_count_cart");
+        Log.e("payment","items name ="+cod_eligible_items_name_count_cart);
+        cod_eligible_items_name_quantity_cart=(ArrayList<String>)extras.getSerializable("cod_eligible_items_name_quantity_cart");
+        cod_eligible_items_name_old_cart_id = (ArrayList<Integer>)extras.getSerializable("cod_eligible_items_name_old_cart_id");
+        cod_eligible_items_name_price_cart = (ArrayList<String>)extras.getSerializable("cod_eligible_items_name_price_cart");
+
+
+        cod_not_eligible_items_name_count_cart = (ArrayList<String>)extras.getSerializable("cod_not_eligible_items_name_count_cart");
+        Log.e("payment","items name ="+cod_eligible_items_name_count_cart);
+        cod_not_eligible_items_name_quantity_cart=(ArrayList<String>)extras.getSerializable("cod_not_eligible_items_name_quantity_cart");
+        cod_not_eligible_items_name_old_cart_id = (ArrayList<Integer>)extras.getSerializable("cod_not_eligible_items_name_old_cart_id");
+        cod_not_eligible_items_name_price_cart = (ArrayList<String>)extras.getSerializable("cod_not_eligible_items_name_price_cart");
         total=findViewById(R.id.tot_val2_payment_tot);
         sub_total=findViewById(R.id.heading_total_val_payment_sub);
         delivery = findViewById(R.id.cart_delivery_val_payment_del);
@@ -54,13 +93,16 @@ TextView total,sub_total,delivery;
         payment=(RadioGroup) findViewById(R.id.payment_radio);
         quarantine=(RadioGroup) findViewById(R.id.quarantine_radio);
         order = (Button)findViewById(R.id.proceed);
+
         if(cod_eligible_pay.equals("1"))
         {
         cashondelivery.setVisibility(View.VISIBLE);
+      //  Book_cod_now();
         }
         else
         {
             cashondelivery.setVisibility(View.INVISIBLE);
+           // Book_no_cod_now();
         }
         payment.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -102,6 +144,8 @@ TextView total,sub_total,delivery;
 
             @Override
             public void onClick(View v) {
+                //Book_cod_now();
+               // Book_no_cod_now();
             Boolean validate = validaion();
             Log.e("tag","payment order "+validate);
             if(validate)
@@ -113,8 +157,17 @@ TextView total,sub_total,delivery;
                 }
                 else
                 {
-                    Intent next = new Intent(Payment.this,Thankyou.class);
-                    startActivity(next);
+                    if(cod_eligible_pay.equals("1"))
+                    {
+
+                         Book_cod_now();
+                    }
+                    else
+
+                    {
+                        Book_no_cod_now();
+                    }
+
                 }
             }
             else
@@ -249,8 +302,17 @@ TextView total,sub_total,delivery;
                 //Code to handle successful transaction here.
                 Toast.makeText(Payment.this, "Transaction successful.", Toast.LENGTH_SHORT).show();
                 Log.e("UPI", "payment successfull: "+approvalRefNo);
-                Intent next = new Intent(Payment.this,Thankyou.class);
-                startActivity(next);
+//                Intent next = new Intent(Payment.this,Thankyou.class);
+//                startActivity(next);
+                if(cod_eligible_pay.equals("1"))
+                {
+
+                    Book_cod_now();
+                }
+                else
+                {
+                    Book_no_cod_now();
+                }
             }
             else if("Payment cancelled by user.".equals(paymentCancel)) {
                 Toast.makeText(Payment.this, "Payment cancelled by user.", Toast.LENGTH_SHORT).show();
@@ -279,5 +341,175 @@ TextView total,sub_total,delivery;
             }
         }
         return false;
+    }
+    public void Book_cod_now() {
+        String login_type="0";
+        String url = "http://dailyestoreapp.com/dailyestore/api/";
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+        ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
+        cod_items_name_count_cart_integer.clear();
+        for(int k=0;k<cod_eligible_items_name_count_cart.size();k++)
+        {
+            Integer g = Integer.valueOf(cod_eligible_items_name_count_cart.get(k));
+            cod_items_name_count_cart_integer.add(g);
+        }
+        cod_eligible_items_name_quantity_cart_new.clear();
+        for(int l=0;l<cod_eligible_items_name_quantity_cart.size();l++)
+        {
+            String q =cod_eligible_items_name_quantity_cart.get(l);
+            String[] separated = q.split(" ");
+            Log.e("cart","the value is "+separated[1] );
+            String val = separated[1];
+            cod_eligible_items_name_quantity_cart_new.add(val);
+        }
+
+        SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String useridd = shared.getString("logged_in_userId","");
+        int user_int_id = Integer.parseInt(useridd);
+        final ArrayList<Integer> user_cart_id = new ArrayList<>();
+        final ArrayList<Integer> type_cart_id = new ArrayList<>();
+        for(int g =0;g<cod_eligible_items_name_old_cart_id.size();g++)
+        {
+            user_cart_id.add(user_int_id);
+            type_cart_id.add(0);
+        }
+        Log.e("cart","checkout param=    itemid ====>"+cod_eligible_items_name_old_cart_id);
+        Log.e("cart","checkout param=    count====>"+cod_items_name_count_cart_integer);
+        Log.e("cart","checkout param=    quantity ====>"+cod_eligible_items_name_quantity_cart_new);
+        Log.e("cart","checkout param=    type ====>"+type_cart_id);
+        Log.e("cart","checkout param=    userid ====>"+user_cart_id);
+        Log.e("cart","checkout param=    address ====> "+address_booking);
+        Log.e("cart","checkout param=    itemid ====>"+pincode_booking);
+        Log.e("cart","checkout prce ====>"+cod_eligible_items_name_price_cart);
+        Call call = mainInterface.checkoutapi(cod_eligible_items_name_old_cart_id,cod_items_name_count_cart_integer,cod_eligible_items_name_quantity_cart,type_cart_id,cod_eligible_items_name_price_cart,user_cart_id,address_booking,pincode_booking);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, retrofit2.Response response) {
+                Log.e("cart","response orderes="+response.body());
+                Toast.makeText(Payment.this,"Successfully Placed Orders",Toast.LENGTH_SHORT).show();
+                Intent next = new Intent(Payment.this,Thankyou.class);
+                startActivity(next);
+//            CustomerAppResponseLogin obj =response.body();
+//            Log.e("login","success="+response.body().getResponsedata());
+//            int success = Integer.parseInt(obj.getResponsedata().getSuccess());
+//            Log.e("login","success="+success);
+//
+//            if(success==1)
+//            {
+//
+//
+//            }
+//            else
+//            {
+//
+//                Toast.makeText(CartPage.this,"Invalid Username and Password",Toast.LENGTH_SHORT).show();
+//
+//            }
+
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Toast.makeText(Payment.this,t.getMessage(),Toast.LENGTH_SHORT).show();
+                Log.e("cart","error"+t.getMessage()+t.getLocalizedMessage()+t.getCause()+t.getStackTrace()+t.getClass());
+
+            }
+        });
+
+    }
+    public void Book_no_cod_now() {
+        String login_type="0";
+        String url = "http://dailyestoreapp.com/dailyestore/api/";
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+        ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
+        cod_not_items_name_count_cart_integer.clear();
+        for(int k=0;k<cod_not_eligible_items_name_count_cart.size();k++)
+        {
+            Integer g = Integer.valueOf(cod_not_eligible_items_name_count_cart.get(k));
+            cod_not_items_name_count_cart_integer.add(g);
+        }
+        cod_not_eligible_items_name_quantity_cart_new.clear();
+        for(int l=0;l<cod_not_eligible_items_name_quantity_cart.size();l++)
+        {
+            String q =cod_not_eligible_items_name_quantity_cart.get(l);
+            String[] separated = q.split(" ");
+            Log.e("cart","the value is "+separated[1] );
+            String val = separated[1];
+            cod_not_eligible_items_name_quantity_cart_new.add(val);
+        }
+
+        SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String useridd = shared.getString("logged_in_userId","");
+        int user_int_id = Integer.parseInt(useridd);
+        final ArrayList<Integer> user_cart_id = new ArrayList<>();
+        final ArrayList<Integer> type_cart_id = new ArrayList<>();
+        for(int g =0;g<cod_not_eligible_items_name_old_cart_id.size();g++)
+        {
+            user_cart_id.add(user_int_id);
+            type_cart_id.add(0);
+        }
+        Log.e("cart","checkout param=    itemid ====>"+cod_not_eligible_items_name_old_cart_id);
+        Log.e("cart","checkout param=    count====>"+cod_not_items_name_count_cart_integer);
+        Log.e("cart","checkout param=    quantity ====>"+cod_not_eligible_items_name_quantity_cart_new);
+        Log.e("cart","checkout param=    type ====>"+type_cart_id);
+        Log.e("cart","checkout param=    userid ====>"+user_cart_id);
+        Log.e("cart","checkout param=    address ====> "+address_booking);
+        Log.e("cart","checkout param=    itemid ====>"+pincode_booking);
+        Log.e("cart","checkout prce ====>"+cod_not_eligible_items_name_price_cart);
+        Call call = mainInterface.checkoutapi(cod_not_eligible_items_name_old_cart_id,cod_not_items_name_count_cart_integer,cod_not_eligible_items_name_quantity_cart,type_cart_id,cod_not_eligible_items_name_price_cart,user_cart_id,address_booking,pincode_booking);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, retrofit2.Response response) {
+                Log.e("cart","response orderes="+response.body());
+                Toast.makeText(Payment.this,"Successfully Placed Orders",Toast.LENGTH_SHORT).show();
+                Intent next = new Intent(Payment.this,Thankyou.class);
+                startActivity(next);
+//            CustomerAppResponseLogin obj =response.body();
+//            Log.e("login","success="+response.body().getResponsedata());
+//            int success = Integer.parseInt(obj.getResponsedata().getSuccess());
+//            Log.e("login","success="+success);
+//
+//            if(success==1)
+//            {
+//
+//
+//            }
+//            else
+//            {
+//
+//                Toast.makeText(CartPage.this,"Invalid Username and Password",Toast.LENGTH_SHORT).show();
+//
+//            }
+
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Toast.makeText(Payment.this,t.getMessage(),Toast.LENGTH_SHORT).show();
+                Log.e("cart","error"+t.getMessage()+t.getLocalizedMessage()+t.getCause()+t.getStackTrace()+t.getClass());
+
+            }
+        });
+
     }
 }

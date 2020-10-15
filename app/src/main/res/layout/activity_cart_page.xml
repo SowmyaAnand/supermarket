@@ -194,7 +194,31 @@
                      android:textSize="15sp"
                      android:background="@color/white"
                      android:gravity="end" />
-
+                 <TextView
+                     android:id="@+id/tot_val_reduced"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="COUPON APPLIED"
+                     android:layout_marginTop="10dp"
+                     android:layout_below="@+id/tot_val"
+                     android:textColor="@color/black"
+                     android:fontFamily="@font/roboto_light"
+                     android:textSize="15sp"
+                     android:background="@color/white"/>
+                 <TextView
+                     android:id="@+id/tot_val2_reducedprice"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:text="0.00"
+                     android:textAlignment="textEnd"
+                     android:layout_marginTop="10dp"
+                     android:layout_below="@+id/tot_val2"
+                     android:layout_toRightOf="@+id/tot_val_reduced"
+                     android:textColor="@color/green"
+                     android:fontFamily="@font/roboto_light"
+                     android:textSize="15sp"
+                     android:background="@color/white"
+                     android:gravity="end" />
              </RelativeLayout>
 
          </androidx.cardview.widget.CardView>
@@ -237,7 +261,7 @@
                         app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
                         android:hint="NAME">
                         <EditText
-                            android:id="@+id/edit_text"
+                            android:id="@+id/edit_text_name_booking"
                             android:fontFamily="@font/roboto_light"
                             android:layout_marginTop="50dp"
                             android:background="@drawable/customized_edittext"
@@ -257,7 +281,7 @@
                             app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
                             android:hint="MOBILE">
                             <EditText
-                                android:id="@+id/mobile"
+                                android:id="@+id/mobile_booking"
                                 android:fontFamily="@font/roboto_light"
                                 android:layout_marginTop="50dp"
                                 android:background="@drawable/customized_edittext"
@@ -279,7 +303,7 @@
 
                         android:hint="PLACE">
                         <EditText
-                            android:id="@+id/edit_text5"
+                            android:id="@+id/edit_text5_place_booking"
                             android:textColor="@color/black"
                             android:fontFamily="@font/roboto_light"
                             android:layout_marginTop="10dp"
@@ -300,7 +324,7 @@
 
                         android:hint="ADDRESS">
                         <EditText
-                            android:id="@+id/edit_text10"
+                            android:id="@+id/edit_text10_address_booking"
 
                             android:textColor="@color/black"
                             android:fontFamily="@font/roboto_light"

@@ -20,6 +20,7 @@
     <!-- dots active colors -->
     <color name="dot_light_screen1">#FFFFFF</color>
     <color name="dot_light_screen2">#FFFFFF</color>
+    <color name="green">#008000</color>
 
     <array name="array_dot_active">
         <item>@color/dot_light_screen1</item>

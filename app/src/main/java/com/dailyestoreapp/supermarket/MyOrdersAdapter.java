@@ -7,9 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,8 +29,10 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
     ArrayList<String> lts=new ArrayList<String>();
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity=1;
+    ArrayList<String> items_name_price_myorders = new ArrayList<>();
+    ArrayList<String> items_image_myorders = new ArrayList<>();
     ArrayList<String> items_name_myorders; ArrayList<String>items_name_quantity_myorders;ArrayList<Integer> items_name_status_myorders;ArrayList<Integer> items_count_myorders;
-    public MyOrdersAdapter(Context context,ArrayList<String> items_name_myorders, ArrayList<String>items_name_quantity_myorders,ArrayList<Integer> items_name_status_myorders,ArrayList<Integer> items_count_myorders) {
+    public MyOrdersAdapter(Context context,ArrayList<String> items_name_myorders, ArrayList<String>items_name_quantity_myorders,ArrayList<Integer> items_name_status_myorders,ArrayList<Integer> items_count_myorders, ArrayList<String> items_name_price_myorders,ArrayList<String> items_image_myorders) {
         this.context = context;
         this.personNames = personNames;
         this.lts.addAll(personNames);
@@ -34,6 +40,8 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
         this.items_count_myorders=items_count_myorders;
         this.items_name_quantity_myorders=items_name_quantity_myorders;
         this.items_name_status_myorders=items_name_status_myorders;
+        this.items_name_price_myorders=items_name_price_myorders;
+        this.items_image_myorders=items_image_myorders;
         Log.e("myorders","adapter orders are ="+items_name_quantity_myorders);
     }
     @Override
@@ -51,10 +59,15 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
         // set the data in items
         String name = (String) items_name_myorders.get(position);
         String quan = (String) items_name_quantity_myorders.get(position);
+        String pr =items_name_price_myorders.get(position);
+        String img =items_image_myorders.get(position);
         Integer count = items_count_myorders.get(position);
         Integer st = items_name_status_myorders.get(position);
         holder.name.setText(name);
         holder.quantityy.setText(quan);
+
+
+
         String cntt = "COUNT :"+count;
         holder.count.setText(cntt);
         if(st==0)
@@ -67,6 +80,26 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
             holder.status.setText("APPROVED");
         }
 
+
+        String[] separated = pr .split(" ");
+        Log.e("cart","the value is "+separated[1] );
+        String val = separated[1];
+        Log.e("cart","the value is "+val );
+        Integer int_pr_initial = Integer.valueOf(val);
+
+        Integer tot_count_price = count*int_pr_initial;
+        String string_tot_count_price= "Rs: "+String.valueOf(tot_count_price);
+        holder.price.setText(string_tot_count_price);
+
+
+
+
+
+
+        String Sb_img =items_image_myorders.get(position);
+        Glide.with(context).load(Sb_img)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.img_my);
 
         // implement setOnClickListener event on item view.
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +121,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name,quantityy,price,status,count;// init the item view's
         Button addition,substraction,addbtn;
+        ImageView img_my;
         public MyViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.Title_myorder);
@@ -95,6 +129,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
            price=(TextView) itemView.findViewById(R.id.prce_myorder);
            status=(TextView) itemView.findViewById(R.id.status_myorder);
            count=(TextView) itemView.findViewById(R.id.count_myorder);
+           img_my=itemView.findViewById(R.id.img_myorder);
             // get the reference of item view's
 
         }
