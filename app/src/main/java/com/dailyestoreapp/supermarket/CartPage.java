@@ -3,7 +3,6 @@ package com.dailyestoreapp.supermarket;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,13 +12,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,7 +35,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CartPage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 Toolbar tcart;
-
+EditText coupon_nm;
+Button coupon_apply;
     RecyclerView recyclerView_cart,recyclerView_cart2;
     CartAdapter customAdapter_cart;
     CartNotEligibleAdapter customAdapter_cart2;
@@ -44,7 +44,7 @@ Toolbar tcart;
     static TextView tot;
     TextView delivery_charge;
     String selected_pincode;
-    String selected_radio_button_val="PAY COD ELIGIBLE FIRST";
+    String selected_radio_button_val="PAY COD NOT ELIGIBLE FIRST";
     RadioGroup r1;
     static String deliverychg;
     static String deliverychg1;
@@ -94,6 +94,17 @@ String fullname;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_page);
+        coupon_nm = findViewById(R.id.coupon_name);
+        coupon_apply=findViewById(R.id.apply_btn_coupon);
+        coupon_nm.setEnabled(true);coupon_nm.setFocusable(true);
+
+        coupon_apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+String coupon_name = coupon_nm.getText().toString();
+couponDetails(coupon_name);
+            }
+        });
         Intent in = getIntent();
         Bundle extras = in.getExtras();
         from_flag= extras.getString("from_item_flag");
@@ -399,18 +410,30 @@ Log.e("cart","cod values ==="+items_name_cod_cart+itemSingle_name_cod+cart_item_
                   if(selected_radio_button_val.equals("PAY COD ELIGIBLE FIRST"))
                   {
                       Log.e("cart","the selected pincode is"+spin.getSelectedItemPosition());
+                      String  sub_txt_val  = sub_tot.getText().toString();
+                      String tot_val = tot.getText().toString();
+                      String delivery = delivery_charge.getText().toString();
                       Intent n = new Intent(CartPage.this,Payment.class);
                       Bundle b = new Bundle();
                       b.putString("cod_eligible_pay","1");
+                      b.putString("sub_txt_val",sub_txt_val);
+                      b.putString("tot_val",tot_val);
+                      b.putString("delivery",delivery);
                       n.putExtras(b);
                       startActivity(n);
                   }
                   else
                   {
                       Log.e("cart","the selected pincode is"+spin.getSelectedItemPosition());
+                      String  sub_txt_val  = sub_tot.getText().toString();
+                      String tot_val = tot.getText().toString();
+                      String delivery = delivery_charge.getText().toString();
                       Intent n = new Intent(CartPage.this,Payment.class);
                       Bundle b = new Bundle();
                       b.putString("cod_eligible_pay","0");
+                      b.putString("sub_txt_val",sub_txt_val);
+                      b.putString("tot_val",tot_val);
+                      b.putString("delivery",delivery);
                       n.putExtras(b);
                       startActivity(n);
                   }
@@ -565,4 +588,74 @@ public void Book_now() {
     });
 
 }
+    private void couponDetails(String cpname)
+    {
+
+
+        String url = "http://dailyestoreapp.com/dailyestore/api/";
+
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+        ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
+
+        Call<CustomerAppResponse> call = mainInterface.viewCouponDetail(cpname);
+        call.enqueue(new Callback<CustomerAppResponse>() {
+            @Override
+            public void onResponse(Call<CustomerAppResponse> call, retrofit2.Response<CustomerAppResponse> response) {
+                CustomerAppResponse listCategoryResponseobject = response.body();
+               String success = response.body().getResponsedata().getSuccess();
+                Log.e("firstpop","the succes value is "+listCategoryResponseobject.getResponsedata().getSuccess());
+
+                Log.e("firstpop","the succes value is "+listCategoryResponseobject.getResponsedata());
+
+            if(success.equals("1"))
+            {
+                String tot_price_with_colon = String.valueOf(sub_tot.getText());
+                Log.e("cart","delete="+tot_price_with_colon);
+                double vl = Double.parseDouble(response.body().getResponsedata().getData().get(0).getPercent());
+                Log.e("cart","delete="+vl);
+                Double intval = Double.valueOf(tot_price_with_colon);
+                Log.e("cart","delete="+intval);
+                double percent = Double.valueOf(vl/100);
+                Log.e("cart","delete percent ="+percent);
+
+                Double mul_val = percent*intval;
+                Log.e("cart","delete mul_val="+percent);
+                Log.e("cart","delete="+mul_val);
+                Double value = (vl/100)*intval;
+                Log.e("cart","delete="+value);
+                Double newintval = intval-value;
+                Log.e("cart","delete="+newintval);
+                String t= String.valueOf(newintval);
+                Log.e("cart","delete="+t);
+                sub_tot.setText(t);
+                Double d = Double.valueOf(deliverychg1);
+                Double totval = newintval+d;
+                String stringtotval = String.valueOf(totval);
+                tot.setText(stringtotval);
+                coupon_apply.setVisibility(View.GONE);
+               coupon_nm.setEnabled(false);coupon_nm.setFocusable(false);
+            }
+
+            }
+
+            @Override
+            public void onFailure(Call<CustomerAppResponse> call, Throwable t) {
+                Log.e("frag","error="+t.getMessage());
+            }
+        });
+
+
+
+
+
+    }
 }

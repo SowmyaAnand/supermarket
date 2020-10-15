@@ -153,8 +153,20 @@ public class Fragment4 extends Fragment {
                 pincode_main= String.valueOf(pincode_account.getText());
                 SharedPreferences shared = getContext().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
                 String useridd = shared.getString("logged_in_userId","");
-                int idd = Integer.parseInt(useridd);
-                userdetailsEdit(idd,firstname_main,lastname_main,email_main,phone_num_main,address_main,pincode_main,dob_main);
+                String useridd_flag =shared.getString("logged_in_flag","");
+                int idd ;
+                if(useridd_flag.equals("1"))
+                {
+                    idd = Integer.parseInt(useridd);
+                    userdetailsEdit(idd,firstname_main,lastname_main,email_main,phone_num_main,address_main,pincode_main,dob_main);
+                }
+                else
+                {
+                    idd=0;
+                    Toast.makeText(getContext(),"Please Login",Toast.LENGTH_SHORT).show();
+                }
+
+
 
 
             }

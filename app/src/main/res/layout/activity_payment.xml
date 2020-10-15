@@ -42,7 +42,7 @@
                         android:textSize="15sp"
                         android:background="@color/white"/>
                     <TextView
-                        android:id="@+id/heading_total_val"
+                        android:id="@+id/heading_total_val_payment_sub"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="RS:3000.00"
@@ -64,7 +64,7 @@
                         android:textSize="15sp"
                         android:background="@color/white"/>
                     <TextView
-                        android:id="@+id/cart_delivery_val"
+                        android:id="@+id/cart_delivery_val_payment_del"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="RS:3000"
@@ -89,7 +89,7 @@
                         android:textSize="15sp"
                         android:background="@color/white"/>
                     <TextView
-                        android:id="@+id/tot_val2"
+                        android:id="@+id/tot_val2_payment_tot"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Rs 3000"

@@ -152,6 +152,10 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
 //        customAdapter = new ItemAdapter(Itemlisting.this, personNames);
 //        recyclerView.setAdapter(customAdapter);
         subidd = Subcategoriescatno_edit.get(0);
+        Log.e("itemlist","selected sub id before itemlist="+subidd);
+        SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        editor_frst.putInt("selected_sub_id_items", subidd);
+        editor_frst.apply();
             ItemsList(subidd,limit,start);
 //        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
 //            @Override
@@ -398,6 +402,9 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
             Item_description.clear();
             Item_categories_offer_desc.clear();
             item_id_offer.clear();
+            SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+            editor_frst.putInt("selected_sub_id_items", name);
+            editor_frst.apply();
             ItemsList(name,0,3);
             //  customAdapter_offers.notifyDataSetChanged();
 
@@ -418,6 +425,30 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
       return n;
     }
 
+public void  updaterecyclerview()
+{
+    SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
 
+    int sb_item = shared.getInt("selected_sub_id_items",0);
+    Log.e("itemlist","selected sub id after itemlist="+sb_item);
+    Log.e("itemlist","selected sub id after itemlist="+sb_item);
+    Item_categories.clear();
+    item_image.clear();
+    Item_Quantity.clear();
+    cod_eligible.clear();
+    refund_eligible.clear();
+    Item_Price.clear();
+    item_id.clear();
+    item_id_status.clear();
+    Item_description.clear();
+    Item_categories_offer_desc.clear();
+    item_id_offer.clear();
+    ItemsList(sb_item,0,3);
+}
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        updaterecyclerview();
+    }
 }

@@ -36,11 +36,20 @@ RecyclerView orders;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myorders);
-        MyOrders();
+       // MyOrders();
         orders = (RecyclerView) findViewById(R.id.itemrecycler_orders);
         // set a LinearLayoutManager with default vertical orientation
-
-        MyOrders();
+        SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String useridd = shared.getString("logged_in_userId","");
+        String  usr_flag =shared.getString("logged_in_flag","");
+        if(usr_flag.equals("1"))
+        {
+            MyOrders();
+        }
+        else
+        {
+            Toast.makeText(Myorders.this,"Please Login ",Toast.LENGTH_SHORT).show();
+        }
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
 
@@ -49,6 +58,7 @@ RecyclerView orders;
     {
         SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String useridd = shared.getString("logged_in_userId","");
+
         int user_idd = Integer.parseInt(useridd);
 
 

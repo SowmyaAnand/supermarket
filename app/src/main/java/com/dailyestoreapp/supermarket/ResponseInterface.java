@@ -34,6 +34,9 @@ public interface ResponseInterface {
     @POST("userDetails")
     Call<CustomerAppResponseMyAccount> userDetails(@Field("userId") int userId);
     @FormUrlEncoded
+    @POST("viewCouponByIdNew")
+    Call<CustomerAppResponse> viewCouponDetail(@Field("couponName") String cpName);
+    @FormUrlEncoded
     @POST("userOrders")
     Call<CustomerAppResponse> userOrders(@Field("userId") int userId);
     @GET("allOrders")

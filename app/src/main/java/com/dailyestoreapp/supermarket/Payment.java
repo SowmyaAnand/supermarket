@@ -12,8 +12,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class Payment extends AppCompatActivity {
 RadioButton quarantine_yes,quarantine_no,cashondelivery,gpay;
 RadioGroup quarantine,payment;
 Button order;
+TextView total,sub_total,delivery;
     final int GOOGLE_PAY_REQUEST_CODE = 123;
     String upi = "anandc17@okaxis";
     boolean gpay_value=false;
@@ -33,8 +36,16 @@ Button order;
         setContentView(R.layout.activity_payment);
         Intent in = getIntent();
         Bundle extras = in.getExtras();
-        String cod_eligible_pay = extras.getString("cod_eligible_pay");
-
+        final String cod_eligible_pay = extras.getString("cod_eligible_pay");
+        String sb_tot =extras.getString("sub_txt_val");
+        String tot_tot =extras.getString("tot_val");
+        String delivery_tot =extras.getString("delivery");
+        total=findViewById(R.id.tot_val2_payment_tot);
+        sub_total=findViewById(R.id.heading_total_val_payment_sub);
+        delivery = findViewById(R.id.cart_delivery_val_payment_del);
+        sub_total.setText(sb_tot);
+        delivery.setText(delivery_tot);
+        total.setText(tot_tot);
         Toast.makeText(Payment.this,cod_eligible_pay,Toast.LENGTH_SHORT).show();
         quarantine_yes=(RadioButton)findViewById(R.id.q_yes);
         quarantine_no=(RadioButton)findViewById(R.id.q_no);
@@ -77,7 +88,11 @@ Button order;
                         quarantine_selected=true;
                         break;
                     case R.id.q_no:
-                        cashondelivery.setVisibility(View.VISIBLE);
+                        if(cod_eligible_pay.equals("1"))
+                        {
+                            cashondelivery.setVisibility(View.VISIBLE);
+                        }
+
                         quarantine_selected=true;
                         break;
                 }
@@ -94,7 +109,7 @@ Button order;
                 if(gpay_value)
                 {
                     payUsingUpi("CustomerName", upi,
-                            "payment", "5");
+                            "payment", "1");
                 }
                 else
                 {

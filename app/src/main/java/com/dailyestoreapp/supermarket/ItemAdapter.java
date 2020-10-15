@@ -888,6 +888,10 @@ Log.e("itemadapter","first befre add  add btn "+cart_item_names+items_name_old);
             // get the reference of item view's
 
         }
+        public void updateaddbtn()
+        {
+            addbtn.setVisibility(View.VISIBLE);
+        }
     }
     public void filter(String charText) {
         Log.e("texting if","persons="+charText);
@@ -910,5 +914,6 @@ Log.e("itemadapter","first befre add  add btn "+cart_item_names+items_name_old);
         Log.e("text","persons="+personNames);
         notifyDataSetChanged();
     }
+
 
 }

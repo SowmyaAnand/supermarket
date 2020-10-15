@@ -141,6 +141,7 @@ String cnt1 ="COUNT: "+cnt;
 //        String new_val2 = String.valueOf(--increment_val2);
 
         Main2Activity.update_counter(new_val2);
+
         Integer specific_cnt= Integer.valueOf(cod_eligible_items_name_count_cartadapter.get(position));
         String pr_initial = cod_eligible_items_name_price_cartadapter.get(position);
         String[] separated2 = pr_initial .split(" ");
