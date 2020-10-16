@@ -88,6 +88,8 @@ String fullusername_global;
 
     @Override
     public void onBindViewHolder(final CartNotEligibleAdapter.MyViewHolder holder, final int position) {
+        holder.rm.setClickable(true);
+        holder.rm.setEnabled(true);
         final SharedPreferences fullname_shared = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         fullusername_global = fullname_shared.getString("fullusername","");
         // set the data in items
@@ -148,7 +150,7 @@ String fullusername_global;
                 Log.e("cart","the value is "+val2 );
                 Integer int_pr_initial = Integer.valueOf(val2);
                 Integer tot_count_price = specific_cnt*int_pr_initial;
-                CartPage.update_total_values(tot_count_price);
+                CartPage.update_total_values(tot_count_price,"0");
 
 
 
@@ -173,6 +175,8 @@ String fullusername_global;
                 final StringBuilder it_cod = new StringBuilder();
                 final StringBuilder it_offer_percnt = new StringBuilder();
                 holder.rm.setText("ITEM REMOVED");
+                holder.rm.setClickable(false);
+                holder.rm.setEnabled(false);
 Log.e("cart","new removal flag="+items_name_old_cartadapter.size()+items_name_old_cartadapter);
                 String delete_item_name = String.valueOf(holder.name_cart.getText());
                 int int_new_position = items_name_old_cartadapter.indexOf(delete_item_name);
@@ -240,7 +244,7 @@ Log.e("cart","new removal flag="+items_name_old_cartadapter.size()+items_name_ol
                 editor_idd.putString(cart_item_id, it_id.toString());
                 Log.e("homefragment", "the catgeories shared preference are  login  =" + it_id.toString());
                 editor_idd.apply();
-
+                CartPage.validate_items(items_name_old_cart_id);
 
                 items_name_quantity_cartadapter.remove(int_new_position);
 

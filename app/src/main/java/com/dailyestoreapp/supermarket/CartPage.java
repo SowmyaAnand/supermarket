@@ -33,23 +33,32 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.widget.Toast.LENGTH_SHORT;
+
 public class CartPage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 Toolbar tcart;
 EditText coupon_nm;
     String pincode_booking;
 EditText name_book,mobile_book,place_book,address_book;
 Button coupon_apply;
+static int cod_length=0;
+    static int no_cod_length=0;
     String total_address_values_booking;
     RecyclerView recyclerView_cart,recyclerView_cart2;
     CartAdapter customAdapter_cart;
     CartNotEligibleAdapter customAdapter_cart2;
     static TextView sub_tot;
+    static int no_cod_total=0;
+    static String no_cod_total_set="0";
+    static String cod_total_set="0";
+    static int cod_total=0;
+    private ArrayList<Integer> validation_items_name_old_cart_id = new ArrayList<>();
     static TextView tot;
     TextView delivery_charge;
     TextView couponaplliedval;
     String selected_pincode;
     String selected_radio_button_val="PAY COD ELIGIBLE FIRST";
-    RadioGroup r1;
+    //RadioGroup r1;
     static String deliverychg;
     static String deliverychg1;
     ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3"));
@@ -70,7 +79,7 @@ Button coupon_apply;
     final ArrayList<Integer> items_index_eligible_cod = new ArrayList<>();
     final ArrayList<Integer> items_index_not_eligible_cod = new ArrayList<>();
     //code eligible
-    final ArrayList<Integer> cod_eligible_items_name_old_cart_id = new ArrayList<>();
+    static final ArrayList<Integer> cod_eligible_items_name_old_cart_id = new ArrayList<>();
     final ArrayList<String> cod_eligible_items_name_old_cart = new ArrayList<>();
     final ArrayList<String> cod_eligible_items_name_quantity_cart = new ArrayList<>();
     final ArrayList<String> cod_eligible_items_name_quantity_cart_new = new ArrayList<>();
@@ -82,7 +91,7 @@ Button coupon_apply;
     final ArrayList<Integer> cod_items_name_count_cart_integer = new ArrayList<>();
 
     // cod not eligible
-    final ArrayList<Integer> cod_not_eligible_items_name_old_cart_id = new ArrayList<>();
+    static final ArrayList<Integer> cod_not_eligible_items_name_old_cart_id = new ArrayList<>();
     final ArrayList<String> cod_not_eligible_items_name_old_cart = new ArrayList<>();
     final ArrayList<String> cod_not_eligibleitems_name_quantity_cart_new = new ArrayList<>();
     final ArrayList<String> cod_not_eligible_items_name_quantity_cart = new ArrayList<>();
@@ -93,16 +102,24 @@ Button coupon_apply;
     final ArrayList<String> cod_not_eligible_items_name_count_cart = new ArrayList<>();
     final ArrayList<Integer> cod_not_items_name_count_cart_integer = new ArrayList<>();
     Spinner spin;
+    static int flag_original_values_cod_befor_remove=1;
+    static int flag_original_values_no_cod_befor_remove=1;
     String from_flag;
     private String tag = "cartpage";
     TextView cod_heading1,cod_heading2;
 String fullname;
     TextView tot_cart_text;
+    TextView cod_reduced_coupon,no_cod_reduced_coupon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_page);
+        flag_original_values_cod_befor_remove=1;
+        flag_original_values_no_cod_befor_remove=1;
+//        no_cod_total=0;
+//        cod_total=0;
         coupon_nm = findViewById(R.id.coupon_name);
+
         coupon_apply=findViewById(R.id.apply_btn_coupon);
         coupon_nm.setEnabled(true);coupon_nm.setFocusable(true);
         couponaplliedval=findViewById(R.id.tot_val2_reducedprice);
@@ -110,6 +127,8 @@ String fullname;
         mobile_book=findViewById(R.id.mobile_booking);
         place_book=findViewById(R.id.edit_text5_place_booking);
         address_book=findViewById(R.id.edit_text10_address_booking);
+//        no_cod_total_set="0";
+//        cod_total_set="0";
         coupon_apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,14 +145,14 @@ couponDetails(coupon_name);
         tcart = (Toolbar)findViewById(R.id.toolbar_cart);
         setSupportActionBar(tcart);
         spin = findViewById(R.id.spinner_pincode);
-        r1=findViewById(R.id.payfirst);
-        r1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton rb1 = (RadioButton) findViewById(checkedId);
-                selected_radio_button_val= String.valueOf(rb1.getText());
-            }
-        });
+//        r1=findViewById(R.id.payfirst);
+//        r1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                RadioButton rb1 = (RadioButton) findViewById(checkedId);
+//                selected_radio_button_val= String.valueOf(rb1.getText());
+//            }
+//        });
         spin.setOnItemSelectedListener(this);
         ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,pincodess);
         aa.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -364,6 +383,8 @@ Log.e("cart","cod values ==="+items_name_cod_cart+itemSingle_name_cod+cart_item_
                 cod_eligible_items_image_cart.add(items_name_image_cart.get(k));
             }
         }
+        cod_length = cod_eligible_items_name_old_cart.size();
+        no_cod_length=cod_not_eligible_items_name_old_cart.size();
         Log.e(tag,"the values eligible in cart are "+cod_eligible_items_name_old_cart);
         Log.e(tag,"the values not eligible in cart are "+cod_not_eligible_items_name_old_cart);
         recyclerView_cart = (RecyclerView) findViewById(R.id.itemrecycler_cart);
@@ -389,12 +410,12 @@ Log.e("cart","cod values ==="+items_name_cod_cart+itemSingle_name_cod+cart_item_
         }
        if((cod_eligible_items_name_old_cart.size()==0)&&(cod_not_eligible_items_name_old_cart.size()==0))
        {
-           Toast.makeText(CartPage.this,"No items added in cart",Toast.LENGTH_SHORT).show();
+           Toast.makeText(CartPage.this,"No items added in cart", LENGTH_SHORT).show();
        }
-        if(!((cod_eligible_items_name_old_cart.size()==0))&&(!(cod_not_eligible_items_name_old_cart.size()==0)))
-       {
-           r1.setVisibility(View.VISIBLE);
-       }
+//        if(!((cod_eligible_items_name_old_cart.size()==0))&&(!(cod_not_eligible_items_name_old_cart.size()==0)))
+//       {
+//           r1.setVisibility(View.VISIBLE);
+//       }
         else if(!((cod_eligible_items_name_old_cart.size()==0)))
         {
             selected_radio_button_val="PAY COD ELIGIBLE FIRST";
@@ -415,7 +436,7 @@ Log.e("cart","cod values ==="+items_name_cod_cart+itemSingle_name_cod+cart_item_
                 String address =String.valueOf(address_book.getText());
 if(name.equals("")||mobile.equals("")||place.equals("")||address.equals(""))
 {
-    Toast.makeText(CartPage.this,"Please fil all the details",Toast.LENGTH_SHORT).show();
+    Toast.makeText(CartPage.this,"Please fil all the details", LENGTH_SHORT).show();
 
 }
 else
@@ -423,58 +444,163 @@ else
     int pin_flag=0;
     if(selected_pincode.equals("SELECT PINCODE"))
     {
-        Toast.makeText(CartPage.this,"Please select pincode",Toast.LENGTH_SHORT).show();
+        Toast.makeText(CartPage.this,"Please select pincode", LENGTH_SHORT).show();
 
     }
     else
     {
-        total_address_values_booking = name+place+address+mobile;
+        total_address_values_booking = name+"          "+place+"            "+address+"             "+mobile;
         pincode_booking =selected_pincode;
-        if(selected_radio_button_val.equals("PAY COD ELIGIBLE FIRST"))
-        {
-            Log.e("cart","the selected pincode is"+spin.getSelectedItemPosition());
+                String  sub_txt_val  = sub_tot.getText().toString();
+                String tot_val = tot.getText().toString();
+                String delivery = delivery_charge.getText().toString();
+        Intent n = new Intent(CartPage.this,Payment.class);
+        Bundle b = new Bundle();
+         if(!(cod_length==0)&&(!(no_cod_length==0)))
+         {
+             Log.e("cart","entered1");
+          b.putString("cod_eligible_pay","0");
+         } else if (no_cod_length>0) {
+             Log.e("cart","entered2");
+                  b.putString("cod_eligible_pay","0");
+         }
+         else
+         {
+             Log.e("cart","entered3");
+                  b.putString("cod_eligible_pay","1");
+         }
+//                if(!(cod_eligible_items_name_old_cart.size()==0)&&(!(cod_not_eligible_items_name_old_cart.size()==0)))
+//       {
+//           Log.e("cart","entered1");
+//           b.putString("cod_eligible_pay","0");
+//       }
+//                else if(!(cod_eligible_items_name_old_cart.size()==0))
+//                {
+//                    Log.e("cart","entered2");
+//                    b.putString("cod_eligible_pay","1");
+//                }
+//                else
+//                {
+//                    Log.e("cart","entered3");
+//                    b.putString("cod_eligible_pay","0");
+//                }
 
-            String  sub_txt_val  = sub_tot.getText().toString();
-            String tot_val = tot.getText().toString();
-            String delivery = delivery_charge.getText().toString();
-            Intent n = new Intent(CartPage.this,Payment.class);
-            Bundle b = new Bundle();
-            b.putString("cod_eligible_pay","1");
-            b.putString("sub_txt_val",sub_txt_val);
-            b.putString("tot_val",tot_val);
-            b.putString("delivery",delivery);
-            b.putString("book_address",total_address_values_booking);
-            b.putString("pincode_book",pincode_booking);
-            b.putSerializable("cod_eligible_items_name_count_cart",cod_eligible_items_name_count_cart);
-            b.putSerializable("cod_eligible_items_name_quantity_cart",cod_eligible_items_name_quantity_cart);
-            b.putSerializable("cod_eligible_items_name_old_cart_id",cod_eligible_items_name_old_cart_id);
-            b.putSerializable("cod_eligible_items_name_price_cart",cod_eligible_items_name_price_cart);
-            n.putExtras(b);
-            startActivity(n);
-        }
-        else
-        {
-            Log.e("cart","the selected pincode is"+spin.getSelectedItemPosition());
-            String  sub_txt_val  = sub_tot.getText().toString();
-            String tot_val = tot.getText().toString();
-            String delivery = delivery_charge.getText().toString();
-            Intent n = new Intent(CartPage.this,Payment.class);
-            Bundle b = new Bundle();
-            b.putString("cod_eligible_pay","0");
-            b.putString("sub_txt_val",sub_txt_val);
-            b.putString("tot_val",tot_val);
-            b.putString("delivery",delivery);
-            b.putString("book_address",total_address_values_booking);
-            b.putString("pincode_book",pincode_booking);
-            b.putSerializable("cod_not_eligible_items_name_count_cart",cod_not_eligible_items_name_count_cart);
-            b.putSerializable("cod_not_eligible_items_name_quantity_cart",cod_not_eligible_items_name_quantity_cart);
-            b.putSerializable("cod_not_eligible_items_name_old_cart_id",cod_not_eligible_items_name_old_cart_id);
-            b.putSerializable("cod_not_eligible_items_name_price_cart",cod_not_eligible_items_name_price_cart);
-            n.putExtras(b);
-            startActivity(n);
-        }
-
-    }
+        b.putString("sub_txt_val",sub_txt_val);
+        b.putString("tot_val",tot_val);
+        b.putString("delivery",delivery);
+        b.putString("name_booking",name);
+        b.putString("book_address",total_address_values_booking);
+        b.putString("pincode_book",pincode_booking);
+        b.putSerializable("cod_eligible_items_name_count_cart",cod_eligible_items_name_count_cart);
+        b.putSerializable("cod_eligible_items_name_quantity_cart",cod_eligible_items_name_quantity_cart);
+        b.putSerializable("cod_eligible_items_name_old_cart_id",cod_eligible_items_name_old_cart_id);
+        b.putSerializable("cod_eligible_items_name_price_cart",cod_eligible_items_name_price_cart);
+        n.putExtras(b);
+        startActivity(n);
+//        if(selected_radio_button_val.equals("PAY COD ELIGIBLE FIRST"))
+//        {
+//            if(flag_original_values_cod_befor_remove==1)
+//            {
+//                Log.e("cart","the selected pincode is"+spin.getSelectedItemPosition());
+//
+//                String  sub_txt_val  = sub_tot.getText().toString();
+//                String tot_val = tot.getText().toString();
+//                String delivery = delivery_charge.getText().toString();
+//                if(cod_total_set.equals("0")) {
+//                    cod_total=0;
+//                    for (int g = 0; g < cod_eligible_items_name_price_cart.size(); g++) {
+//                        String cnt = cod_eligible_items_name_count_cart.get(g);
+//                        String pr_initial = cod_eligible_items_name_price_cart.get(g);
+//                        String cnt1 = "COUNT: " + cnt;
+//
+//                        String[] separated = pr_initial.split(" ");
+//                        Log.e("cart", "the value is " + separated[1]);
+//                        String val = separated[1];
+//                        Log.e("cart", "the value is " + val);
+//                        Integer int_pr_initial = Integer.valueOf(val);
+//                        Integer int_cnt = Integer.valueOf(cnt);
+//                        Integer tot_count_price = int_cnt * int_pr_initial;
+//                        cod_total = cod_total + tot_count_price;
+//                    }
+//                }
+//
+//
+//
+//
+//                Intent n = new Intent(CartPage.this,Payment.class);
+//                Bundle b = new Bundle();
+//                b.putString("cod_eligible_pay","1");
+//                b.putString("sub_txt_val",sub_txt_val);
+//                b.putString("tot_val",tot_val);
+//                b.putString("delivery",delivery);
+//                b.putInt("cod_total",cod_total);
+//                b.putString("name_booking",name);
+//                b.putString("book_address",total_address_values_booking);
+//                b.putString("pincode_book",pincode_booking);
+//                b.putSerializable("cod_eligible_items_name_count_cart",cod_eligible_items_name_count_cart);
+//                b.putSerializable("cod_eligible_items_name_quantity_cart",cod_eligible_items_name_quantity_cart);
+//                b.putSerializable("cod_eligible_items_name_old_cart_id",cod_eligible_items_name_old_cart_id);
+//                b.putSerializable("cod_eligible_items_name_price_cart",cod_eligible_items_name_price_cart);
+//                n.putExtras(b);
+//                startActivity(n);
+//            }
+//
+//            else
+//            {
+//                Toast.makeText(CartPage.this,"No Items in COD Eligible Section",LENGTH_SHORT).show();
+//            }
+//
+//
+//        }
+//        else
+//        {
+//            if(flag_original_values_no_cod_befor_remove==1)
+//            {
+//                Log.e("cart","the selected pincode is"+spin.getSelectedItemPosition());
+//                String  sub_txt_val  = sub_tot.getText().toString();
+//                String tot_val = tot.getText().toString();
+//                String delivery = delivery_charge.getText().toString();
+//
+//                if(no_cod_total_set.equals("0")) {
+//                    no_cod_total = 0;
+//                    for (int g = 0; g < cod_not_eligible_items_name_price_cart.size(); g++) {
+//                        String cnt = cod_not_eligible_items_name_count_cart.get(g);
+//                        String pr_initial = cod_not_eligible_items_name_price_cart.get(g);
+//                        String cnt1 = "COUNT: " + cnt;
+//
+//                        String[] separated = pr_initial.split(" ");
+//                        Log.e("cart", "the value is " + separated[1]);
+//                        String val = separated[1];
+//                        Log.e("cart", "the value is " + val);
+//                        Integer int_pr_initial = Integer.valueOf(val);
+//                        Integer int_cnt = Integer.valueOf(cnt);
+//                        Integer tot_count_price = int_cnt * int_pr_initial;
+//                        no_cod_total = no_cod_total + tot_count_price;
+//                    }
+//                }
+//                Intent n = new Intent(CartPage.this,Payment.class);
+//                Bundle b = new Bundle();
+//                b.putString("cod_eligible_pay","0");
+//                b.putString("sub_txt_val",sub_txt_val);
+//                b.putString("tot_val",tot_val);
+//                b.putString("delivery",delivery);
+//                b.putInt("no_cod_total",no_cod_total);
+//                b.putString("book_address",total_address_values_booking);
+//                b.putString("pincode_book",pincode_booking);
+//                b.putSerializable("cod_not_eligible_items_name_count_cart",cod_not_eligible_items_name_count_cart);
+//                b.putSerializable("cod_not_eligible_items_name_quantity_cart",cod_not_eligible_items_name_quantity_cart);
+//                b.putSerializable("cod_not_eligible_items_name_old_cart_id",cod_not_eligible_items_name_old_cart_id);
+//                b.putSerializable("cod_not_eligible_items_name_price_cart",cod_not_eligible_items_name_price_cart);
+//                n.putExtras(b);
+//                startActivity(n);
+//            }
+//            else
+//            {
+//                Toast.makeText(CartPage.this,"No Items in COD Not Eligible Section",LENGTH_SHORT).show();
+//            }
+//        }
+//
+   }
 
 
 }
@@ -530,7 +656,7 @@ else
 //            Log.d("Exception","Exception of type"+ex.getMessage());
 //        }
     }
-    public static void update_total_values(Integer value){
+    public static void update_total_values(Integer value,String type_cod_or_not_cod){
         String tot_price_with_colon = String.valueOf(sub_tot.getText());
         Log.e("cart","delete="+tot_price_with_colon);
         Double intval = Double.valueOf(tot_price_with_colon);
@@ -542,8 +668,53 @@ else
         Double totval = newintval+d;
         String stringtotval = String.valueOf(totval);
         tot.setText(stringtotval);
-    }
+        if(type_cod_or_not_cod.equals("1"))
+        {
+            if(cod_length>0)
+            {
+                cod_length=cod_length-1;
+            }
 
+
+
+        }
+        else
+        {
+            if(no_cod_length>0)
+            {
+                no_cod_length=no_cod_length-1;
+            }
+
+        }
+    }
+    public static void validate_items(ArrayList<Integer> originall_items_name_old_cart_id){
+        int cod_count=0;
+        int not_cod_count=0;
+        for(int l=0;l<cod_eligible_items_name_old_cart_id.size();l++)
+      {
+
+         Integer id= cod_eligible_items_name_old_cart_id.get(l);
+         for(int d=0;d<originall_items_name_old_cart_id.size();d++)
+          if(id.equals(originall_items_name_old_cart_id.get(d)))
+          {
+             cod_count=1;
+          }
+
+      }
+        for(int l=0;l<cod_not_eligible_items_name_old_cart_id.size();l++)
+        {
+
+            Integer id= cod_not_eligible_items_name_old_cart_id.get(l);
+            for(int d=0;d<originall_items_name_old_cart_id.size();d++)
+                if(id.equals(originall_items_name_old_cart_id.get(d)))
+                {
+                    not_cod_count=1;
+                }
+
+        }
+        flag_original_values_cod_befor_remove=cod_count;
+        flag_original_values_no_cod_befor_remove=not_cod_count;
+    }
     private void couponDetails(String cpname)
     {
 
@@ -599,8 +770,10 @@ else
                 Double totval = newintval+d;
                 String stringtotval = String.valueOf(totval);
                 tot.setText(stringtotval);
+
                 coupon_apply.setVisibility(View.GONE);
                coupon_nm.setEnabled(false);coupon_nm.setFocusable(false);
+
             }
 
             }
@@ -670,7 +843,7 @@ else
             @Override
             public void onResponse(Call call, retrofit2.Response response) {
                 Log.e("cart","response orderes="+response.body());
-                Toast.makeText(CartPage.this,"Successfully Placed Orders",Toast.LENGTH_SHORT).show();
+                Toast.makeText(CartPage.this,"Successfully Placed Orders", LENGTH_SHORT).show();
 //            CustomerAppResponseLogin obj =response.body();
 //            Log.e("login","success="+response.body().getResponsedata());
 //            int success = Integer.parseInt(obj.getResponsedata().getSuccess());
@@ -692,12 +865,13 @@ else
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Toast.makeText(CartPage.this,t.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(CartPage.this,t.getMessage(), LENGTH_SHORT).show();
                 Log.e("cart","error"+t.getMessage()+t.getLocalizedMessage()+t.getCause()+t.getStackTrace()+t.getClass());
 
             }
         });
 
     }
+
 
 }

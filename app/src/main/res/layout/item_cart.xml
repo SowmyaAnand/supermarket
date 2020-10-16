@@ -133,7 +133,14 @@
                 android:gravity="center_vertical"
                 android:fontFamily="@font/roboto_light"
                 android:textSize="12sp"/>
-
+<!--            <TextView-->
+<!--                android:id="@+id/text_Removed"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="ITEM REMOVED"-->
+<!--                android:textColor="@color/colorPrimary"-->
+<!--                android:visibility="gone"-->
+<!--                android:layout_below="@+id/remove_btn"/>-->
 
 
         </RelativeLayout>

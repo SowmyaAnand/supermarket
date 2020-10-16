@@ -219,6 +219,7 @@
                      android:textSize="15sp"
                      android:background="@color/white"
                      android:gravity="end" />
+
              </RelativeLayout>
 
          </androidx.cardview.widget.CardView>
@@ -366,31 +367,31 @@
                             android:layout_height="50dp"
                             />
 
-                        <RadioGroup
-                            android:id="@+id/payfirst"
-                            android:layout_margin="20dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:orientation="horizontal">
-                            <RadioButton
-                                android:id="@+id/cod_eligiblefirst"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:checked="true"
-                                android:buttonTint="@color/colorPrimary"
-                                android:textColor="@color/colorPrimary"
-                                android:text="PAY COD ELIGIBLE FIRST"/>
-                            <RadioButton
-                                android:id="@+id/cod_not_eligible"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="@color/colorPrimary"
-                                android:textColor="@color/colorPrimary"
-                                android:text="PAY COD NOT ELIGIBLE FIRST"/>
-                        </RadioGroup>
+<!--                        <RadioGroup-->
+<!--                            android:id="@+id/payfirst"-->
+<!--                            android:layout_margin="20dp"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:visibility="gone"-->
+<!--                            android:orientation="horizontal">-->
+<!--                            <RadioButton-->
+<!--                                android:id="@+id/cod_eligiblefirst"-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:checked="true"-->
+<!--                                android:buttonTint="@color/colorPrimary"-->
+<!--                                android:textColor="@color/colorPrimary"-->
+<!--                                android:text="PAY COD ELIGIBLE FIRST"/>-->
+<!--                            <RadioButton-->
+<!--                                android:id="@+id/cod_not_eligible"-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:buttonTint="@color/colorPrimary"-->
+<!--                                android:textColor="@color/colorPrimary"-->
+<!--                                android:text="PAY COD NOT ELIGIBLE FIRST"/>-->
+<!--                        </RadioGroup>-->
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>

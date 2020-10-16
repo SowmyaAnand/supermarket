@@ -41,13 +41,14 @@ TextView total,sub_total,delivery;
     boolean quarantine_selected=false;
     String address_booking;
     String pincode_booking;
+    String customer_booking_name;
      ArrayList<Integer> cod_items_name_count_cart_integer = new ArrayList<>();
      ArrayList<String> cod_eligible_items_name_count_cart = new ArrayList<>();
    ArrayList<String> cod_eligible_items_name_quantity_cart_new = new ArrayList<>();
     ArrayList<String> cod_eligible_items_name_quantity_cart = new ArrayList<>();
     ArrayList<Integer> cod_eligible_items_name_old_cart_id = new ArrayList<>();
      ArrayList<String> cod_eligible_items_name_price_cart = new ArrayList<>();
-    String cod_eligible_pay;
+   String cod_eligible_pay;
 
     ArrayList<Integer> cod_not_items_name_count_cart_integer = new ArrayList<>();
     ArrayList<String> cod_not_eligible_items_name_count_cart = new ArrayList<>();
@@ -55,6 +56,7 @@ TextView total,sub_total,delivery;
     ArrayList<String> cod_not_eligible_items_name_quantity_cart = new ArrayList<>();
     ArrayList<Integer> cod_not_eligible_items_name_old_cart_id = new ArrayList<>();
     ArrayList<String> cod_not_eligible_items_name_price_cart = new ArrayList<>();
+    Integer cod_total_payment,not_cod_total_payment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +69,9 @@ TextView total,sub_total,delivery;
         String delivery_tot =extras.getString("delivery");
         address_booking =extras.getString("book_address");
         pincode_booking =extras.getString("pincode_book");
+        customer_booking_name =extras.getString("name_booking");
+//       cod_total_payment=extras.getInt("cod_total");
+//       not_cod_total_payment=extras.getInt("no_cod_total");
         cod_eligible_items_name_count_cart = (ArrayList<String>)extras.getSerializable("cod_eligible_items_name_count_cart");
         Log.e("payment","items name ="+cod_eligible_items_name_count_cart);
         cod_eligible_items_name_quantity_cart=(ArrayList<String>)extras.getSerializable("cod_eligible_items_name_quantity_cart");
@@ -85,7 +90,7 @@ TextView total,sub_total,delivery;
         sub_total.setText(sb_tot);
         delivery.setText(delivery_tot);
         total.setText(tot_tot);
-        Toast.makeText(Payment.this,cod_eligible_pay,Toast.LENGTH_SHORT).show();
+
         quarantine_yes=(RadioButton)findViewById(R.id.q_yes);
         quarantine_no=(RadioButton)findViewById(R.id.q_no);
         cashondelivery=(RadioButton)findViewById(R.id.cod);
@@ -97,13 +102,21 @@ TextView total,sub_total,delivery;
         if(cod_eligible_pay.equals("1"))
         {
         cashondelivery.setVisibility(View.VISIBLE);
-      //  Book_cod_now();
+      // Book_cod_now();
         }
         else
         {
             cashondelivery.setVisibility(View.INVISIBLE);
-           // Book_no_cod_now();
+           //Book_no_cod_now();
         }
+//        if(cod_not_eligible_items_name_count_cart.size()>0)
+//        {
+//            cashondelivery.setVisibility(View.INVISIBLE);
+//        }
+//        else
+//        {
+//            cashondelivery.setVisibility(View.VISIBLE);
+//        }
         payment.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -130,11 +143,7 @@ TextView total,sub_total,delivery;
                         quarantine_selected=true;
                         break;
                     case R.id.q_no:
-                        if(cod_eligible_pay.equals("1"))
-                        {
-                            cashondelivery.setVisibility(View.VISIBLE);
-                        }
-
+                        cashondelivery.setVisibility(View.VISIBLE);
                         quarantine_selected=true;
                         break;
                 }
@@ -152,8 +161,21 @@ TextView total,sub_total,delivery;
             {
                 if(gpay_value)
                 {
-                    payUsingUpi("CustomerName", upi,
-                            "payment", "1");
+                    String tot_amount_booking= String.valueOf(total.getText());
+                    payUsingUpi(customer_booking_name, upi,
+                            "payment", tot_amount_booking);
+//                    if(cod_eligible_pay.equals("1"))
+//                    {
+//                        String tot_cod = String.valueOf(cod_total_payment);
+//                        payUsingUpi(customer_booking_name, upi,
+//                                "payment", tot_cod);
+//                    }
+//                    else
+//                    {
+//                        String tot_cod_not = String.valueOf(not_cod_total_payment);
+//                        payUsingUpi(customer_booking_name, upi,
+//                                "payment", tot_cod_not);
+//                    }
                 }
                 else
                 {
