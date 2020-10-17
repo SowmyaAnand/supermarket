@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 
@@ -62,6 +63,8 @@ public class Fragment1 extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     ViewPager mviewpager,flyerpager;
+    Button serach_btn;
+    EditText searchtext;
     ArrayList<String> categoriesEditCategies = new ArrayList<>();
     ArrayList<String> categoriesEditCategies_image = new ArrayList<>();
     ArrayList<String> firstflyer_image = new ArrayList<>();
@@ -77,13 +80,14 @@ public class Fragment1 extends Fragment {
     int popupid;
     int intialsub=1;
     int cno;
+    int search_cno;
     int secondddflyerid;
     String popup_img;
     ArrayList<String> Images_sub = new ArrayList<>();
     ExpandableHeightGridView gridview,dealsview;
     Imageadapterforflyers flyeradapterview;
     Imageadapterforflyers testflyeradapterview;
-    SearchView sr;
+
     ArrayList<String> item_image = new ArrayList<>();
     ArrayList<String> original_item_image_lts = new ArrayList<>();
     TextView t;
@@ -216,16 +220,24 @@ public class Fragment1 extends Fragment {
 
         mviewpager = (ViewPager)rootView.findViewById(R.id.viewpager);
         flyerpager = (ViewPager)rootView.findViewById(R.id.viewpager2);
-        sr = (SearchView)rootView.findViewById(R.id.searchview);
+        searchtext=rootView.findViewById(R.id.search_text);
 
-        sr.setQueryHint("Type here to search");
-        sr.setBackgroundColor(getResources().getColor(R.color.white));
-        sr.setIconifiedByDefault(false);
-        EditText txtSearch = ((EditText)sr.findViewById(androidx.appcompat.R.id.search_src_text));
-        txtSearch.setHint("Type here to search");
-        txtSearch.setHintTextColor(Color.LTGRAY);
-        txtSearch.setTextColor(getResources().getColor(R.color.black));
-        txtSearch.setTextSize(12);
+        serach_btn = rootView.findViewById(R.id.search_btn);
+        serach_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String serach_val = String.valueOf(searchtext.getText());
+                search_func(serach_val);
+            }
+        });
+//        sr.setQueryHint("Type here to search");
+//        sr.setBackgroundColor(getResources().getColor(R.color.white));
+//        sr.setIconifiedByDefault(false);
+//        EditText txtSearch = ((EditText)sr.findViewById(androidx.appcompat.R.id.search_src_text));
+//        txtSearch.setHint("Type here to search");
+//        txtSearch.setHintTextColor(Color.LTGRAY);
+//        txtSearch.setTextColor(getResources().getColor(R.color.black));
+//        txtSearch.setTextSize(12);
 
         flyeradapterview = new Imageadapterforflyers(getContext(),firstflyer_image,intial_firstflyer_id);
         flyerpager.setAdapter(flyeradapterview);
@@ -243,7 +255,7 @@ public class Fragment1 extends Fragment {
             @SuppressWarnings("rawtypes")
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 cno = categoriescatno_edit.get(position);
-                subcategoryactivate();
+                subcategoryactivate("1");
 //                Intent next = new Intent(getContext(),Itemlisting.class);
 //                String cname = categoriesEditCategies.get(position);
 //                 cno = categoriescatno_edit.get(position);
@@ -364,8 +376,54 @@ public class Fragment1 extends Fragment {
         }
     }
 
+    private void search_func(String search_val)
+    {
 
-    private void subcategoryactivate()
+        String url = "http://dailyestoreapp.com/dailyestore/api/";
+
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+        ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
+        Log.e("frag1","cno="+cno);
+        Call<CustomerAppResponse> call = mainInterface.SearhApi(search_val);
+        call.enqueue(new Callback<CustomerAppResponse>() {
+            @Override
+            public void onResponse(Call<CustomerAppResponse> call, retrofit2.Response<CustomerAppResponse> response) {
+                CustomerAppResponse catObj = response.body();
+                String success = catObj.getResponsedata().getSuccess();
+                if(success.equals("1"))
+                {
+                    int data_size = catObj.getResponsedata().getData().size();
+                   String search_typeid = catObj.getResponsedata().getData().get(0).getTypeId();
+                   int search_typeid_int = Integer.parseInt(search_typeid);
+                   search_cno=search_typeid_int;
+                    subcategoryactivate("0");
+                }
+                else
+                {
+                    Toast.makeText(getContext(),"No Item found",Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CustomerAppResponse> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+    private void subcategoryactivate(String flag)
     {
         final StringBuilder strbul  = new StringBuilder();
         final StringBuilder sb  = new StringBuilder();
@@ -401,6 +459,10 @@ public class Fragment1 extends Fragment {
                 .build();
         ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
         Log.e("frag1","cno="+cno);
+        if(flag.equals("0"))
+        {
+            cno=search_cno;
+        }
         Call<CustomerAppResponse> call = mainInterface.SubCategory(cno);
         call.enqueue(new Callback<CustomerAppResponse>() {
             @Override

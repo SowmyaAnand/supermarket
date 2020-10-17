@@ -12,7 +12,10 @@ public interface ResponseInterface {
 
     @GET("listcategory")
     Call<CustomerAppResponse> CategoryList();
-
+    @FormUrlEncoded
+    @POST("orderStatus")
+    Call<CustomerAppResponseLogin> changeOrderStatus(@Field("orderId") int id,
+                                                 @Field("status") int status);
     @GET("viewAllPopup")
     Call<CustomerAppResponse> firstpop();
     @GET("viewAllUpFlyers")
@@ -29,7 +32,9 @@ public interface ResponseInterface {
     @FormUrlEncoded
     @POST("listSubCategory")
     Call<CustomerAppResponse> SubCategory(@Field("typeId") int id);
-
+    @FormUrlEncoded
+    @POST("searchAllItems")
+    Call<CustomerAppResponse> SearhApi(@Field("keyword") String keyword);
     @FormUrlEncoded
     @POST("userDetails")
     Call<CustomerAppResponseMyAccount> userDetails(@Field("userId") int userId);
@@ -113,6 +118,6 @@ public interface ResponseInterface {
                                           @Field("userId[]") ArrayList<Integer> id,
                                           @Field("address") String address,
                                           @Field("postCode") String postcode,
-                                            @Field("paymentType") String payment
+                                            @Field("paymentType") Integer payment
                                           );
 }

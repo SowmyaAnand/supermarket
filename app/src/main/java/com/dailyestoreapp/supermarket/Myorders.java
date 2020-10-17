@@ -32,6 +32,8 @@ RecyclerView orders;
     final ArrayList<String> items_name_price_myorders = new ArrayList<>();
     final ArrayList<String> items_name_offer_percentage_myorders = new ArrayList<>();
     final ArrayList<String> items_name_count_myorders = new ArrayList<>();
+    final ArrayList<Integer> items_count_myorders_id = new ArrayList<>();
+    final ArrayList<Integer> order_placed_id= new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +102,7 @@ RecyclerView orders;
                         String item_price = response.body().getResponsedata().getData().get(i).getPrice();
                         Integer item_status = Integer.valueOf(response.body().getResponsedata().getData().get(i).getStatus());
                         String imageurl = response.body().getResponsedata().getData().get(i).getImage();
+                        Integer order_id= Integer.valueOf(response.body().getResponsedata().getData().get(i).getOrderId());
                        Integer cnt = Integer.valueOf(response.body().getResponsedata().getData().get(i).getCount());
                         String imageurl_total=url1+imageurl;
                         Log.e("itemlisting","imageurl"+url1+imageurl);
@@ -110,7 +113,8 @@ RecyclerView orders;
                         items_name_status_myorders.add(item_status);
                         items_count_myorders.add(cnt);
                         items_image_myorders.add(imageurl_total);
-
+                        items_count_myorders_id.add(it_id);
+                        order_placed_id.add(order_id);
 
                     }
 
@@ -118,7 +122,7 @@ RecyclerView orders;
 
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                     orders.setLayoutManager(linearLayoutManager);
-                    customAdapter_offers = new MyOrdersAdapter(Myorders.this, items_name_myorders,items_name_quantity_myorders,items_name_status_myorders,items_count_myorders,items_name_price_myorders,items_image_myorders);
+                    customAdapter_offers = new MyOrdersAdapter(Myorders.this, items_name_myorders,items_name_quantity_myorders,items_name_status_myorders,items_count_myorders,items_name_price_myorders,items_image_myorders,items_count_myorders_id,order_placed_id);
                     orders.setAdapter(customAdapter_offers);
                 }
 

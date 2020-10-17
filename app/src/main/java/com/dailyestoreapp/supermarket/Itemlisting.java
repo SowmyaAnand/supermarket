@@ -174,7 +174,7 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        MenuItem menuItem = menu.findItem(R.id.action_search);
+       // MenuItem menuItem = menu.findItem(R.id.action_search);
         MenuItem mc =menu.findItem(R.id.cart3);
         View v  = mc.getActionView();
         txt = mc.getActionView().findViewById(R.id.cart_badge3);
@@ -213,21 +213,21 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
                 startActivity(cart);
             }
         });
-        SearchView searchView = (SearchView)menuItem.getActionView();
-        searchView.setQueryHint("Type here to search");
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                String text = newText;
-           customAdapter.filter(text);
-                return true;
-            }
-        });
+        //SearchView searchView = (SearchView)menuItem.getActionView();
+//        searchView.setQueryHint("Type here to search");
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                String text = newText;
+//           customAdapter.filter(text);
+//                return true;
+//            }
+      //  });
         return true;
     }
     @Override

@@ -134,9 +134,17 @@
             android:layout_height="wrap_content"
             android:text="COMPLETED"
             android:layout_toRightOf="@+id/img_myorder"
-            />
+            android:layout_toEndOf="@+id/img_myorder" />
 
-
+<Button
+    android:id="@+id/return_button"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:textColor="@color/white"
+    android:layout_below="@+id/status_myorder"
+    android:layout_marginTop="20dp"
+    android:text="RETURN"/>
 
         <RelativeLayout
             android:id="@+id/priceadd"

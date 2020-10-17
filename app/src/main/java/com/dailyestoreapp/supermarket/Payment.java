@@ -143,7 +143,11 @@ TextView total,sub_total,delivery;
                         quarantine_selected=true;
                         break;
                     case R.id.q_no:
-                        cashondelivery.setVisibility(View.VISIBLE);
+                        if(cod_eligible_pay.equals("1"))
+                        {
+                            cashondelivery.setVisibility(View.VISIBLE);
+                        }
+
                         quarantine_selected=true;
                         break;
                 }
@@ -364,7 +368,8 @@ TextView total,sub_total,delivery;
         }
         return false;
     }
-    public void Book_cod_now(String paymentType) {
+    public void Book_cod_now(String pay) {
+        int paymentType = Integer.parseInt(pay);
         String login_type="0";
         String url = "http://dailyestoreapp.com/dailyestore/api/";
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -464,7 +469,8 @@ TextView total,sub_total,delivery;
                 String cart_item_price_payment = fullname+"cart_item_price";
                 String cart_item_offer_percent_payment = fullname+"cart_item_offer_percent";
                 String cart_item_names_payment = fullname+"cart_item_names";
-
+                String t ="0";
+                Main2Activity.update_counter(t);
 
                 editor_payment.putString(cart_item_names_payment,"");
                 editor_payment.putString(total_count_cart_payment,"");
@@ -492,8 +498,9 @@ TextView total,sub_total,delivery;
         });
 
     }
-    public void Book_no_cod_now(String paymentType) {
+    public void Book_no_cod_now(String pay) {
         String login_type="0";
+        int paymentType = Integer.parseInt(pay);
         String url = "http://dailyestoreapp.com/dailyestore/api/";
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -588,7 +595,8 @@ TextView total,sub_total,delivery;
                 String cart_item_price_payment = fullname+"cart_item_price";
                 String cart_item_offer_percent_payment = fullname+"cart_item_offer_percent";
                 String cart_item_names_payment = fullname+"cart_item_names";
-
+                String t ="0";
+                Main2Activity.update_counter(t);
 
                 editor_payment.putString(cart_item_names_payment,"");
                 editor_payment.putString(total_count_cart_payment,"");

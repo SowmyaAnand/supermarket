@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,19 +21,28 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Locale;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyViewHolder>
 {
 
     ArrayList<String> personNames = new ArrayList<String>();
     Context context;
-
+    Integer orderid_adapter;
     ArrayList<String> lts=new ArrayList<String>();
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity=1;
     ArrayList<String> items_name_price_myorders = new ArrayList<>();
     ArrayList<String> items_image_myorders = new ArrayList<>();
+    ArrayList<Integer> return_request_orders_list_array_orderid = new ArrayList<>();
+    ArrayList<Integer> order_id_list = new ArrayList<>();
     ArrayList<String> items_name_myorders; ArrayList<String>items_name_quantity_myorders;ArrayList<Integer> items_name_status_myorders;ArrayList<Integer> items_count_myorders;
-    public MyOrdersAdapter(Context context,ArrayList<String> items_name_myorders, ArrayList<String>items_name_quantity_myorders,ArrayList<Integer> items_name_status_myorders,ArrayList<Integer> items_count_myorders, ArrayList<String> items_name_price_myorders,ArrayList<String> items_image_myorders) {
+    public MyOrdersAdapter(Context context,ArrayList<String> items_name_myorders, ArrayList<String>items_name_quantity_myorders,ArrayList<Integer> items_name_status_myorders,ArrayList<Integer> items_count_myorders, ArrayList<String> items_name_price_myorders,ArrayList<String> items_image_myorders,ArrayList<Integer> return_request_orders_list_array_orderid,ArrayList<Integer> order_id_list) {
         this.context = context;
         this.personNames = personNames;
         this.lts.addAll(personNames);
@@ -42,6 +52,8 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
         this.items_name_status_myorders=items_name_status_myorders;
         this.items_name_price_myorders=items_name_price_myorders;
         this.items_image_myorders=items_image_myorders;
+        this.return_request_orders_list_array_orderid=return_request_orders_list_array_orderid;
+        this.order_id_list=order_id_list;
         Log.e("myorders","adapter orders are ="+items_name_quantity_myorders);
     }
     @Override
@@ -79,13 +91,29 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
         {
             holder.status.setText("APPROVED");
         }
+        else if(st==2)
+        {
+            holder.status.setText("RETURN REQUESTED");
+        }
+
+        else if(st==3)
+        {
+            holder.status.setText("RETURN ACCEPTED");
+        }
+
+Log.e("myordersadapter","pr="+pr);
+        Integer int_pr_initial=0;
+        if(pr.length()>0)
+        {
+            String[] separated = pr.split(" ");
+            Log.e("cart","the value is "+separated[1] );
+            String val = separated[1];
+            Log.e("cart","the value is "+val );
+             int_pr_initial = Integer.valueOf(val);
+        }
 
 
-        String[] separated = pr .split(" ");
-        Log.e("cart","the value is "+separated[1] );
-        String val = separated[1];
-        Log.e("cart","the value is "+val );
-        Integer int_pr_initial = Integer.valueOf(val);
+
 
         Integer tot_count_price = count*int_pr_initial;
         String string_tot_count_price= "Rs: "+String.valueOf(tot_count_price);
@@ -97,10 +125,71 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
 
 
         String Sb_img =items_image_myorders.get(position);
+        Log.e("myorderadapter","order_adapter="+order_id_list+position);
+
         Glide.with(context).load(Sb_img)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.img_my);
 
+        holder.return_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                orderid_adapter = order_id_list.get(position);
+                String url = "http://dailyestoreapp.com/dailyestore/api/";
+
+                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+                loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                        .addInterceptor(loggingInterceptor)
+                        .build();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(okHttpClient)
+                        .build();
+                ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
+                Call<CustomerAppResponseLogin> call = mainInterface.changeOrderStatus(orderid_adapter,2);
+                call.enqueue(new Callback<CustomerAppResponseLogin>() {
+                    @Override
+                    public void onResponse(Call<CustomerAppResponseLogin> call, retrofit2.Response<CustomerAppResponseLogin> response) {
+                        CustomerAppResponseLogin listCategoryResponseobject = response.body();
+                        int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
+                        try {
+
+
+                            if(success==1)
+                            {
+                                holder.return_btn.setText("RETURN  REQUESTED");
+//                                holder.pd_pending.setTextColor(ContextCompat.getColor(context, white));
+//                                holder.pd_pending.setBackgroundColor(ContextCompat.getColor(context, green));
+                                Toast.makeText(context,"Return Requested.Customer Will Cal You Shortly For Confirmation",Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                Toast.makeText(context,"No Data found",Toast.LENGTH_LONG).show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(context,"something went wrong",Toast.LENGTH_SHORT).show();
+                        }
+
+
+
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<CustomerAppResponseLogin> call, Throwable t) {
+                        Log.e("error",t.getMessage());
+                       // dialog.dismiss();
+                    }
+                });
+
+
+
+
+            }
+        });
         // implement setOnClickListener event on item view.
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -120,7 +209,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name,quantityy,price,status,count;// init the item view's
-        Button addition,substraction,addbtn;
+        Button return_btn;
         ImageView img_my;
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -130,6 +219,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
            status=(TextView) itemView.findViewById(R.id.status_myorder);
            count=(TextView) itemView.findViewById(R.id.count_myorder);
            img_my=itemView.findViewById(R.id.img_myorder);
+           return_btn=itemView.findViewById(R.id.return_button);
             // get the reference of item view's
 
         }
@@ -155,5 +245,6 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
         Log.e("text","persons="+personNames);
         notifyDataSetChanged();
     }
+
 }
 

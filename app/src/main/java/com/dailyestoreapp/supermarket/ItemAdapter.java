@@ -58,7 +58,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
         this.item_image_adapter=item_image_adapter;
         this.Item_categories_offer_desc_adapter=Item_categories_offer_desc_adapter;
         this.item_id_offer_adapter=item_id_offer_adapter;
-        this.lts.addAll(personNames);
+        this.lts.addAll(Item_categories_adapter);
         this.Item_cod_adapter=Item_cod_adapter;
         this.Item_Refunf_adapter =Item_Refunf_adapter;
         this.Item_description = Item_description;
@@ -897,21 +897,22 @@ Log.e("itemadapter","first befre add  add btn "+cart_item_names+items_name_old);
         Log.e("texting if","persons="+charText);
         charText = charText.toLowerCase(Locale.getDefault());
         Log.e("texting if2","persons="+charText);
-        personNames.clear();
-        Iterator itr=personNames.iterator();
+        Item_categories_adapter.clear();
+        Iterator itr=Item_categories_adapter.iterator();
         if (charText.length() == 0) {
             Log.e("texting if3","persons="+charText);
-            personNames.addAll(lts);
+            Item_categories_adapter.addAll(lts);
         } else {
             for(int i =0;i<lts.size();i++) {
                 Log.e("texting else","persons="+lts.get(i));
                 String s = (String) lts.get(i);
                 if (s.toLowerCase(Locale.getDefault()).contains(charText)) {
-                    personNames.add(s);
+                    Item_categories_adapter.add(s);
                 }
             }
         }
-        Log.e("text","persons="+personNames);
+        Log.e("text","persons="+Item_categories_adapter
+        );
         notifyDataSetChanged();
     }
 
