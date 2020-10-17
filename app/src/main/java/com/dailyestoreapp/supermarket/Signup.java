@@ -122,7 +122,7 @@ Button sgnup;
                 else
                 {
 
-                    Toast.makeText(Signup.this,"Invalid Username and Password",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Signup.this,"User Already Exists",Toast.LENGTH_SHORT).show();
 
                 }
 

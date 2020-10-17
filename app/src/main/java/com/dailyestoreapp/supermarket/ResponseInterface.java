@@ -112,6 +112,7 @@ public interface ResponseInterface {
                                                @Field("price[]") ArrayList<String> price,
                                           @Field("userId[]") ArrayList<Integer> id,
                                           @Field("address") String address,
-                                          @Field("postCode") String postcode
+                                          @Field("postCode") String postcode,
+                                            @Field("paymentType") String payment
                                           );
 }

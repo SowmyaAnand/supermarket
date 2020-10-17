@@ -128,6 +128,7 @@ sngup.setOnClickListener(new View.OnClickListener() {
                 CustomerAppResponseLogin obj =response.body();
                 Log.e("login","success="+response.body().getResponsedata());
                 int success = Integer.parseInt(obj.getResponsedata().getSuccess());
+
                 Log.e("login","success="+success);
                 String userid = obj.getResponsedata().getData();
                 String fullusername = "username"+userid;
@@ -145,6 +146,7 @@ sngup.setOnClickListener(new View.OnClickListener() {
                     startActivity(next);
 
                 }
+
                 else
                 {
 
@@ -223,18 +225,47 @@ sngup.setOnClickListener(new View.OnClickListener() {
                 CustomerAppResponseLogin obj =response.body();
                 Log.e("login","success="+response.body().getResponsedata());
                 int success = Integer.parseInt(obj.getResponsedata().getSuccess());
-                Log.e("login","success="+success);
-                String userid = obj.getResponsedata().getData();
-                String fullusername = "username"+userid;
+                String data_val = obj.getResponsedata().getData();
+                if(success==1)
+                {
+                    Log.e("login","success="+success);
+                    String userid = obj.getResponsedata().getData();
+                    String fullusername = "username"+userid;
 
-                Toast.makeText(getApplicationContext(),"Logged in Successfully",Toast.LENGTH_LONG).show();
-                SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                editor_frst.putString("logged_in_flag", "1");
-                editor_frst.putString("logged_in_userId", userid);
-                editor_frst.putString("fullusername", email_val);
-                editor_frst.apply();
-                Intent next = new Intent(Login.this,Main2Activity.class);
-                startActivity(next);
+                    Toast.makeText(getApplicationContext(),"Signed in Successfully",Toast.LENGTH_LONG).show();
+                    SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                    editor_frst.putString("logged_in_flag", "1");
+                    editor_frst.putString("logged_in_userId", userid);
+                    editor_frst.putString("fullusername", fullusername);
+                    editor_frst.apply();
+                    Intent next = new Intent(Login.this,Main2Activity.class);
+                    startActivity(next);
+                }
+                else if(success==0)
+                {
+                    if(data_val.contains("user exist"))
+                    {
+                        String[] separated = data_val.split(",");
+                        String usr_id = separated[1];
+                        String fullusername = "username"+usr_id;
+                        Log.e("login","google account sucess"+fullusername);
+                        Toast.makeText(getApplicationContext(),"Signed in Successfully",Toast.LENGTH_LONG).show();
+                        SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                        editor_frst.putString("logged_in_flag", "1");
+                        editor_frst.putString("logged_in_userId", usr_id);
+                        editor_frst.putString("fullusername", fullusername);
+                        editor_frst.apply();
+                        Intent next = new Intent(Login.this,Main2Activity.class);
+                        startActivity(next);
+                    }
+                    else
+                    {
+                        Toast.makeText(Login.this,"Something went wrong please try after some time",Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+
 
             }
 

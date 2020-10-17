@@ -2,6 +2,8 @@ package com.dailyestoreapp.supermarket;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,8 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,30 +37,37 @@ import static android.widget.Toast.LENGTH_SHORT;
 
 public class CartPage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 Toolbar tcart;
-EditText coupon_nm;
+static EditText coupon_nm;
     String pincode_booking;
 EditText name_book,mobile_book,place_book,address_book;
-Button coupon_apply;
+static Button coupon_apply;
 static int cod_length=0;
     static int no_cod_length=0;
     String total_address_values_booking;
     RecyclerView recyclerView_cart,recyclerView_cart2;
     CartAdapter customAdapter_cart;
+
     CartNotEligibleAdapter customAdapter_cart2;
     static TextView sub_tot;
     static int no_cod_total=0;
     static String no_cod_total_set="0";
     static String cod_total_set="0";
     static int cod_total=0;
+    static Activity thisActivity =null;
     private ArrayList<Integer> validation_items_name_old_cart_id = new ArrayList<>();
     static TextView tot;
     TextView delivery_charge;
-    TextView couponaplliedval;
+    static TextView couponaplliedval;
     String selected_pincode;
     String selected_radio_button_val="PAY COD ELIGIBLE FIRST";
     //RadioGroup r1;
-    static String deliverychg;
-    static String deliverychg1;
+    static Integer minimum_coupon_amnt=100;
+    static String deliverychg="110";
+    static String deliverychg1="110.00";
+    static String deliverychg_zero="0";
+    static String deliverychg1_zero="0.00";
+    static Integer minimum_delivery_charge=110;
+    static Integer minimum_amount_prchase=100;
     ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3"));
     ArrayList pincodes = new ArrayList<>(Arrays.asList("400072", "585225"));
     String []pincodess = {"SELECT PINCODE","400072","585225"};
@@ -114,6 +121,7 @@ String fullname;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_page);
+        thisActivity=CartPage.this;
         flag_original_values_cod_befor_remove=1;
         flag_original_values_no_cod_befor_remove=1;
 //        no_cod_total=0;
@@ -132,8 +140,21 @@ String fullname;
         coupon_apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 String coupon_name = coupon_nm.getText().toString();
-couponDetails(coupon_name);
+                String sb_validation = String.valueOf(sub_tot.getText());
+            //    int sb_int_validate = Integer.parseInt(sb_validation);
+                Double min_coupon = Double.valueOf(minimum_coupon_amnt);
+                Double sb_int_validate= Double.valueOf(sb_validation);
+                if(sb_int_validate<min_coupon)
+                {
+
+                    settoast(thisActivity,"ORDER ABOVE "+minimum_coupon_amnt+" TO AVAIL THE OFFER");
+                }
+                else
+                {
+                    couponDetails(coupon_name);
+                }
             }
         });
         Intent in = getIntent();
@@ -317,7 +338,17 @@ Log.e("cart","cod values ==="+items_name_cod_cart+itemSingle_name_cod+cart_item_
         }
        String t= String.valueOf(total_price)+".00";
         sub_tot.setText(t);
-        Integer d = Integer.valueOf(deliverychg);
+        Integer check_sub_eligible_freedelivery = total_price;
+        Integer d;
+        if(check_sub_eligible_freedelivery>=minimum_delivery_charge)
+        {
+            d= Integer.valueOf(deliverychg_zero);
+        }
+        else
+        {
+             d = Integer.valueOf(deliverychg);
+        }
+
         Integer totval = total_price+d;
         String stringtotval = String.valueOf(totval)+".00";
         tot.setText(stringtotval);
@@ -428,6 +459,12 @@ Log.e("cart","cod values ==="+items_name_cod_cart+itemSingle_name_cod+cart_item_
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+String sub_total_minimum_charge = String.valueOf(sub_tot.getText());
+Double sub_total_minimum_charge_int = Double.valueOf(sub_total_minimum_charge);
+Double mn_amount_purchase = Double.valueOf(minimum_amount_prchase);
+if(sub_total_minimum_charge_int>mn_amount_purchase)
+{
+
 
                // Book_now();
                 String name= String.valueOf(name_book.getText());
@@ -469,21 +506,6 @@ else
              Log.e("cart","entered3");
                   b.putString("cod_eligible_pay","1");
          }
-//                if(!(cod_eligible_items_name_old_cart.size()==0)&&(!(cod_not_eligible_items_name_old_cart.size()==0)))
-//       {
-//           Log.e("cart","entered1");
-//           b.putString("cod_eligible_pay","0");
-//       }
-//                else if(!(cod_eligible_items_name_old_cart.size()==0))
-//                {
-//                    Log.e("cart","entered2");
-//                    b.putString("cod_eligible_pay","1");
-//                }
-//                else
-//                {
-//                    Log.e("cart","entered3");
-//                    b.putString("cod_eligible_pay","0");
-//                }
 
         b.putString("sub_txt_val",sub_txt_val);
         b.putString("tot_val",tot_val);
@@ -497,115 +519,17 @@ else
         b.putSerializable("cod_eligible_items_name_price_cart",cod_eligible_items_name_price_cart);
         n.putExtras(b);
         startActivity(n);
-//        if(selected_radio_button_val.equals("PAY COD ELIGIBLE FIRST"))
-//        {
-//            if(flag_original_values_cod_befor_remove==1)
-//            {
-//                Log.e("cart","the selected pincode is"+spin.getSelectedItemPosition());
-//
-//                String  sub_txt_val  = sub_tot.getText().toString();
-//                String tot_val = tot.getText().toString();
-//                String delivery = delivery_charge.getText().toString();
-//                if(cod_total_set.equals("0")) {
-//                    cod_total=0;
-//                    for (int g = 0; g < cod_eligible_items_name_price_cart.size(); g++) {
-//                        String cnt = cod_eligible_items_name_count_cart.get(g);
-//                        String pr_initial = cod_eligible_items_name_price_cart.get(g);
-//                        String cnt1 = "COUNT: " + cnt;
-//
-//                        String[] separated = pr_initial.split(" ");
-//                        Log.e("cart", "the value is " + separated[1]);
-//                        String val = separated[1];
-//                        Log.e("cart", "the value is " + val);
-//                        Integer int_pr_initial = Integer.valueOf(val);
-//                        Integer int_cnt = Integer.valueOf(cnt);
-//                        Integer tot_count_price = int_cnt * int_pr_initial;
-//                        cod_total = cod_total + tot_count_price;
-//                    }
-//                }
-//
-//
-//
-//
-//                Intent n = new Intent(CartPage.this,Payment.class);
-//                Bundle b = new Bundle();
-//                b.putString("cod_eligible_pay","1");
-//                b.putString("sub_txt_val",sub_txt_val);
-//                b.putString("tot_val",tot_val);
-//                b.putString("delivery",delivery);
-//                b.putInt("cod_total",cod_total);
-//                b.putString("name_booking",name);
-//                b.putString("book_address",total_address_values_booking);
-//                b.putString("pincode_book",pincode_booking);
-//                b.putSerializable("cod_eligible_items_name_count_cart",cod_eligible_items_name_count_cart);
-//                b.putSerializable("cod_eligible_items_name_quantity_cart",cod_eligible_items_name_quantity_cart);
-//                b.putSerializable("cod_eligible_items_name_old_cart_id",cod_eligible_items_name_old_cart_id);
-//                b.putSerializable("cod_eligible_items_name_price_cart",cod_eligible_items_name_price_cart);
-//                n.putExtras(b);
-//                startActivity(n);
-//            }
-//
-//            else
-//            {
-//                Toast.makeText(CartPage.this,"No Items in COD Eligible Section",LENGTH_SHORT).show();
-//            }
-//
-//
-//        }
-//        else
-//        {
-//            if(flag_original_values_no_cod_befor_remove==1)
-//            {
-//                Log.e("cart","the selected pincode is"+spin.getSelectedItemPosition());
-//                String  sub_txt_val  = sub_tot.getText().toString();
-//                String tot_val = tot.getText().toString();
-//                String delivery = delivery_charge.getText().toString();
-//
-//                if(no_cod_total_set.equals("0")) {
-//                    no_cod_total = 0;
-//                    for (int g = 0; g < cod_not_eligible_items_name_price_cart.size(); g++) {
-//                        String cnt = cod_not_eligible_items_name_count_cart.get(g);
-//                        String pr_initial = cod_not_eligible_items_name_price_cart.get(g);
-//                        String cnt1 = "COUNT: " + cnt;
-//
-//                        String[] separated = pr_initial.split(" ");
-//                        Log.e("cart", "the value is " + separated[1]);
-//                        String val = separated[1];
-//                        Log.e("cart", "the value is " + val);
-//                        Integer int_pr_initial = Integer.valueOf(val);
-//                        Integer int_cnt = Integer.valueOf(cnt);
-//                        Integer tot_count_price = int_cnt * int_pr_initial;
-//                        no_cod_total = no_cod_total + tot_count_price;
-//                    }
-//                }
-//                Intent n = new Intent(CartPage.this,Payment.class);
-//                Bundle b = new Bundle();
-//                b.putString("cod_eligible_pay","0");
-//                b.putString("sub_txt_val",sub_txt_val);
-//                b.putString("tot_val",tot_val);
-//                b.putString("delivery",delivery);
-//                b.putInt("no_cod_total",no_cod_total);
-//                b.putString("book_address",total_address_values_booking);
-//                b.putString("pincode_book",pincode_booking);
-//                b.putSerializable("cod_not_eligible_items_name_count_cart",cod_not_eligible_items_name_count_cart);
-//                b.putSerializable("cod_not_eligible_items_name_quantity_cart",cod_not_eligible_items_name_quantity_cart);
-//                b.putSerializable("cod_not_eligible_items_name_old_cart_id",cod_not_eligible_items_name_old_cart_id);
-//                b.putSerializable("cod_not_eligible_items_name_price_cart",cod_not_eligible_items_name_price_cart);
-//                n.putExtras(b);
-//                startActivity(n);
-//            }
-//            else
-//            {
-//                Toast.makeText(CartPage.this,"No Items in COD Not Eligible Section",LENGTH_SHORT).show();
-//            }
-//        }
-//
+
    }
 
 
 }
 
-
+}
+else
+{
+Toast.makeText(CartPage.this,"MINIMUM ORDER AMOUNT IS "+minimum_amount_prchase,LENGTH_SHORT).show();
+}
 
             }
         });
@@ -663,9 +587,26 @@ else
 
         Double newintval = intval-value;
         String t= String.valueOf(newintval);
-        sub_tot.setText(t);
-        Double d = Double.valueOf(deliverychg1);
-        Double totval = newintval+d;
+        Double sb_tt = newintval;
+        if(sb_tt>0)
+        {
+            sub_tot.setText(t);
+        }
+        else {
+            sub_tot.setText("0");
+        }
+        Double new_del= Double.valueOf(minimum_delivery_charge);
+        Double dd;
+        if(newintval>new_del)
+        {
+            dd= Double.valueOf(deliverychg1_zero);
+        }
+        else
+        {
+            dd = Double.valueOf(deliverychg1);
+        }
+
+        Double totval = newintval+dd;
         String stringtotval = String.valueOf(totval);
         tot.setText(stringtotval);
         if(type_cod_or_not_cod.equals("1"))
@@ -674,8 +615,6 @@ else
             {
                 cod_length=cod_length-1;
             }
-
-
 
         }
         else
@@ -686,6 +625,21 @@ else
             }
 
         }
+        Log.e("cart","sub tottt===="+String.valueOf(sub_tot.getText()));
+        String coupon_name = coupon_nm.getText().toString();
+        String sb_validation = String.valueOf(sub_tot.getText());
+        Double sb_int_validate = Double.valueOf(sb_validation);
+        Double min_amnt = Double.valueOf(minimum_coupon_amnt);
+        if(sb_int_validate<min_amnt)
+        {
+
+           settoast(thisActivity,"ORDER ABOVE "+minimum_coupon_amnt+" TO AVAIL THE OFFER");
+        }
+        else
+        {
+            couponDetails(coupon_name);
+        }
+
     }
     public static void validate_items(ArrayList<Integer> originall_items_name_old_cart_id){
         int cod_count=0;
@@ -715,8 +669,9 @@ else
         flag_original_values_cod_befor_remove=cod_count;
         flag_original_values_no_cod_befor_remove=not_cod_count;
     }
-    private void couponDetails(String cpname)
+    private static void couponDetails(String cpname)
     {
+
 
 
         String url = "http://dailyestoreapp.com/dailyestore/api/";
@@ -766,8 +721,18 @@ else
                 String t= String.valueOf(newintval);
                 Log.e("cart","delete="+t);
                 sub_tot.setText(t);
-                Double d = Double.valueOf(deliverychg1);
-                Double totval = newintval+d;
+                Double d_coupn;
+                Double d_min = Double.valueOf(minimum_delivery_charge);
+                if(newintval>d_min)
+                {
+                    d_coupn = Double.valueOf(deliverychg1_zero);
+                }
+                else
+                {
+                    d_coupn = Double.valueOf(deliverychg1);
+                }
+
+                Double totval = newintval+d_coupn;
                 String stringtotval = String.valueOf(totval);
                 tot.setText(stringtotval);
 
@@ -789,89 +754,95 @@ else
 
 
     }
-    public void Book_now() {
-        String login_type="0";
-        String url = "http://dailyestoreapp.com/dailyestore/api/";
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient)
-                .build();
-        ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
-        items_name_count_cart_integer.clear();
-        for(int k=0;k<items_name_count_cart.size();k++)
-        {
-            Integer g = Integer.valueOf(items_name_count_cart.get(k));
-            items_name_count_cart_integer.add(g);
-        }
-        items_name_quantity_cart_new.clear();
-        for(int l=0;l<items_name_quantity_cart.size();l++)
-        {
-            String q =items_name_quantity_cart.get(l);
-            String[] separated = q.split(" ");
-            Log.e("cart","the value is "+separated[1] );
-            String val = separated[1];
-            items_name_quantity_cart_new.add(val);
-        }
-        Log.e("cart","checkout param=    itemid ====>"+items_name_old_cart_id);
-        Log.e("cart","checkout param=    count====>"+items_name_count_cart_integer);
-        Log.e("cart","checkout param=    quantity ====>"+items_name_quantity_cart_new);
-        Log.e("cart","checkout param=    type ====>"+0);
-        Log.e("cart","checkout param=    userid ====>"+4);
-        Log.e("cart","checkout param=    address ====> abc");
-        Log.e("cart","checkout param=    itemid ====>585225");
-        Log.e("cart","checkout prce ====>"+items_name_price_cart);
-        SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        String useridd = shared.getString("logged_in_userId","");
-        int user_int_id = Integer.parseInt(useridd);
-        final ArrayList<Integer> user_cart_id = new ArrayList<>();
-        final ArrayList<Integer> type_cart_id = new ArrayList<>();
-        for(int g =0;g<items_name_old_cart_id.size();g++)
-        {
-            user_cart_id.add(user_int_id);
-            type_cart_id.add(0);
-        }
-
-        Call call = mainInterface.checkoutapi(items_name_old_cart_id,items_name_count_cart_integer,items_name_quantity_cart,type_cart_id,items_name_price_cart,user_cart_id,"abc","585225");
-        call.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, retrofit2.Response response) {
-                Log.e("cart","response orderes="+response.body());
-                Toast.makeText(CartPage.this,"Successfully Placed Orders", LENGTH_SHORT).show();
-//            CustomerAppResponseLogin obj =response.body();
-//            Log.e("login","success="+response.body().getResponsedata());
-//            int success = Integer.parseInt(obj.getResponsedata().getSuccess());
-//            Log.e("login","success="+success);
+//    public void Book_now() {
+//        String login_type="0";
+//        String url = "http://dailyestoreapp.com/dailyestore/api/";
+//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+//                .addInterceptor(loggingInterceptor)
+//                .build();
 //
-//            if(success==1)
-//            {
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(url)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .client(okHttpClient)
+//                .build();
+//        ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
+//        items_name_count_cart_integer.clear();
+//        for(int k=0;k<items_name_count_cart.size();k++)
+//        {
+//            Integer g = Integer.valueOf(items_name_count_cart.get(k));
+//            items_name_count_cart_integer.add(g);
+//        }
+//        items_name_quantity_cart_new.clear();
+//        for(int l=0;l<items_name_quantity_cart.size();l++)
+//        {
+//            String q =items_name_quantity_cart.get(l);
+//            String[] separated = q.split(" ");
+//            Log.e("cart","the value is "+separated[1] );
+//            String val = separated[1];
+//            items_name_quantity_cart_new.add(val);
+//        }
+//        Log.e("cart","checkout param=    itemid ====>"+items_name_old_cart_id);
+//        Log.e("cart","checkout param=    count====>"+items_name_count_cart_integer);
+//        Log.e("cart","checkout param=    quantity ====>"+items_name_quantity_cart_new);
+//        Log.e("cart","checkout param=    type ====>"+0);
+//        Log.e("cart","checkout param=    userid ====>"+4);
+//        Log.e("cart","checkout param=    address ====> abc");
+//        Log.e("cart","checkout param=    itemid ====>585225");
+//        Log.e("cart","checkout prce ====>"+items_name_price_cart);
+//        SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+//        String useridd = shared.getString("logged_in_userId","");
+//        int user_int_id = Integer.parseInt(useridd);
+//        final ArrayList<Integer> user_cart_id = new ArrayList<>();
+//        final ArrayList<Integer> type_cart_id = new ArrayList<>();
+//        for(int g =0;g<items_name_old_cart_id.size();g++)
+//        {
+//            user_cart_id.add(user_int_id);
+//            type_cart_id.add(0);
+//        }
 //
+//        Call call = mainInterface.checkoutapi(items_name_old_cart_id,items_name_count_cart_integer,items_name_quantity_cart,type_cart_id,items_name_price_cart,user_cart_id,"abc","585225");
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onResponse(Call call, retrofit2.Response response) {
+//                Log.e("cart","response orderes="+response.body());
+//                Toast.makeText(CartPage.this,"Successfully Placed Orders", LENGTH_SHORT).show();
+//
+//
+////            CustomerAppResponseLogin obj =response.body();
+////            Log.e("login","success="+response.body().getResponsedata());
+////            int success = Integer.parseInt(obj.getResponsedata().getSuccess());
+////            Log.e("login","success="+success);
+////
+////            if(success==1)
+////            {
+////
+////
+////            }
+////            else
+////            {
+////
+////                Toast.makeText(CartPage.this,"Invalid Username and Password",Toast.LENGTH_SHORT).show();
+////
+////            }
 //
 //            }
-//            else
-//            {
 //
-//                Toast.makeText(CartPage.this,"Invalid Username and Password",Toast.LENGTH_SHORT).show();
+//            @Override
+//            public void onFailure(Call call, Throwable t) {
+//                Toast.makeText(CartPage.this,t.getMessage(), LENGTH_SHORT).show();
+//                Log.e("cart","error"+t.getMessage()+t.getLocalizedMessage()+t.getCause()+t.getStackTrace()+t.getClass());
 //
 //            }
+//        });
+//
+//    }
 
-            }
-
-            @Override
-            public void onFailure(Call call, Throwable t) {
-                Toast.makeText(CartPage.this,t.getMessage(), LENGTH_SHORT).show();
-                Log.e("cart","error"+t.getMessage()+t.getLocalizedMessage()+t.getCause()+t.getStackTrace()+t.getClass());
-
-            }
-        });
-
-    }
-
+public static void settoast(Context c,String a)
+{
+    Toast.makeText(c,a,LENGTH_SHORT).show();
+}
 
 }

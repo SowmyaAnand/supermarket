@@ -92,7 +92,7 @@ public class Itemlisting extends AppCompatActivity {
         setContentView(R.layout.activity_itemlisting);
         final SharedPreferences fullname_shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         fullname = fullname_shared.getString("fullusername","");
- t = (Toolbar)findViewById(R.id.toolbar_itemlisting);
+ t = (Toolbar)findViewById(R.id.toolbar_itemlisting_item);
         setSupportActionBar(t);
         Intent in = getIntent();
         Bundle extras = in.getExtras();
@@ -128,7 +128,7 @@ t.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
 t.setNavigationOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        Intent prev= new Intent(Itemlisting.this,MainActivity.class);
+        Intent prev= new Intent(Itemlisting.this,Main2Activity.class);
         startActivity(prev);
     }
 });

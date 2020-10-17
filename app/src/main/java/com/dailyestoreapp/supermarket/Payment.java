@@ -49,7 +49,7 @@ TextView total,sub_total,delivery;
     ArrayList<Integer> cod_eligible_items_name_old_cart_id = new ArrayList<>();
      ArrayList<String> cod_eligible_items_name_price_cart = new ArrayList<>();
    String cod_eligible_pay;
-
+    ArrayList<String> items_name_old_cart_payment = new ArrayList<>();
     ArrayList<Integer> cod_not_items_name_count_cart_integer = new ArrayList<>();
     ArrayList<String> cod_not_eligible_items_name_count_cart = new ArrayList<>();
     ArrayList<String> cod_not_eligible_items_name_quantity_cart_new = new ArrayList<>();
@@ -182,12 +182,12 @@ TextView total,sub_total,delivery;
                     if(cod_eligible_pay.equals("1"))
                     {
 
-                         Book_cod_now();
+                         Book_cod_now("0");
                     }
                     else
 
                     {
-                        Book_no_cod_now();
+                        Book_no_cod_now("0");
                     }
 
                 }
@@ -329,11 +329,11 @@ TextView total,sub_total,delivery;
                 if(cod_eligible_pay.equals("1"))
                 {
 
-                    Book_cod_now();
+                    Book_cod_now("1");
                 }
                 else
                 {
-                    Book_no_cod_now();
+                    Book_no_cod_now("1");
                 }
             }
             else if("Payment cancelled by user.".equals(paymentCancel)) {
@@ -364,7 +364,7 @@ TextView total,sub_total,delivery;
         }
         return false;
     }
-    public void Book_cod_now() {
+    public void Book_cod_now(String paymentType) {
         String login_type="0";
         String url = "http://dailyestoreapp.com/dailyestore/api/";
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -413,30 +413,73 @@ TextView total,sub_total,delivery;
         Log.e("cart","checkout param=    address ====> "+address_booking);
         Log.e("cart","checkout param=    itemid ====>"+pincode_booking);
         Log.e("cart","checkout prce ====>"+cod_eligible_items_name_price_cart);
-        Call call = mainInterface.checkoutapi(cod_eligible_items_name_old_cart_id,cod_items_name_count_cart_integer,cod_eligible_items_name_quantity_cart,type_cart_id,cod_eligible_items_name_price_cart,user_cart_id,address_booking,pincode_booking);
+        Call call = mainInterface.checkoutapi(cod_eligible_items_name_old_cart_id,cod_items_name_count_cart_integer,cod_eligible_items_name_quantity_cart,type_cart_id,cod_eligible_items_name_price_cart,user_cart_id,address_booking,pincode_booking,paymentType);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, retrofit2.Response response) {
                 Log.e("cart","response orderes="+response.body());
                 Toast.makeText(Payment.this,"Successfully Placed Orders",Toast.LENGTH_SHORT).show();
+
+
+                //clearance of cart items
+
+                SharedPreferences fullname_shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                String fullname = fullname_shared.getString("fullusername","");
+
+
+                //retrieve item names for getting specific count
+                SharedPreferences shared_tot = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                Log.e("cart","fullname name ="+fullname);
+                String cart_item_names = fullname+"cart_item_names";
+                Log.e("cart","fullname name="+fullname);
+                String itemSingle_name_old = shared_tot.getString(cart_item_names, "");
+
+                if(!(itemSingle_name_old==null)||(itemSingle_name_old.length()==0))
+                {
+                    String[] cats = itemSingle_name_old .split(",");//if spaces are uneven, use \\s+ instead of " "
+                    for (String ct : cats) {
+                        if(!(ct.equals("")||ct.equals(null)))
+                        {
+                            items_name_old_cart_payment.add(ct);
+                        }
+
+                    }
+                }
+
+
+                SharedPreferences.Editor editor_payment = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                for(int i=0;i<items_name_old_cart_payment.size();i++) {
+                    String nm = items_name_old_cart_payment.get(i);
+                    //specific count
+                    String sharepreferencename_count_payment = fullname + nm + "_count";
+                    editor_payment.putString(sharepreferencename_count_payment,"");
+                }
+                //your cart text count
+                String total_count_cart_payment = fullname+"total_count_cart";
+                String cart_Items_toolbar_count_payment= fullname+"cart_Items_toolbar_count";
+                String cart_item_names_id_payment = fullname+"cart_item_names_id";
+                String cart_item_image_payment = fullname+"cart_item_image";
+                String cart_item_qnty_payment =fullname+"cart_item_qnty";
+                String cart_item_cod_payment = fullname+"cart_item_cod";
+                String cart_item_price_payment = fullname+"cart_item_price";
+                String cart_item_offer_percent_payment = fullname+"cart_item_offer_percent";
+                String cart_item_names_payment = fullname+"cart_item_names";
+
+
+                editor_payment.putString(cart_item_names_payment,"");
+                editor_payment.putString(total_count_cart_payment,"");
+                editor_payment.putString(cart_Items_toolbar_count_payment,"");
+                editor_payment.putString(cart_item_names_id_payment,"");
+                editor_payment.putString(cart_item_image_payment,"");
+                editor_payment.putString(cart_item_qnty_payment,"");
+                editor_payment.putString(cart_item_cod_payment,"");
+                editor_payment.putString(cart_item_price_payment,"");
+                editor_payment.putString(cart_item_offer_percent_payment,"");
+
+                editor_payment.apply();
+
                 Intent next = new Intent(Payment.this,Thankyou.class);
                 startActivity(next);
-//            CustomerAppResponseLogin obj =response.body();
-//            Log.e("login","success="+response.body().getResponsedata());
-//            int success = Integer.parseInt(obj.getResponsedata().getSuccess());
-//            Log.e("login","success="+success);
-//
-//            if(success==1)
-//            {
-//
-//
-//            }
-//            else
-//            {
-//
-//                Toast.makeText(CartPage.this,"Invalid Username and Password",Toast.LENGTH_SHORT).show();
-//
-//            }
 
             }
 
@@ -449,7 +492,7 @@ TextView total,sub_total,delivery;
         });
 
     }
-    public void Book_no_cod_now() {
+    public void Book_no_cod_now(String paymentType) {
         String login_type="0";
         String url = "http://dailyestoreapp.com/dailyestore/api/";
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -498,30 +541,71 @@ TextView total,sub_total,delivery;
         Log.e("cart","checkout param=    address ====> "+address_booking);
         Log.e("cart","checkout param=    itemid ====>"+pincode_booking);
         Log.e("cart","checkout prce ====>"+cod_not_eligible_items_name_price_cart);
-        Call call = mainInterface.checkoutapi(cod_not_eligible_items_name_old_cart_id,cod_not_items_name_count_cart_integer,cod_not_eligible_items_name_quantity_cart,type_cart_id,cod_not_eligible_items_name_price_cart,user_cart_id,address_booking,pincode_booking);
+        Call call = mainInterface.checkoutapi(cod_not_eligible_items_name_old_cart_id,cod_not_items_name_count_cart_integer,cod_not_eligible_items_name_quantity_cart,type_cart_id,cod_not_eligible_items_name_price_cart,user_cart_id,address_booking,pincode_booking,paymentType);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, retrofit2.Response response) {
                 Log.e("cart","response orderes="+response.body());
                 Toast.makeText(Payment.this,"Successfully Placed Orders",Toast.LENGTH_SHORT).show();
+                SharedPreferences fullname_shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                String fullname = fullname_shared.getString("fullusername","");
+
+
+                //retrieve item names for getting specific count
+                SharedPreferences shared_tot = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                Log.e("cart","fullname name ="+fullname);
+                String cart_item_names = fullname+"cart_item_names";
+                Log.e("cart","fullname name="+fullname);
+                String itemSingle_name_old = shared_tot.getString(cart_item_names, "");
+
+                if(!(itemSingle_name_old==null)||(itemSingle_name_old.length()==0))
+                {
+                    String[] cats = itemSingle_name_old .split(",");//if spaces are uneven, use \\s+ instead of " "
+                    for (String ct : cats) {
+                        if(!(ct.equals("")||ct.equals(null)))
+                        {
+                            items_name_old_cart_payment.add(ct);
+                        }
+
+                    }
+                }
+
+
+                SharedPreferences.Editor editor_payment = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                for(int i=0;i<items_name_old_cart_payment.size();i++) {
+                    String nm = items_name_old_cart_payment.get(i);
+                    //specific count
+                    String sharepreferencename_count_payment = fullname + nm + "_count";
+                    editor_payment.putString(sharepreferencename_count_payment,"");
+                }
+                //your cart text count
+                String total_count_cart_payment = fullname+"total_count_cart";
+                String cart_Items_toolbar_count_payment= fullname+"cart_Items_toolbar_count";
+                String cart_item_names_id_payment = fullname+"cart_item_names_id";
+                String cart_item_image_payment = fullname+"cart_item_image";
+                String cart_item_qnty_payment =fullname+"cart_item_qnty";
+                String cart_item_cod_payment = fullname+"cart_item_cod";
+                String cart_item_price_payment = fullname+"cart_item_price";
+                String cart_item_offer_percent_payment = fullname+"cart_item_offer_percent";
+                String cart_item_names_payment = fullname+"cart_item_names";
+
+
+                editor_payment.putString(cart_item_names_payment,"");
+                editor_payment.putString(total_count_cart_payment,"");
+                editor_payment.putString(cart_Items_toolbar_count_payment,"");
+                editor_payment.putString(cart_item_names_id_payment,"");
+                editor_payment.putString(cart_item_image_payment,"");
+                editor_payment.putString(cart_item_qnty_payment,"");
+                editor_payment.putString(cart_item_cod_payment,"");
+                editor_payment.putString(cart_item_price_payment,"");
+                editor_payment.putString(cart_item_offer_percent_payment,"");
+
+                editor_payment.apply();
+
+
+
                 Intent next = new Intent(Payment.this,Thankyou.class);
                 startActivity(next);
-//            CustomerAppResponseLogin obj =response.body();
-//            Log.e("login","success="+response.body().getResponsedata());
-//            int success = Integer.parseInt(obj.getResponsedata().getSuccess());
-//            Log.e("login","success="+success);
-//
-//            if(success==1)
-//            {
-//
-//
-//            }
-//            else
-//            {
-//
-//                Toast.makeText(CartPage.this,"Invalid Username and Password",Toast.LENGTH_SHORT).show();
-//
-//            }
 
             }
 
