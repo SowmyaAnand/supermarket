@@ -35,6 +35,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
     Context context;
     Integer orderid_adapter;
     ArrayList<String> lts=new ArrayList<String>();
+   ArrayList<Integer> payment_type= new ArrayList<>();
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity=1;
     ArrayList<String> items_name_price_myorders = new ArrayList<>();
@@ -42,7 +43,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
     ArrayList<Integer> return_request_orders_list_array_orderid = new ArrayList<>();
     ArrayList<Integer> order_id_list = new ArrayList<>();
     ArrayList<String> items_name_myorders; ArrayList<String>items_name_quantity_myorders;ArrayList<Integer> items_name_status_myorders;ArrayList<Integer> items_count_myorders;
-    public MyOrdersAdapter(Context context,ArrayList<String> items_name_myorders, ArrayList<String>items_name_quantity_myorders,ArrayList<Integer> items_name_status_myorders,ArrayList<Integer> items_count_myorders, ArrayList<String> items_name_price_myorders,ArrayList<String> items_image_myorders,ArrayList<Integer> return_request_orders_list_array_orderid,ArrayList<Integer> order_id_list) {
+    public MyOrdersAdapter(Context context,ArrayList<String> items_name_myorders, ArrayList<String>items_name_quantity_myorders,ArrayList<Integer> items_name_status_myorders,ArrayList<Integer> items_count_myorders, ArrayList<String> items_name_price_myorders,ArrayList<String> items_image_myorders,ArrayList<Integer> return_request_orders_list_array_orderid,ArrayList<Integer> order_id_list,ArrayList<Integer> payment_type) {
         this.context = context;
         this.personNames = personNames;
         this.lts.addAll(personNames);
@@ -54,6 +55,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
         this.items_image_myorders=items_image_myorders;
         this.return_request_orders_list_array_orderid=return_request_orders_list_array_orderid;
         this.order_id_list=order_id_list;
+        this.payment_type=payment_type;
         Log.e("myorders","adapter orders are ="+items_name_quantity_myorders);
     }
     @Override
@@ -67,7 +69,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
 
     @Override
     public void onBindViewHolder(final MyOrdersAdapter.MyViewHolder holder, final int position) {
-
+String pay_txt;
         // set the data in items
         String name = (String) items_name_myorders.get(position);
         String quan = (String) items_name_quantity_myorders.get(position);
@@ -75,9 +77,19 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
         String img =items_image_myorders.get(position);
         Integer count = items_count_myorders.get(position);
         Integer st = items_name_status_myorders.get(position);
+        Integer p_type =payment_type.get(position);
         holder.name.setText(name);
         holder.quantityy.setText(quan);
 
+        if(p_type==1)
+        {
+           pay_txt="Gpay";
+        }
+        else
+        {
+            pay_txt="Cash On Delivery";
+        }
+        holder.cod_available.setText(pay_txt);
 
 
         String cntt = "COUNT :"+count;
@@ -208,7 +220,7 @@ Log.e("myordersadapter","pr="+pr);
         return items_name_myorders.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name,quantityy,price,status,count;// init the item view's
+        TextView name,quantityy,price,status,count,cod_available;// init the item view's
         Button return_btn;
         ImageView img_my;
         public MyViewHolder(View itemView) {
@@ -220,6 +232,7 @@ Log.e("myordersadapter","pr="+pr);
            count=(TextView) itemView.findViewById(R.id.count_myorder);
            img_my=itemView.findViewById(R.id.img_myorder);
            return_btn=itemView.findViewById(R.id.return_button);
+           cod_available=itemView.findViewById(R.id.pay_type_text);
             // get the reference of item view's
 
         }

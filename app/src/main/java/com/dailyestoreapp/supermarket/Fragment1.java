@@ -71,6 +71,7 @@ public class Fragment1 extends Fragment {
     ArrayList<String> secondflyer_image = new ArrayList<>();
     ArrayList<String> deal_image = new ArrayList<>();
     ArrayList<Integer> categoriescatno_edit = new ArrayList<>();
+    ArrayList<Integer> deals_type_id_for_click = new ArrayList<>();
     ArrayList<Integer> Sub_categories_id = new ArrayList<>();
     private Integer selectedSubCategoryNo;
     ArrayList<String> Sub_categories = new ArrayList<>();
@@ -81,6 +82,7 @@ public class Fragment1 extends Fragment {
     int intialsub=1;
     int cno;
     int search_cno;
+    int deals_typeid_cno;
     int secondddflyerid;
     String popup_img;
     ArrayList<String> Images_sub = new ArrayList<>();
@@ -141,68 +143,88 @@ public class Fragment1 extends Fragment {
         SharedPreferences shared = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String savedcatString = shared.getString("categories_new", "");
         String[] cats = savedcatString.split(",");//if spaces are uneven, use \\s+ instead of " "
-        for (String ct : cats) {
-            if(!(ct.equals("")||ct.equals(null)))
-            {
-                categoriesEditCategies.add(ct);
-            }
+       if(categoriesEditCategies.size()==0) {
+           for (String ct : cats) {
+               if (!(ct.equals("") || ct.equals(null))) {
 
-        }
+                   categoriesEditCategies.add(ct);
+               }
+
+           }
+       }
 
         SharedPreferences shared4 = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String savedcatString_image = shared4.getString("categories_image_new", "");
         String[] cats_image = savedcatString_image.split(",");//if spaces are uneven, use \\s+ instead of " "
-        for (String ct : cats_image) {
-            if(!(ct.equals("")||ct.equals(null)))
-            {
-                categoriesEditCategies_image.add(ct);
+        if(categoriesEditCategies_image.size()==0) {
+            for (String ct : cats_image) {
+                if (!(ct.equals("") || ct.equals(null))) {
+                    categoriesEditCategies_image.add(ct);
+                }
+
             }
-
         }
-
         SharedPreferences shared2 = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String savedString = shared2.getString("categories_no_new", "");
         Log.e("editcategories","the categories are images arae "+categoriesEditCategies_image);
         String[] numbers = savedString.split(",");//if spaces are uneven, use \\s+ instead of " "
-        for (String number : numbers) {
-            if(!(numbers.equals("")||numbers.equals(null)))
-            {
-                categoriescatno_edit.add(Integer.valueOf(number));
-            }
+        if(categoriescatno_edit.size()==0) {
+            for (String number : numbers) {
+                if (!(numbers.equals("") || numbers.equals(null))) {
+                    categoriescatno_edit.add(Integer.valueOf(number));
+                }
 
+            }
         }
         SharedPreferences shared_cat_id = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         int intial_cat_id =shared_cat_id.getInt("categories_intial",0);
         SharedPreferences shared_firstflyer = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String shared_firstflyer_img = shared_firstflyer.getString("first_flyer_new", "");
         String[] firstflyer_img = shared_firstflyer_img.split(",");//if spaces are uneven, use \\s+ instead of " "
-        for (String ct : firstflyer_img) {
-            if(!(ct.equals("")||ct.equals(null)))
-            {
-                firstflyer_image.add(ct);
-            }
+        if(firstflyer_image.size()==0) {
+            for (String ct : firstflyer_img) {
+                if (!(ct.equals("") || ct.equals(null))) {
+                    firstflyer_image.add(ct);
+                }
 
+            }
         }
         String shared_secondflyer = shared_firstflyer.getString("sec_flyers_images_new", "");
         String[] shared_secondflyer_img = shared_secondflyer.split(",");//if spaces are uneven, use \\s+ instead of " "
-        for (String ct : shared_secondflyer_img) {
-            if(!(ct.equals("")||ct.equals(null)))
-            {
-                secondflyer_image.add(ct);
-            }
+        if(secondflyer_image.size()==0) {
+            for (String ct : shared_secondflyer_img) {
+                if (!(ct.equals("") || ct.equals(null))) {
+                    secondflyer_image.add(ct);
+                }
 
+            }
         }
         String shared_dealflyer = shared_firstflyer.getString("viewalldeals_img", "");
         String[] shared_dealflyer_img = shared_dealflyer.split(",");//if spaces are uneven, use \\s+ instead of " "
-        for (String ct : shared_dealflyer_img) {
-            if(!(ct.equals("")||ct.equals(null)))
-            {
-                deal_image.add(ct);
-            }
+        if(deal_image.size()==0) {
+            for (String ct : shared_dealflyer_img) {
+                if (!(ct.equals("") || ct.equals(null))) {
+                    deal_image.add(ct);
+                }
 
+            }
         }
+        SharedPreferences shared_deal_typeId = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String deal_type_id_fragment1 = shared_deal_typeId.getString("deals_typeid", "");
+        String[] deal_type_id_numbers = deal_type_id_fragment1.split(",");//if spaces are uneven, use \\s+ instead of " "
+     if(deals_type_id_for_click.size()==0) {
+         for (String number : deal_type_id_numbers) {
+             if (!(deal_type_id_numbers.equals("") || deal_type_id_numbers.equals(null))) {
+                 deals_type_id_for_click.add(Integer.valueOf(number));
+
+             }
+
+         }
+     }
+
+
         popup_img = shared_firstflyer.getString("firstpop_img", "");
-        int popup_id = shared_firstflyer.getInt("popup_initalval",0);
+        final int popup_id = shared_firstflyer.getInt("popup_initalval",0);
         popupid=popup_id;
 
 
@@ -269,7 +291,8 @@ public class Fragment1 extends Fragment {
         dealsview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @SuppressWarnings("rawtypes")
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-
+            deals_typeid_cno=deals_type_id_for_click.get(position);
+            subcategoryactivate("2");
             }
         });
 
@@ -462,6 +485,10 @@ public class Fragment1 extends Fragment {
         if(flag.equals("0"))
         {
             cno=search_cno;
+        }
+        else if(flag.equals("2"))
+        {
+            cno=deals_typeid_cno;
         }
         Call<CustomerAppResponse> call = mainInterface.SubCategory(cno);
         call.enqueue(new Callback<CustomerAppResponse>() {

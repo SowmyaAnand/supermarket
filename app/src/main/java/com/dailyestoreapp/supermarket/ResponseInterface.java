@@ -12,6 +12,8 @@ public interface ResponseInterface {
 
     @GET("listcategory")
     Call<CustomerAppResponse> CategoryList();
+    @GET("fcm/send.php")
+    Call<PushNotificationadaptertrial> pushnotificationtrial();
     @FormUrlEncoded
     @POST("orderStatus")
     Call<CustomerAppResponseLogin> changeOrderStatus(@Field("orderId") int id,

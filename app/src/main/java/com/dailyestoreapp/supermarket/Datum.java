@@ -19,6 +19,9 @@ class Datum {
     @SerializedName("initialdealid")
     @Expose
     private String initialdealid;
+    @SerializedName("paymentType")
+    @Expose
+    private String paymentType;
     @SerializedName("itemName")
     @Expose
     private String itemName;
@@ -170,6 +173,13 @@ class Datum {
 
     public void setCouponId(String couponId) {
         this.couponId = couponId;
+    }
+    public String getpaymentType() {
+        return paymentType;
+    }
+
+    public void setpaymentType(String paymentType) {
+        this.paymentType = paymentType;
     }
     public String getoffer() {
         return offer;

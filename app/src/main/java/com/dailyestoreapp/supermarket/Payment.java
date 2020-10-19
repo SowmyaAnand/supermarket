@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -483,7 +484,8 @@ TextView total,sub_total,delivery;
                 editor_payment.putString(cart_item_offer_percent_payment,"");
 
                 editor_payment.apply();
-
+                push_notif();
+                Toast.makeText(Payment.this,"Your order has been placed successfully",Toast.LENGTH_LONG).show();
                 Intent next = new Intent(Payment.this,Thankyou.class);
                 startActivity(next);
 
@@ -626,4 +628,40 @@ TextView total,sub_total,delivery;
         });
 
     }
+
+    private void push_notif()
+    {
+
+        String url_push = "http://dailyestoreapp.com/dailyestore/";
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url_push)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+        ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
+        Call<PushNotificationadaptertrial> call = mainInterface.pushnotificationtrial();
+        call.enqueue(new Callback<PushNotificationadaptertrial>() {
+            @Override
+            public void onResponse(Call<PushNotificationadaptertrial> call, retrofit2.Response<PushNotificationadaptertrial> response) {
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<PushNotificationadaptertrial> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+
 }

@@ -34,6 +34,7 @@ RecyclerView orders;
     final ArrayList<String> items_name_count_myorders = new ArrayList<>();
     final ArrayList<Integer> items_count_myorders_id = new ArrayList<>();
     final ArrayList<Integer> order_placed_id= new ArrayList<>();
+    final ArrayList<Integer> payment_type= new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +105,7 @@ RecyclerView orders;
                         String imageurl = response.body().getResponsedata().getData().get(i).getImage();
                         Integer order_id= Integer.valueOf(response.body().getResponsedata().getData().get(i).getOrderId());
                        Integer cnt = Integer.valueOf(response.body().getResponsedata().getData().get(i).getCount());
+                       Integer pay_type = Integer.valueOf(response.body().getResponsedata().getData().get(i).getpaymentType());
                         String imageurl_total=url1+imageurl;
                         Log.e("itemlisting","imageurl"+url1+imageurl);
 
@@ -115,6 +117,7 @@ RecyclerView orders;
                         items_image_myorders.add(imageurl_total);
                         items_count_myorders_id.add(it_id);
                         order_placed_id.add(order_id);
+                        payment_type.add(pay_type);
 
                     }
 
@@ -122,7 +125,7 @@ RecyclerView orders;
 
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                     orders.setLayoutManager(linearLayoutManager);
-                    customAdapter_offers = new MyOrdersAdapter(Myorders.this, items_name_myorders,items_name_quantity_myorders,items_name_status_myorders,items_count_myorders,items_name_price_myorders,items_image_myorders,items_count_myorders_id,order_placed_id);
+                    customAdapter_offers = new MyOrdersAdapter(Myorders.this, items_name_myorders,items_name_quantity_myorders,items_name_status_myorders,items_count_myorders,items_name_price_myorders,items_image_myorders,items_count_myorders_id,order_placed_id,payment_type);
                     orders.setAdapter(customAdapter_offers);
                 }
 

@@ -35,6 +35,7 @@ private static int SPLASH_TIME_OUT = 1000;
     int  intialsecondFlyers=1;
     int  intialdealFlyers=1;
     int intialpopup=1;
+    final ArrayList<Integer> deals_typeId_array = new ArrayList<>();
     public static final String MY_PREFS_NAME = "CustomerApp";
 
     @Override
@@ -345,12 +346,13 @@ SecondViewFlyers();
 
 
 
-    ViewAllDeals();
+        ViewAllDeals();
 
     }
     private void ViewAllDeals()
     {
         final StringBuilder viewalldeals_img = new StringBuilder();
+        final StringBuilder strbul_deal_typieid = new StringBuilder();
         String url = "http://dailyestoreapp.com/dailyestore/api/";
         final String url1 = "http://dailyestoreapp.com/dailyestore/";
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -379,12 +381,13 @@ SecondViewFlyers();
                         for (int i = 0; i < data_length; i++)
 
                         {
-
                             String imageurl = response.body().getResponsedata().getData().get(i).getImage();
                             String did = response.body().getResponsedata().getData().get(i).getDealId();
+                            int deal_typeid= Integer.parseInt(response.body().getResponsedata().getData().get(i).getTypeId());
                             String imageurl_total=url1+imageurl;
                             Log.e("firstpop","the deal succes value is "+imageurl_total);
                            original_deal_splash.add(imageurl_total);
+                           deals_typeId_array.add(deal_typeid);
                             String intial_deal_flyer =response.body().getResponsedata().getData().get(i).getinitialdealid();
                             if(intial_deal_flyer.equals("0"))
                             {
@@ -401,6 +404,21 @@ SecondViewFlyers();
                                 viewalldeals_img.append(",");
                             }
                         }
+
+                        Iterator<Integer> iter = deals_typeId_array.iterator();
+                        while(iter.hasNext())
+                        {
+                            strbul_deal_typieid.append(iter.next());
+                            if(iter.hasNext()){
+                                strbul_deal_typieid.append(",");
+                            }
+                        }
+                        strbul_deal_typieid.toString();
+
+                        SharedPreferences.Editor editor2 = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                        editor2.putString("deals_typeid", strbul_deal_typieid.toString());
+                        editor2.apply();
+
                         SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                         editor_frst.putString("viewalldeals_img", viewalldeals_img.toString());
                         editor_frst.putInt("deal_flyer_initalval",intialdealFlyers);
