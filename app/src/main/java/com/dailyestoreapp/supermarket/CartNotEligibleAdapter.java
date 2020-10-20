@@ -212,6 +212,26 @@ Log.e("cart","new removal flag="+items_name_old_cartadapter.size()+items_name_ol
                 Log.e("homefragment", "the catgeories shared preference are  login  =" + it.toString());
                 editor.apply();
 
+
+
+                items_name_count_cartadapter.remove(int_new_position);
+                final StringBuilder it_pay_count  = new StringBuilder();
+                Iterator<String> itr_string_pay = items_name_count_cartadapter.iterator();
+                while (itr_string_pay.hasNext()) {
+
+                    it_pay_count.append(itr_string_pay.next());
+                    if (itr_string_pay.hasNext()) {
+                        it_pay_count.append(",");
+                    }
+                }
+                SharedPreferences.Editor editor_pay = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                editor_pay.putString("payment_only_cart_item_count", it_pay_count.toString());
+                Log.e("homefragment", "the catgeories shared preference are  login  =" + it_pay_count.toString());
+                editor_pay.apply();
+
+
+
+
                 items_images_cart.remove(int_new_position);
                 Iterator<String> itr_string_ig = items_images_cart.iterator();
                 while (itr_string_ig.hasNext()) {

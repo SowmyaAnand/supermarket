@@ -170,6 +170,7 @@ String cnt1 ="COUNT: "+cnt;
         String val = separated[1];
         Integer intdelete_price= Integer.valueOf(val);
         final StringBuilder it  = new StringBuilder();
+        final StringBuilder it_payment_count  = new StringBuilder();
         final StringBuilder it_qnty  = new StringBuilder();
         final StringBuilder it_ig  = new StringBuilder();
         final StringBuilder it_id  = new StringBuilder();
@@ -212,6 +213,27 @@ String cnt1 ="COUNT: "+cnt;
             editor.putString(cart_Items_toolbar_count, String.valueOf(items_name_old_cartadapter.size()));
             Log.e("homefragment", "the catgeories shared preference are  login  =" + it.toString());
             editor.apply();
+
+        items_name_count_cartadapter.remove(int_new_position);
+        final StringBuilder it_pay_count  = new StringBuilder();
+        Iterator<String> itr_string_pay = items_name_count_cartadapter.iterator();
+        while (itr_string_pay.hasNext()) {
+
+            it_pay_count.append(itr_string_pay.next());
+            if (itr_string_pay.hasNext()) {
+                it_pay_count.append(",");
+            }
+        }
+        SharedPreferences.Editor editor_pay = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        editor_pay.putString("payment_only_cart_item_count", it_pay_count.toString());
+        Log.e("homefragment", "the catgeories shared preference are  login  =" + it_pay_count.toString());
+        editor_pay.apply();
+
+
+
+
+
+
 
 
 

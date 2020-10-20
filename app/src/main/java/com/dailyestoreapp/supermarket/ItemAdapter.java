@@ -38,7 +38,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
     ArrayList<String> Item_cod_adapter = new ArrayList<>();
     ArrayList<String> Item_Refunf_adapter = new ArrayList<>();
     ArrayList<String> Item_categories_offer_desc_adapter = new ArrayList<>();
-    ArrayList<Integer> Item_Quantity_adapter = new ArrayList<>();
+//    ArrayList<Integer> Item_Quantity_adapter = new ArrayList<>();
+ArrayList<String> Item_Quantity_adapter = new ArrayList<>();
     ArrayList<Integer> Item_Price_adapter = new ArrayList<>();
     ArrayList<Integer> Sub_categories_id_adapter = new ArrayList<>();
     ArrayList<Integer> item_id_adapter = new ArrayList<>();
@@ -100,7 +101,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
         // set the data in items
         String name =  Item_categories_adapter.get(position);
        holder.name.setText(name);
-       String item_qty = "QUANTITY: "+String.valueOf(Item_Quantity_adapter.get(position));
+       String item_qty = "QUANTITY: "+Item_Quantity_adapter.get(position);
        holder.item_inital_qty.setText(item_qty);
        String amt = String.valueOf(Item_Price_adapter.get(position));
        String at = "RS: "+amt;
@@ -162,8 +163,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                    {
                        item_old_val= Integer.valueOf(itemSingle_name_old_count);
                    }
-                   Integer qty_vl_from_text = Item_Quantity_adapter.get(position);
-                   Log.e("itemadapter","the integer val for add qty is "+qty_vl_from_text);
+                   //Integer qty_vl_from_text = Item_Quantity_adapter.get(position);
+                   //Log.e("itemadapter","the integer val for add qty is "+qty_vl_from_text);
                   // item_old_val=item_old_val+qty_vl_from_text;
                   ++item_old_val;
 
@@ -498,8 +499,8 @@ Log.e("itemadapter","first befre add  add btn "+cart_item_names+items_name_old);
                {
                    item_old_val= Integer.valueOf(itemSingle_name_old_count);
                }
-               Integer qty_vl_from_text = Item_Quantity_adapter.get(position);
-               Log.e("itemadapter","the integer val for add qty is "+qty_vl_from_text);
+               //Integer qty_vl_from_text = Item_Quantity_adapter.get(position);
+             //  Log.e("itemadapter","the integer val for add qty is "+qty_vl_from_text);
                //item_old_val=item_old_val+qty_vl_from_text;
                ++item_old_val;
                //add new volaues

@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -74,6 +75,7 @@ static int cod_length=0;
     public static final String MY_PREFS_NAME = "CustomerApp";
     final ArrayList<String> items_name_old_cart = new ArrayList<>();
     final ArrayList<Integer> items_name_old_cart_id = new ArrayList<>();
+    static final ArrayList<Integer> removed_positions = new ArrayList<>();
     final ArrayList<String> items_specific_count_cart = new ArrayList<>();
     final ArrayList<String> items_name_image_cart = new ArrayList<>();
     final ArrayList<String> items_name_quantity_cart = new ArrayList<>();
@@ -82,6 +84,8 @@ static int cod_length=0;
     final ArrayList<String> items_name_price_cart = new ArrayList<>();
     final ArrayList<String> items_name_offer_percentage_cart = new ArrayList<>();
     final ArrayList<String> items_name_count_cart = new ArrayList<>();
+    final ArrayList<String> items_name_count_cart_payment = new ArrayList<>();
+
     final ArrayList<Integer> items_name_count_cart_integer = new ArrayList<>();
     final ArrayList<Integer> items_index_eligible_cod = new ArrayList<>();
     final ArrayList<Integer> items_index_not_eligible_cod = new ArrayList<>();
@@ -378,6 +382,24 @@ Log.e("cart","cod values ==="+items_name_cod_cart+itemSingle_name_cod+cart_item_
             items_name_count_cart.add(itemSingle_name_old_count);
 
         }
+
+        final StringBuilder it_pay_count  = new StringBuilder();
+        Iterator<String> itr_string = items_name_count_cart.iterator();
+        while (itr_string.hasNext()) {
+
+            it_pay_count.append(itr_string.next());
+            if (itr_string.hasNext()) {
+                it_pay_count.append(",");
+            }
+        }
+        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        editor.putString("payment_only_cart_item_count", it_pay_count.toString());
+        Log.e("homefragment", "the catgeories shared preference are  login  =" + it_pay_count.toString());
+        editor.apply();
+
+
+
+
         Log.e(tag,"the values name in cart are "+items_name_old_cart);
         Log.e(tag,"the valuesquantity in cart are "+items_name_quantity_cart);
         Log.e(tag,"the valuesprice in cart are "+items_name_price_cart);
@@ -506,6 +528,8 @@ else
              Log.e("cart","entered3");
                   b.putString("cod_eligible_pay","1");
          }
+Log.e("cart","itemid===="+items_name_count_cart+items_name_old_cart_id);
+        final ArrayList<Integer> cod_eligible_items_name_old_cart_id_newpayment = new ArrayList<>();
 
         b.putString("sub_txt_val",sub_txt_val);
         b.putString("tot_val",tot_val);
@@ -513,10 +537,33 @@ else
         b.putString("name_booking",name);
         b.putString("book_address",total_address_values_booking);
         b.putString("pincode_book",pincode_booking);
-        b.putSerializable("cod_eligible_items_name_count_cart",cod_eligible_items_name_count_cart);
-        b.putSerializable("cod_eligible_items_name_quantity_cart",cod_eligible_items_name_quantity_cart);
-        b.putSerializable("cod_eligible_items_name_old_cart_id",cod_eligible_items_name_old_cart_id);
-        b.putSerializable("cod_eligible_items_name_price_cart",cod_eligible_items_name_price_cart);
+//        b.putSerializable("cod_eligible_items_name_count_cart",cod_eligible_items_name_count_cart);
+//        b.putSerializable("cod_eligible_items_name_quantity_cart",cod_eligible_items_name_quantity_cart);
+//        b.putSerializable("cod_eligible_items_name_old_cart_id",cod_eligible_items_name_old_cart_id);
+//        b.putSerializable("cod_eligible_items_name_price_cart",cod_eligible_items_name_price_cart);
+        items_name_count_cart_payment.clear();
+        SharedPreferences shared_tot_id = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String itemSingle_name_old_id_pay = shared_tot_id.getString("payment_only_cart_item_count", "");
+
+
+            String[] cats_pay = itemSingle_name_old_id_pay .split(",");//if spaces are uneven, use \\s+ instead of " "
+            for (String ct : cats_pay) {
+                if(!(ct.equals("")||ct.equals(null)))
+                {
+                    String c  = ct;
+                    items_name_count_cart_payment.add(c);
+                }
+
+            }
+
+
+
+
+        b.putSerializable("cod_eligible_items_name_count_cart",items_name_count_cart_payment);
+        b.putSerializable("cod_eligible_items_name_quantity_cart",items_name_quantity_cart);
+        b.putSerializable("cod_eligible_items_name_old_cart_id",items_name_old_cart_id);
+        b.putSerializable("cod_eligible_items_name_price_cart",items_name_price_cart);
+
         n.putExtras(b);
         startActivity(n);
 
@@ -844,5 +891,7 @@ public static void settoast(Context c,String a)
 {
     Toast.makeText(c,a,LENGTH_SHORT).show();
 }
+
+
 
 }

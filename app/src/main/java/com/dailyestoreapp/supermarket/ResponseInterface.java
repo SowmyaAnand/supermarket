@@ -110,16 +110,28 @@ public interface ResponseInterface {
                                         @Field("address") String address,
                                         @Field("pinCode") String pincode,
                                         @Field("dob") String dob);
-    @FormUrlEncoded
-    @POST("checkout")
-    Call<Void> checkoutapi(@Field("itemId[]") ArrayList<Integer> ItemId ,
-                                          @Field("count[]") ArrayList<Integer> count,
-                                          @Field("quantity[]") ArrayList<String> quantity,
-                                          @Field("type[]") ArrayList<Integer> type,
-                                               @Field("price[]") ArrayList<String> price,
-                                          @Field("userId[]") ArrayList<Integer> id,
-                                          @Field("address") String address,
-                                          @Field("postCode") String postcode,
-                                            @Field("paymentType") Integer payment
-                                          );
+//    @FormUrlEncoded
+//    @POST("checkout")
+//    Call<Void> checkoutapi(@Field("itemId[]") ArrayList<Integer> ItemId ,
+//                                          @Field("count[]") ArrayList<Integer> count,
+//                                          @Field("quantity[]") ArrayList<String> quantity,
+//                                          @Field("type[]") ArrayList<Integer> type,
+//                                               @Field("price[]") ArrayList<String> price,
+//                                          @Field("userId[]") ArrayList<Integer> id,
+//                                          @Field("address") String address,
+//                                          @Field("postCode") String postcode,
+//                                            @Field("paymentType") Integer payment
+//                                          );
+@FormUrlEncoded
+@POST("checkout")
+Call<Void> checkoutapi(@Field("itemId[]") ArrayList<Integer> ItemId ,
+                       @Field("count[]") ArrayList<Integer> count,
+                       @Field("quantity[]") ArrayList<String> quantity,
+                       @Field("type") int type,
+                       @Field("price[]") ArrayList<String> price,
+                       @Field("userId") int id,
+                       @Field("address") String address,
+                       @Field("postCode") String postcode,
+                       @Field("paymentType") Integer payment
+);
 }

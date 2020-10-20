@@ -49,6 +49,8 @@ TextView total,sub_total,delivery;
     ArrayList<String> cod_eligible_items_name_quantity_cart = new ArrayList<>();
     ArrayList<Integer> cod_eligible_items_name_old_cart_id = new ArrayList<>();
      ArrayList<String> cod_eligible_items_name_price_cart = new ArrayList<>();
+    ArrayList<Integer> cod_eligible_items_name_old_cart_id_new = new ArrayList<>();
+    ArrayList<String> cod_eligible_items_name_price_cart_new = new ArrayList<>();
    String cod_eligible_pay;
     ArrayList<String> items_name_old_cart_payment = new ArrayList<>();
     ArrayList<Integer> cod_not_items_name_count_cart_integer = new ArrayList<>();
@@ -385,6 +387,30 @@ TextView total,sub_total,delivery;
                 .client(okHttpClient)
                 .build();
         ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
+
+
+        cod_eligible_items_name_old_cart_id_new.clear();
+        for(int k=0;k<cod_eligible_items_name_old_cart_id.size();k++)
+        {
+            Integer g = Integer.valueOf(cod_eligible_items_name_old_cart_id.get(k));
+            cod_eligible_items_name_old_cart_id_new.add(g);
+        }
+
+
+        cod_eligible_items_name_price_cart_new.clear();
+        for(int k=0;k<cod_eligible_items_name_price_cart.size();k++)
+        {
+            String price = cod_eligible_items_name_price_cart.get(k);
+            cod_eligible_items_name_price_cart_new.add(price);
+        }
+
+
+
+
+
+
+
+
         cod_items_name_count_cart_integer.clear();
         for(int k=0;k<cod_eligible_items_name_count_cart.size();k++)
         {
@@ -411,15 +437,15 @@ TextView total,sub_total,delivery;
             user_cart_id.add(user_int_id);
             type_cart_id.add(0);
         }
-        Log.e("cart","checkout param=    itemid ====>"+cod_eligible_items_name_old_cart_id);
+        Log.e("cart","checkout param=    itemid ====>"+cod_eligible_items_name_old_cart_id_new);
         Log.e("cart","checkout param=    count====>"+cod_items_name_count_cart_integer);
         Log.e("cart","checkout param=    quantity ====>"+cod_eligible_items_name_quantity_cart_new);
-        Log.e("cart","checkout param=    type ====>"+type_cart_id);
-        Log.e("cart","checkout param=    userid ====>"+user_cart_id);
+        Log.e("cart","checkout param=    type ====>0");
+        Log.e("cart","checkout param=    userid ====>"+user_int_id);
         Log.e("cart","checkout param=    address ====> "+address_booking);
         Log.e("cart","checkout param=    itemid ====>"+pincode_booking);
-        Log.e("cart","checkout prce ====>"+cod_eligible_items_name_price_cart);
-        Call call = mainInterface.checkoutapi(cod_eligible_items_name_old_cart_id,cod_items_name_count_cart_integer,cod_eligible_items_name_quantity_cart,type_cart_id,cod_eligible_items_name_price_cart,user_cart_id,address_booking,pincode_booking,paymentType);
+        Log.e("cart","checkout prce ====>"+cod_eligible_items_name_price_cart_new);
+        Call call = mainInterface.checkoutapi(cod_eligible_items_name_old_cart_id,cod_items_name_count_cart_integer,cod_eligible_items_name_quantity_cart,0,cod_eligible_items_name_price_cart,user_int_id,address_booking,pincode_booking,paymentType);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, retrofit2.Response response) {
@@ -550,7 +576,7 @@ TextView total,sub_total,delivery;
         Log.e("cart","checkout param=    address ====> "+address_booking);
         Log.e("cart","checkout param=    itemid ====>"+pincode_booking);
         Log.e("cart","checkout prce ====>"+cod_not_eligible_items_name_price_cart);
-        Call call = mainInterface.checkoutapi(cod_not_eligible_items_name_old_cart_id,cod_not_items_name_count_cart_integer,cod_not_eligible_items_name_quantity_cart,type_cart_id,cod_not_eligible_items_name_price_cart,user_cart_id,address_booking,pincode_booking,paymentType);
+        Call call = mainInterface.checkoutapi(cod_not_eligible_items_name_old_cart_id,cod_not_items_name_count_cart_integer,cod_not_eligible_items_name_quantity_cart,0,cod_not_eligible_items_name_price_cart,user_int_id,address_booking,pincode_booking,paymentType);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, retrofit2.Response response) {

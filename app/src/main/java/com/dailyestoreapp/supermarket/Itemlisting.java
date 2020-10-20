@@ -58,7 +58,8 @@ public class Itemlisting extends AppCompatActivity {
     ArrayList<String> cod_eligible = new ArrayList<>();
     ArrayList<String> refund_eligible = new ArrayList<>();
     ArrayList<String> Item_categories_offer_desc = new ArrayList<>();
-    ArrayList<Integer> Item_Quantity = new ArrayList<>();
+//    ArrayList<Integer> Item_Quantity = new ArrayList<>();
+ArrayList<String> Item_Quantity = new ArrayList<>();
     ArrayList<String> Item_description = new ArrayList<>();
     ArrayList<Integer> Item_Price = new ArrayList<>();
     ArrayList<Integer> Sub_categories_id = new ArrayList<>();
@@ -74,7 +75,8 @@ public class Itemlisting extends AppCompatActivity {
     ArrayList<String> Item_categories_offer_desc_lts = new ArrayList<>();
     ArrayList<Integer> item_id_offer_lts = new ArrayList<>();
     ArrayList<String> original_item_image_lts = new ArrayList<>();
-    ArrayList<Integer> original_Item_Quantity_lts = new ArrayList<>();
+//    ArrayList<Integer> original_Item_Quantity_lts = new ArrayList<>();
+ArrayList<String> original_Item_Quantity_lts = new ArrayList<>();
     ArrayList<Integer> original_Item_Price_lts = new ArrayList<>();
     ArrayList<Integer> original_item_id_lts = new ArrayList<>();
     ArrayList<Integer> original_item_id_status_lts = new ArrayList<>();
@@ -282,6 +284,7 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
             public void onResponse(Call<CustomerAppResponse> call, retrofit2.Response<CustomerAppResponse> response) {
                 CustomerAppResponse listCategoryResponseobject = response.body();
                 String success = response.body().getResponsedata().getSuccess();
+
               //  dialog.dismiss();
                 Log.e("frag4","success="+success);
 //                if(success==1)
@@ -321,24 +324,27 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
 
 
 
-                        for(int i=0; i<data_length; i++)
-                        {
+                        for(int i=0; i<data_length; i++) {
 //                        JSONObject j1= categoriesarray.getJSONObject(i);
 //                        String item_name = j1.getString("itemName");
-                            String item_name = response.body().getResponsedata().getData().get(i).getItemName();
+                            String Stats_active = response.body().getResponsedata().getData().get(i).getStatus();
+                            if (Stats_active.equals("1"))
+                            {
+
+                                String item_name = response.body().getResponsedata().getData().get(i).getItemName();
                             int it_id = Integer.parseInt(response.body().getResponsedata().getData().get(i).getItemId());
 
-                            Integer item_quant = Integer.valueOf(response.body().getResponsedata().getData().get(i).getQuantity());
+                            String item_quant = response.body().getResponsedata().getData().get(i).getQuantity();
                             Integer item_price = Integer.valueOf(response.body().getResponsedata().getData().get(i).getPrice());
                             Integer item_status = Integer.valueOf(response.body().getResponsedata().getData().get(i).getStatus());
                             String imageurl = response.body().getResponsedata().getData().get(i).getImage();
-                            Integer offer_percent =Integer.valueOf(response.body().getResponsedata().getData().get(i).getoffer());
+                            Integer offer_percent = Integer.valueOf(response.body().getResponsedata().getData().get(i).getoffer());
                             String offer_desc = response.body().getResponsedata().getData().get(i).getofdescription();
                             String cod_elgble = response.body().getResponsedata().getData().get(i).getCashOnDelivery();
                             String refund_elgble = response.body().getResponsedata().getData().get(i).getRefund();
                             String desc = response.body().getResponsedata().getData().get(i).getDescription();
-                            String imageurl_total=url1+imageurl;
-                            Log.e("itemlisting","imageurl"+url1+imageurl);
+                            String imageurl_total = url1 + imageurl;
+                            Log.e("itemlisting", "imageurl" + url1 + imageurl);
                             Item_categories.add(item_name);
                             Item_Quantity.add(item_quant);
                             Item_Price.add(item_price);
@@ -350,6 +356,7 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
                             cod_eligible.add(cod_elgble);
                             refund_eligible.add(refund_elgble);
                             Item_description.add(desc);
+                        }
 
                         }
                         original_Item_categories_lts.addAll(Item_categories);
@@ -373,6 +380,7 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Log.e("Itemlisting","error="+e.getMessage());
                     Toast.makeText(Itemlisting.this,"something went wrong",Toast.LENGTH_SHORT).show();
                 }
 

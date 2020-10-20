@@ -56,4 +56,11 @@ ImageView wt,cl;
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent n= new Intent(Thankyou.this,Main2Activity.class);
+        startActivity(n);
+    }
 }
