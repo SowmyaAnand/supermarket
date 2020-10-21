@@ -37,6 +37,9 @@ class Datum {
     @SerializedName("Refund")
     @Expose
     private String Refund;
+    @SerializedName("refund")
+    @Expose
+    private String refund;
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
@@ -203,6 +206,15 @@ class Datum {
     public void setRefund(String Refund) {
         this.Refund = Refund;
     }
+
+    public String getRefundSmall() {
+        return refund;
+    }
+
+    public void setRefundSmall(String refund) {
+        this.refund = refund;
+    }
+
     public String getCouponName() {
         return couponName;
     }

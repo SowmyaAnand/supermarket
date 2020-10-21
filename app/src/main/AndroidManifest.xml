@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.App.Basestyle"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ForgotPswd"></activity>
+        <activity android:name=".Reference_Activity"></activity>
+        <activity android:name=".ForgotPswd" />
         <activity android:name=".DealItemCategoryListing" />
         <activity android:name=".MenuContactUs" />
         <activity android:name=".Myorders" />

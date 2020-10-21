@@ -9,13 +9,13 @@
 
     android:background="@color/white"
     tools:context=".description">
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_itemdesc"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay" />
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar_itemdesc"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="?attr/actionBarSize"-->
+<!--        android:background="@color/colorPrimary"-->
+<!--        android:fitsSystemWindows="true"-->
+<!--        android:theme="@style/AppTheme.AppBarOverlay" />-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

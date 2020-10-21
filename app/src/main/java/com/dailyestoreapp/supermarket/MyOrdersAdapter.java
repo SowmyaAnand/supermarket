@@ -42,8 +42,9 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
     ArrayList<String> items_image_myorders = new ArrayList<>();
     ArrayList<Integer> return_request_orders_list_array_orderid = new ArrayList<>();
     ArrayList<Integer> order_id_list = new ArrayList<>();
+    ArrayList<String> items_name_refund_myordersadapter = new ArrayList<>();
     ArrayList<String> items_name_myorders; ArrayList<String>items_name_quantity_myorders;ArrayList<Integer> items_name_status_myorders;ArrayList<Integer> items_count_myorders;
-    public MyOrdersAdapter(Context context,ArrayList<String> items_name_myorders, ArrayList<String>items_name_quantity_myorders,ArrayList<Integer> items_name_status_myorders,ArrayList<Integer> items_count_myorders, ArrayList<String> items_name_price_myorders,ArrayList<String> items_image_myorders,ArrayList<Integer> return_request_orders_list_array_orderid,ArrayList<Integer> order_id_list,ArrayList<Integer> payment_type) {
+    public MyOrdersAdapter(Context context,ArrayList<String> items_name_myorders, ArrayList<String>items_name_quantity_myorders,ArrayList<Integer> items_name_status_myorders,ArrayList<Integer> items_count_myorders, ArrayList<String> items_name_price_myorders,ArrayList<String> items_image_myorders,ArrayList<Integer> return_request_orders_list_array_orderid,ArrayList<Integer> order_id_list,ArrayList<Integer> payment_type, ArrayList<String> items_name_refund_myordersadapter) {
         this.context = context;
         this.personNames = personNames;
         this.lts.addAll(personNames);
@@ -55,8 +56,9 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
         this.items_image_myorders=items_image_myorders;
         this.return_request_orders_list_array_orderid=return_request_orders_list_array_orderid;
         this.order_id_list=order_id_list;
+        this.items_name_refund_myordersadapter=items_name_refund_myordersadapter;
         this.payment_type=payment_type;
-        Log.e("myorders","adapter orders are ="+items_name_quantity_myorders);
+
     }
     @Override
     public MyOrdersAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -81,6 +83,8 @@ String pay_txt;
         holder.name.setText(name);
         holder.quantityy.setText(quan);
 
+
+        Log.e("myorders","adapter orders are ="+items_name_refund_myordersadapter);
         if(p_type==1)
         {
            pay_txt="Gpay";
@@ -112,6 +116,16 @@ String pay_txt;
         {
             holder.status.setText("RETURN ACCEPTED");
         }
+
+        if((items_name_refund_myordersadapter.get(position).equals("1"))&&((st==1)))
+        {
+            holder.return_btn.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            holder.return_btn.setVisibility(View.GONE);
+        }
+
 
 Log.e("myordersadapter","pr="+pr);
         Integer int_pr_initial=0;

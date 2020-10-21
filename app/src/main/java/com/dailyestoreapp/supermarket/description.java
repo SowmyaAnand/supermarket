@@ -41,16 +41,16 @@ itemDesc=findViewById(R.id.itemdesc);
         Glide.with(description.this).load(sb_img)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(ig);
-        Toolbar desc = (Toolbar)findViewById(R.id.toolbar_itemdesc);
-        setSupportActionBar(desc);
-        desc.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-        desc.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent prev= new Intent(description.this,Itemlisting.class);
-                startActivity(prev);
-            }
-        });
+//        Toolbar desc = (Toolbar)findViewById(R.id.toolbar_itemdesc);
+//        setSupportActionBar(desc);
+//        desc.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+//        desc.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent prev= new Intent(description.this,Main2Activity.class);
+//                startActivity(prev);
+//            }
+//        });
         itemDesc.setText(descc);
         if(refundd.equals("1"))
         {
@@ -62,10 +62,10 @@ itemDesc=findViewById(R.id.itemdesc);
         }
 
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main2, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.main2, menu);
+//        return true;
+//    }
 }

@@ -26,6 +26,7 @@ RecyclerView orders;
     public static final String MY_PREFS_NAME = "CustomerApp";
     final ArrayList<String> items_name_myorders = new ArrayList<>();
     final ArrayList<String> items_name_quantity_myorders = new ArrayList<>();
+    final ArrayList<String> items_name_refund_myorders = new ArrayList<>();
     final ArrayList<Integer> items_name_status_myorders = new ArrayList<>();
     final ArrayList<String> items_image_myorders = new ArrayList<>();
     final ArrayList<Integer> items_count_myorders = new ArrayList<>();
@@ -107,7 +108,9 @@ RecyclerView orders;
                        Integer cnt = Integer.valueOf(response.body().getResponsedata().getData().get(i).getCount());
                        Integer pay_type = Integer.valueOf(response.body().getResponsedata().getData().get(i).getpaymentType());
                         String imageurl_total=url1+imageurl;
-                        Log.e("itemlisting","imageurl"+url1+imageurl);
+                        String refund_myorder = response.body().getResponsedata().getData().get(i).getRefund();
+                        items_name_refund_myorders.add(refund_myorder);
+                        Log.e("itemlisting","refund"+refund_myorder);
 
                         items_name_quantity_myorders.add(item_quant);
                         items_name_price_myorders.add(item_price);
@@ -125,7 +128,7 @@ RecyclerView orders;
 
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                     orders.setLayoutManager(linearLayoutManager);
-                    customAdapter_offers = new MyOrdersAdapter(Myorders.this, items_name_myorders,items_name_quantity_myorders,items_name_status_myorders,items_count_myorders,items_name_price_myorders,items_image_myorders,items_count_myorders_id,order_placed_id,payment_type);
+                    customAdapter_offers = new MyOrdersAdapter(Myorders.this, items_name_myorders,items_name_quantity_myorders,items_name_status_myorders,items_count_myorders,items_name_price_myorders,items_image_myorders,items_count_myorders_id,order_placed_id,payment_type,items_name_refund_myorders);
                     orders.setAdapter(customAdapter_offers);
                 }
 
