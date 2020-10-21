@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_todays_deal"
+            android:icon="@drawable/ic_notifications_active_black_24dp"
+            android:title="@string/today_s_deal" />
+        <item
+            android:id="@+id/nav_my_orders"
+            android:icon="@drawable/ic_add_shopping_cart_black_24dp"
+            android:title="@string/my_orders" />
+
+
+
+        <item
+            android:id="@+id/nav_customer_support"
+            android:icon="@drawable/ic_call_black_24dp"
+            android:title="@string/customer_service" />
+        <item
+            android:id="@+id/nav_reference_friend"
+            android:icon="@drawable/ic_call_black_24dp"
+            android:title="@string/customer_service" />
+
+    </group>
+    <item android:title="About Developer">
+        <menu>
+        <item android:id="@+id/aboutdeveloper"
+            android:title="sowmyaanand2509@gmail.com"/>
+            <item android:id="@+id/aboutdeveloper_mob"
+                android:title="+917025864742"/>
+    </menu>
+
+    </item>
+</menu>
