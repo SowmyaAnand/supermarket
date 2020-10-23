@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.ToLongBiFunction;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -46,6 +49,7 @@ public class Itemlisting extends AppCompatActivity {
     NestedScrollView nestedScrollView;
     ProgressBar progressBar;
     int subidd;
+    ACProgressFlower dialog;
     int initialid;
     ArrayList<String> SubcategoriesEditCategies = new ArrayList<>();
     ArrayList<String> SubcategoriesEditCategies_image = new ArrayList<>();
@@ -256,13 +260,13 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
 
     private void ItemsList(Integer subId ,int st,int lmt)
     {
-//        dialog = new ACProgressFlower.Builder(getContext())
-//                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
-//                .themeColor(Color.WHITE)
-//                .borderPadding(1)
-//
-//                .fadeColor(Color.DKGRAY).build();
-//        dialog.show();
+        dialog = new ACProgressFlower.Builder(Itemlisting.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(Color.WHITE)
+                .borderPadding(1)
+
+                .fadeColor(Color.DKGRAY).build();
+        dialog.show();
 
 
         String url = "http://dailyestoreapp.com/dailyestore/api/";
@@ -294,7 +298,7 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
 //                String rtring item_name = response.body().getResponsedata().getData().get(1).getItemName();
 ////                }es= new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getResponsedata());
 //                JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
-//                dialog.dismiss();
+                dialog.dismiss();
                 try {
 //                    JSONObject jo2 = new JSONObject(obj.toString());
 //                    JSONArray categoriesarray = jo2.getJSONArray("data");
@@ -388,7 +392,7 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onFailure(Call<CustomerAppResponse> call, Throwable t) {
-              //  dialog.dismiss();
+                dialog.dismiss();
                // Toast.makeText(Itemlisting.this,t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });

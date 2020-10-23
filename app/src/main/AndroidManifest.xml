@@ -17,7 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.App.Basestyle"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Reference_Activity"></activity>
         <activity android:name=".ForgotPswd" />
         <activity android:name=".DealItemCategoryListing" />
         <activity android:name=".MenuContactUs" />
@@ -26,11 +25,13 @@
         <activity android:name=".Thankyou" />
         <activity android:name=".Payment" />
         <activity android:name=".splash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+
+
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
         </activity>
         <activity android:name=".CartPage" />
         <activity android:name=".Signup" />
@@ -48,6 +49,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
     </application>
 
 </manifest>

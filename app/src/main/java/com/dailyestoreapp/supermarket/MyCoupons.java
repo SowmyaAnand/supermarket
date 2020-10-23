@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -21,6 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyCoupons extends AppCompatActivity {
 RecyclerView coupons;
+    ACProgressFlower dialog;
     CouponAdapter customAdapter_offers;
     ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     ArrayList<String> Coupon_Names = new ArrayList<>();
@@ -39,13 +43,13 @@ RecyclerView coupons;
     }
     public void couponList()
     {
-//        dialog = new ACProgressFlower.Builder(getContext())
-//                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
-//                .themeColor(Color.WHITE)
-//                .borderPadding(1)
-//
-//                .fadeColor(Color.DKGRAY).build();
-//        dialog.show();
+        dialog = new ACProgressFlower.Builder(MyCoupons.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(Color.WHITE)
+                .borderPadding(1)
+
+                .fadeColor(Color.DKGRAY).build();
+        dialog.show();
 
 
         String url = "http://dailyestoreapp.com/dailyestore/api/";
@@ -70,6 +74,7 @@ RecyclerView coupons;
 
                 Log.e("frag4","success="+success);
                 try {
+                    dialog.dismiss();
                     if(success.equals("1"))
                     {
                         String cpNames,cpDesc;

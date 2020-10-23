@@ -101,20 +101,20 @@ String pay_txt;
         if(st==0)
         {
 
-        holder.status.setText("PENDING FOR APPROVAL");
+        holder.status.setText("ORDER PENDING FOR APPROVAL");
         }
         else if(st==1)
         {
-            holder.status.setText("APPROVED");
+            holder.status.setText("ORDER APPROVED AND READY TO SHIP");
         }
         else if(st==2)
         {
-            holder.status.setText("RETURN REQUESTED");
+            holder.status.setText("REQUEST FOR RETURN");
         }
 
         else if(st==3)
         {
-            holder.status.setText("RETURN ACCEPTED");
+            holder.status.setText("ORDER RETURN ACCEPTED");
         }
 
         if((items_name_refund_myordersadapter.get(position).equals("1"))&&((st==1)))
@@ -126,7 +126,12 @@ String pay_txt;
             holder.return_btn.setVisibility(View.GONE);
         }
 
-
+holder.return_btn.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Myorders.call_push_replacement();
+    }
+});
 Log.e("myordersadapter","pr="+pr);
         Integer int_pr_initial=0;
         if(pr.length()>0)
@@ -188,10 +193,10 @@ Log.e("myordersadapter","pr="+pr);
                                 holder.return_btn.setText("RETURN  REQUESTED");
 //                                holder.pd_pending.setTextColor(ContextCompat.getColor(context, white));
 //                                holder.pd_pending.setBackgroundColor(ContextCompat.getColor(context, green));
-                                Toast.makeText(context,"Return Requested.Customer Will Cal You Shortly For Confirmation",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context,"Received You Request.Our Representative Will Contact You Shortly",Toast.LENGTH_LONG).show();
                             }
                             else {
-                                Toast.makeText(context,"No Data found",Toast.LENGTH_LONG).show();
+                                Toast.makeText(context,"NO ORDERS",Toast.LENGTH_LONG).show();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -271,6 +276,39 @@ Log.e("myordersadapter","pr="+pr);
         }
         Log.e("text","persons="+personNames);
         notifyDataSetChanged();
+    }
+    private void push_notif()
+    {
+
+        String url_push = "http://dailyestoreapp.com/dailyestore/";
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url_push)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+        ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
+        Call<PushNotificationadaptertrial> call = mainInterface.pushnotificationtrial();
+        call.enqueue(new Callback<PushNotificationadaptertrial>() {
+            @Override
+            public void onResponse(Call<PushNotificationadaptertrial> call, retrofit2.Response<PushNotificationadaptertrial> response) {
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<PushNotificationadaptertrial> call, Throwable t) {
+
+            }
+        });
+
+
     }
 
 }

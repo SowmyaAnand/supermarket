@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -22,6 +23,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -36,11 +39,12 @@ Button order;
     public static final String MY_PREFS_NAME = "CustomerApp";
 TextView total,sub_total,delivery;
     final int GOOGLE_PAY_REQUEST_CODE = 123;
-    String upi = "anandc17@okaxis";
+    String upi = "noufalcps-1@okicici";
     boolean gpay_value=false;
     boolean payment_selected=false;
     boolean quarantine_selected=false;
     String address_booking;
+    ACProgressFlower dialog;
     String pincode_booking;
     String customer_booking_name;
      ArrayList<Integer> cod_items_name_count_cart_integer = new ArrayList<>();
@@ -169,8 +173,9 @@ TextView total,sub_total,delivery;
                 if(gpay_value)
                 {
                     String tot_amount_booking= String.valueOf(total.getText());
+                    Log.e("payment","the amount is"+tot_amount_booking);
                     payUsingUpi(customer_booking_name, upi,
-                            "payment", tot_amount_booking);
+                            "payment", "1");
 //                    if(cod_eligible_pay.equals("1"))
 //                    {
 //                        String tot_cod = String.valueOf(cod_total_payment);
@@ -240,12 +245,20 @@ TextView total,sub_total,delivery;
                 .build();
 // this code is only for google play
         String GOOGLE_PAY_PACKAGE_NAME = "com.google.android.apps.nbu.paisa.user";
+
         //  int GOOGLE_PAY_REQUEST_CODE = 123;
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(uri);
         intent.setPackage(GOOGLE_PAY_PACKAGE_NAME);
-        Payment.this.startActivityForResult(intent, GOOGLE_PAY_REQUEST_CODE);
+try {
+    Payment.this.startActivityForResult(intent, GOOGLE_PAY_REQUEST_CODE);
+}
+catch (Exception e)
+{
+    Toast.makeText(Payment.this, "Please install gpay", Toast.LENGTH_SHORT).show();
+}
+
 
         // this code is for all UPI id installed  in phone
 
@@ -280,6 +293,7 @@ TextView total,sub_total,delivery;
          */
         switch (requestCode) {
             case GOOGLE_PAY_REQUEST_CODE:
+                Log.e("gpay","the gpay result code is "+resultCode);
                 if ((RESULT_OK == resultCode) || (resultCode == 11)) {
                     if (data != null) {
                         String trxt = data.getStringExtra("response");
@@ -372,6 +386,11 @@ TextView total,sub_total,delivery;
         return false;
     }
     public void Book_cod_now(String pay) {
+        dialog = new ACProgressFlower.Builder(Payment.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .borderPadding(1)
+                .fadeColor(Color.WHITE).build();
+        dialog.show();
         int paymentType = Integer.parseInt(pay);
         String login_type="0";
         String url = "http://dailyestoreapp.com/dailyestore/api/";
@@ -452,7 +471,7 @@ TextView total,sub_total,delivery;
                 Log.e("cart","response orderes="+response.body());
                 Toast.makeText(Payment.this,"Successfully Placed Orders",Toast.LENGTH_SHORT).show();
 
-
+dialog.dismiss();
                 //clearance of cart items
 
                 SharedPreferences fullname_shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
@@ -510,6 +529,7 @@ TextView total,sub_total,delivery;
                 editor_payment.putString(cart_item_offer_percent_payment,"");
 
                 editor_payment.apply();
+
                 push_notif();
                 Toast.makeText(Payment.this,"Your order has been placed successfully",Toast.LENGTH_LONG).show();
                 Intent next = new Intent(Payment.this,Thankyou.class);
@@ -521,12 +541,18 @@ TextView total,sub_total,delivery;
             public void onFailure(Call call, Throwable t) {
                 Toast.makeText(Payment.this,t.getMessage(),Toast.LENGTH_SHORT).show();
                 Log.e("cart","error"+t.getMessage()+t.getLocalizedMessage()+t.getCause()+t.getStackTrace()+t.getClass());
-
+dialog.dismiss();
             }
         });
 
     }
+
     public void Book_no_cod_now(String pay) {
+        dialog = new ACProgressFlower.Builder(Payment.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .borderPadding(1)
+                .fadeColor(Color.WHITE).build();
+        dialog.show();
         String login_type="0";
         int paymentType = Integer.parseInt(pay);
         String url = "http://dailyestoreapp.com/dailyestore/api/";
@@ -580,6 +606,7 @@ TextView total,sub_total,delivery;
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, retrofit2.Response response) {
+                dialog.dismiss();
                 Log.e("cart","response orderes="+response.body());
                 Toast.makeText(Payment.this,"Successfully Placed Orders",Toast.LENGTH_SHORT).show();
                 SharedPreferences fullname_shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
@@ -649,7 +676,7 @@ TextView total,sub_total,delivery;
             public void onFailure(Call call, Throwable t) {
                 Toast.makeText(Payment.this,t.getMessage(),Toast.LENGTH_SHORT).show();
                 Log.e("cart","error"+t.getMessage()+t.getLocalizedMessage()+t.getCause()+t.getStackTrace()+t.getClass());
-
+dialog.dismiss();
             }
         });
 

@@ -64,6 +64,7 @@ public class Fragment1 extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     ViewPager mviewpager,flyerpager;
     Button serach_btn;
+    ACProgressFlower dialog;
     EditText searchtext;
     ArrayList<String> categoriesEditCategies = new ArrayList<>();
     ArrayList<String> categoriesEditCategies_image = new ArrayList<>();
@@ -95,7 +96,7 @@ public class Fragment1 extends Fragment {
     TextView t;
     GridviewAdapter gridadpt;
     ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
-    ACProgressFlower dialog;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -264,12 +265,12 @@ public class Fragment1 extends Fragment {
         flyeradapterview = new Imageadapterforflyers(getContext(),firstflyer_image,intial_firstflyer_id);
         flyerpager.setAdapter(flyeradapterview);
         Timer t = new Timer();
-        t.scheduleAtFixedRate(new Mytimertask2(),900,1800);
+        t.scheduleAtFixedRate(new Mytimertask2(),1200,1800);
       adapterview = new ImageAdapter(getContext(),secondflyer_image,intial_secondflyer_id);
        // testflyeradapterview = new Imageadapterforflyers(getContext(),secondflyer_image,intial_secondflyer_id);
         mviewpager.setAdapter(adapterview);
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new Mytimertask(),1500,3000);
+        timer.scheduleAtFixedRate(new Mytimertask(),1800,3000);
         gridview = (ExpandableHeightGridView) rootView.findViewById(R.id.categories);
         gridview.setAdapter(new GridviewAdapter(rootView.getContext(),categoriesEditCategies,categoriesEditCategies_image,categoriescatno_edit,intial_cat_id));
         gridview.setExpanded(true);
@@ -401,7 +402,11 @@ public class Fragment1 extends Fragment {
 
     private void search_func(String search_val)
     {
-
+        dialog = new ACProgressFlower.Builder(getContext())
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .borderPadding(1)
+                .fadeColor(Color.WHITE).build();
+        dialog.show();
         String url = "http://dailyestoreapp.com/dailyestore/api/";
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -422,6 +427,7 @@ public class Fragment1 extends Fragment {
             public void onResponse(Call<CustomerAppResponse> call, retrofit2.Response<CustomerAppResponse> response) {
                 CustomerAppResponse catObj = response.body();
                 String success = catObj.getResponsedata().getSuccess();
+                dialog.dismiss();
                 if(success.equals("1"))
                 {
                     int data_size = catObj.getResponsedata().getData().size();
@@ -439,7 +445,7 @@ public class Fragment1 extends Fragment {
 
             @Override
             public void onFailure(Call<CustomerAppResponse> call, Throwable t) {
-
+dialog.dismiss();
             }
         });
 
@@ -448,6 +454,11 @@ public class Fragment1 extends Fragment {
 
     private void subcategoryactivate(String flag)
     {
+        dialog = new ACProgressFlower.Builder(getContext())
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .borderPadding(1)
+                .fadeColor(Color.WHITE).build();
+        dialog.show();
         final StringBuilder strbul  = new StringBuilder();
         final StringBuilder sb  = new StringBuilder();
         final StringBuilder sb_images  = new StringBuilder();
@@ -497,7 +508,7 @@ public class Fragment1 extends Fragment {
                 CustomerAppResponse catObj = response.body();
                 int cat_length = catObj.getResponsedata().getData().size();
 
-
+dialog.dismiss();
 
                 for(int i=0; i<cat_length; i++)
                 {
@@ -575,7 +586,7 @@ public class Fragment1 extends Fragment {
 
             @Override
             public void onFailure(Call<CustomerAppResponse> call, Throwable t) {
-
+dialog.dismiss();
             }
         });
 

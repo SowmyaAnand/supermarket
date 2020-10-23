@@ -31,7 +31,7 @@ public class welcome extends AppCompatActivity {
     private LinearLayout dotsLayout;
     private TextView[] dots;
     private int[] layouts;
-    private Button btnSkip, btnNext;
+    private Button  btnNext;
 
     Button gt;
     @Override
@@ -53,7 +53,7 @@ public class welcome extends AppCompatActivity {
         //timer.scheduleAtFixedRate(new Mytimertask(),2000,4000);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
-        btnSkip = (Button) findViewById(R.id.btn_skip);
+
         btnNext = (Button) findViewById(R.id.btn_next);
         gt = (Button) findViewById(R.id.gtstarted);
 
@@ -75,12 +75,12 @@ public class welcome extends AppCompatActivity {
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
-        btnSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchHomeScreen();
-            }
-        });
+//        btnSkip.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                launchHomeScreen();
+//            }
+//        });
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,13 +166,13 @@ public class welcome extends AppCompatActivity {
             if (position == layouts.length - 1) {
                 // last page. make button text to GOT IT
                 btnNext.setVisibility(View.GONE);
-                btnSkip.setVisibility(View.GONE);
+                //btnSkip.setVisibility(View.GONE);
                 gt.setVisibility(View.VISIBLE);
 
             } else {
                 // still pages are left
                 btnNext.setVisibility(View.VISIBLE);
-                btnSkip.setVisibility(View.VISIBLE);
+               // btnSkip.setVisibility(View.VISIBLE);
                 gt.setVisibility(View.GONE);
 
             }

@@ -8,10 +8,12 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -19,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
@@ -137,6 +140,9 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 Intent n4 = new Intent(Main2Activity.this,Myorders.class);
                 startActivity(n4);
                 break;
+            case R.id.developer_contact:
+                sendMail();
+                break;
 
 
 
@@ -205,5 +211,16 @@ else
         Integer n = Integer.valueOf(txt.getText().toString());
         return n;
     }
+    private void sendMail() {
 
+        try{
+            Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + "sowmyaanand2509@gmail.com"));
+            intent.putExtra(Intent.EXTRA_SUBJECT, "DailyeStore");
+            intent.putExtra(Intent.EXTRA_TEXT, "your_text");
+            startActivity(intent);
+        }catch(ActivityNotFoundException e){
+            Toast.makeText(getApplicationContext(), "No application found to support ", Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }
 }

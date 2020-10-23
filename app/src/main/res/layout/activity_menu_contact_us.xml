@@ -25,6 +25,7 @@
                     app:popupTheme="@style/Theme.AppCompat.Light"
                     android:elevation="4dp"/>
                 <androidx.cardview.widget.CardView
+
                     android:layout_width="wrap_content"
                     app:cardBackgroundColor="@color/white"
 
@@ -36,14 +37,16 @@
                     android:layout_below="@+id/toolbar21"
                     android:layout_height="match_parent">
                     <RelativeLayout
+                        android:id="@+id/totalcontactudcard"
                         android:layout_width="match_parent"
+                        android:visibility="gone"
                         android:layout_height="wrap_content">
                         <TextView
                             android:id="@+id/head"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="30dp"
-                            android:text="Get in touch"
+                            android:text="Get in touch with US."
                             android:textSize="25dp"
                             android:layout_marginLeft="40dp"
                             android:textColor="@color/black"

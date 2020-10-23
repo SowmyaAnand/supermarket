@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -22,6 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Myorders extends AppCompatActivity {
 RecyclerView orders;
     MyOrdersAdapter customAdapter_offers;
+    ACProgressFlower dialog;;
     ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     public static final String MY_PREFS_NAME = "CustomerApp";
     final ArrayList<String> items_name_myorders = new ArrayList<>();
@@ -60,11 +64,16 @@ RecyclerView orders;
     }
     private void MyOrders()
     {
+
         SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String useridd = shared.getString("logged_in_userId","");
 
         int user_idd = Integer.parseInt(useridd);
-
+        dialog = new ACProgressFlower.Builder(Myorders.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .borderPadding(1)
+                .fadeColor(Color.WHITE).build();
+        dialog.show();
 
         String url = "http://dailyestoreapp.com/dailyestore/api/";
         final String url1 = "http://dailyestoreapp.com/dailyestore/";
@@ -88,7 +97,7 @@ RecyclerView orders;
                 //  dialog.dismiss();
                 Log.e("frag4 orders","success="+success);
 //                {"responsedata":{"success":"1","data":[{"orderId":"13","cartId":"0","itemId":"32","count":"1","quantity":"QUANTITY: 1","price":"","type":"0","userId":"16","status":"0","createdAt":"2020-10-13 17:56:04","address":"abc","postCode":"585225","itemName":"SAMSUNG"}]}}
-
+dialog.dismiss();
                 if(success.equals("1"))
                 {
                     int data_length = response.body().getResponsedata().getData().size();
@@ -138,6 +147,43 @@ RecyclerView orders;
             public void onFailure(Call<CustomerAppResponse> call, Throwable t) {
                 //  dialog.dismiss();
                 // Toast.makeText(Itemlisting.this,t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+    public static void call_push_replacement()
+    {
+        push_notif();
+    }
+    private static void push_notif()
+    {
+
+        String url_push = "http://dailyestoreapp.com/dailyestore/";
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url_push)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+        ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
+        Call<PushNotificationadaptertrial> call = mainInterface.pushnotificationtrial();
+        call.enqueue(new Callback<PushNotificationadaptertrial>() {
+            @Override
+            public void onResponse(Call<PushNotificationadaptertrial> call, retrofit2.Response<PushNotificationadaptertrial> response) {
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<PushNotificationadaptertrial> call, Throwable t) {
+
             }
         });
 

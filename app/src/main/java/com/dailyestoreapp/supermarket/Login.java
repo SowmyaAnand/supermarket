@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -33,6 +36,7 @@ RelativeLayout r;
 Button login;
 EditText usr,pswd;
 TextView frgt_pswd;
+    ACProgressFlower dialog;
     Button google_login;
     String email_val;
     private GoogleSignInClient mGoogleSignInClient;
@@ -107,6 +111,11 @@ sngup.setOnClickListener(new View.OnClickListener() {
     }
     void login_call(String usname, String pass)
     {
+        dialog = new ACProgressFlower.Builder(Login.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .borderPadding(1)
+                .fadeColor(Color.WHITE).build();
+        dialog.show();
         String login_type="0";
         String url = "http://dailyestoreapp.com/dailyestore/api/";
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -132,6 +141,7 @@ sngup.setOnClickListener(new View.OnClickListener() {
                 Log.e("login","success="+success);
                 String userid = obj.getResponsedata().getData();
                 String fullusername = "username"+userid;
+                dialog.dismiss();
                 if(success==1)
                 {
 
@@ -159,7 +169,7 @@ sngup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onFailure(Call<CustomerAppResponseLogin> call, Throwable t) {
                 Toast.makeText(Login.this,t.getMessage(),Toast.LENGTH_SHORT).show();
-
+dialog.dismiss();
             }
         });
         login.setClickable(true);

@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -27,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -50,6 +53,7 @@ static int cod_length=0;
 
     CartNotEligibleAdapter customAdapter_cart2;
     static TextView sub_tot;
+    ACProgressFlower dialog;
     static int no_cod_total=0;
     static String no_cod_total_set="0";
     static String cod_total_set="0";
@@ -62,16 +66,16 @@ static int cod_length=0;
     String selected_pincode;
     String selected_radio_button_val="PAY COD ELIGIBLE FIRST";
     //RadioGroup r1;
-    static Integer minimum_coupon_amnt=100;
-    static String deliverychg="110";
-    static String deliverychg1="110.00";
+    static Integer minimum_coupon_amnt=1000;
+    static String deliverychg="20";
+    static String deliverychg1="20.00";
     static String deliverychg_zero="0";
     static String deliverychg1_zero="0.00";
-    static Integer minimum_delivery_charge=110;
+    static Integer minimum_delivery_charge=1000;
     static Integer minimum_amount_prchase=100;
     ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3"));
     ArrayList pincodes = new ArrayList<>(Arrays.asList("400072", "585225"));
-    String []pincodess = {"SELECT PINCODE","400072","585225"};
+    String []pincodess = {"SELECT PINCODE","679335","679502","679503","679504","679505","679506"};
     public static final String MY_PREFS_NAME = "CustomerApp";
     final ArrayList<String> items_name_old_cart = new ArrayList<>();
     final ArrayList<Integer> items_name_old_cart_id = new ArrayList<>();
@@ -182,8 +186,8 @@ String coupon_name = coupon_nm.getText().toString();
         ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,pincodess);
         aa.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spin.setAdapter(aa);
-         deliverychg ="110";
-        deliverychg1 ="110.00";
+         deliverychg ="20";
+        deliverychg1 ="20.00";
         tot_cart_text=findViewById(R.id.cart_text);
         sub_tot=findViewById(R.id.heading_total_val);
         tot=findViewById(R.id.tot_val2);
@@ -575,7 +579,7 @@ Log.e("cart","itemid===="+items_name_count_cart+items_name_old_cart_id);
 }
 else
 {
-Toast.makeText(CartPage.this,"MINIMUM ORDER AMOUNT IS "+minimum_amount_prchase,LENGTH_SHORT).show();
+Toast.makeText(CartPage.this,"MINIMUM ORDER AMOUNT SHOULD BE MORE THAN "+minimum_amount_prchase,LENGTH_SHORT).show();
 }
 
             }
@@ -739,6 +743,7 @@ Toast.makeText(CartPage.this,"MINIMUM ORDER AMOUNT IS "+minimum_amount_prchase,L
         call.enqueue(new Callback<CustomerAppResponse>() {
             @Override
             public void onResponse(Call<CustomerAppResponse> call, retrofit2.Response<CustomerAppResponse> response) {
+
                 CustomerAppResponse listCategoryResponseobject = response.body();
                String success = response.body().getResponsedata().getSuccess();
                 Log.e("firstpop","the succes value is "+listCategoryResponseobject.getResponsedata().getSuccess());
