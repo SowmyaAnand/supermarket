@@ -534,13 +534,19 @@ else
          }
 Log.e("cart","itemid===="+items_name_count_cart+items_name_old_cart_id);
         final ArrayList<Integer> cod_eligible_items_name_old_cart_id_newpayment = new ArrayList<>();
-
+        String coupon_name_for_intent = coupon_nm.getText().toString();
+        String tot_for_intent = tot.getText().toString();
+        String coupon_applid_amount_for_intent =couponaplliedval.getText().toString();
+        Log.e("cart ","new values ==>"+tot_for_intent);
         b.putString("sub_txt_val",sub_txt_val);
         b.putString("tot_val",tot_val);
         b.putString("delivery",delivery);
         b.putString("name_booking",name);
         b.putString("book_address",total_address_values_booking);
         b.putString("pincode_book",pincode_booking);
+        b.putString("coupon_name_for_intent",coupon_name_for_intent);
+        b.putString("tot_for_intent",tot_for_intent);
+        b.putString("coupon_applid_amount_for_intent",coupon_applid_amount_for_intent);
 //        b.putSerializable("cod_eligible_items_name_count_cart",cod_eligible_items_name_count_cart);
 //        b.putSerializable("cod_eligible_items_name_quantity_cart",cod_eligible_items_name_quantity_cart);
 //        b.putSerializable("cod_eligible_items_name_old_cart_id",cod_eligible_items_name_old_cart_id);

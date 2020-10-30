@@ -13,9 +13,7 @@
         android:fillViewport="true">
     <RelativeLayout
         android:layout_width="match_parent"
-
-
-        android:layout_height="match_parent">
+         android:layout_height="match_parent">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -77,7 +75,7 @@
         android:layout_below="@+id/text_input_layout"
         app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
 
-        android:hint="EMAIL">
+        android:hint="PASSWORD">
         <EditText
             android:id="@+id/edit_text2_pswd_login"
             android:textSize="14dp"
@@ -144,7 +142,8 @@
         android:layout_marginBottom="60dp"
         android:textColor="@color/black"
         android:layout_marginLeft="20dp"
-        android:text="FORGOT PASSWORD"/>
+        android:text="FORGOT PASSWORD"
+        android:gravity="center_horizontal" />
     <TextView
         android:id="@+id/newuser"
         android:layout_width="match_parent"

@@ -195,7 +195,7 @@ dialog.dismiss();
             Log.e("google account","google account"+account.getDisplayName());
             Log.e("google account","google account"+account.getGivenName());
             email_val=account.getEmail();
-            int ph_no=1234567890;
+            String ph_no="1234567890";
             int pincode=123456;
             Signup_call(email_val,email_val,email_val,ph_no,"google account",pincode,"00-00-0000",email_val,"test123");
 
@@ -211,8 +211,13 @@ dialog.dismiss();
 
         }
     }
-    void Signup_call(String firstname,String lastname,String email,int phone_num,String address,int pincode,String dob,String usernme,String pswd)
+    void Signup_call(String firstname,String lastname,String email,String phone_num,String address,int pincode,String dob,String usernme,String pswd)
     {
+        dialog = new ACProgressFlower.Builder(Login.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .borderPadding(1)
+                .fadeColor(Color.WHITE).build();
+        dialog.show();
         String signup_type="0";
 
         String url = "http://dailyestoreapp.com/dailyestore/api/";
@@ -236,6 +241,7 @@ dialog.dismiss();
                 Log.e("login","success="+response.body().getResponsedata());
                 int success = Integer.parseInt(obj.getResponsedata().getSuccess());
                 String data_val = obj.getResponsedata().getData();
+                dialog.dismiss();
                 if(success==1)
                 {
                     Log.e("login","success="+success);

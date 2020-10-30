@@ -2,6 +2,7 @@ package com.dailyestoreapp.supermarket;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -19,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Signup extends AppCompatActivity {
 EditText fname,lname,email,phone_num,address,pincode,dob,usernme,pswd;
 Button sgnup;
+    ACProgressFlower dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,14 +44,14 @@ Button sgnup;
                 final String lastname_val = lname.getText().toString();
                 final String email_val =email.getText().toString();
                 String ph =phone_num.getText().toString();
-                final int phone_num_val;
+
                 if(ph.length()==0)
                 {
-                   phone_num_val=0;
+                  ph="0";
                 }
                 else
                 {
-                    phone_num_val = Integer.parseInt(ph);
+
                 }
                 String pin = pincode.getText().toString();
                 final int pincode_val;
@@ -71,7 +75,7 @@ Button sgnup;
                 }
                 else
                 {
-                    Signup_call(firstname_val,lastname_val,email_val,phone_num_val,address_val,pincode_val,dob_val,usernme_val,pswd_val);
+                    Signup_call(firstname_val,lastname_val,email_val,ph,address_val,pincode_val,dob_val,usernme_val,pswd_val);
 
                 }
 
@@ -79,8 +83,13 @@ Button sgnup;
         });
 
     }
-    void Signup_call(String firstname,String lastname,String email,int phone_num,String address,int pincode,String dob,String usernme,String pswd)
+    void Signup_call(String firstname,String lastname,String email,String phone_num,String address,int pincode,String dob,String usernme,String pswd)
         {
+            dialog = new ACProgressFlower.Builder(Signup.this)
+                    .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                    .borderPadding(1)
+                    .fadeColor(Color.WHITE).build();
+            dialog.show();
         String signup_type="0";
 
         String url = "http://dailyestoreapp.com/dailyestore/api/";
@@ -106,6 +115,7 @@ Button sgnup;
                 Log.e("login","success="+success);
                 String userid = obj.getResponsedata().getData();
                 String fullusername = "username"+userid;
+                dialog.dismiss();
                 if(success==1)
                 {
 
@@ -131,7 +141,7 @@ Button sgnup;
             @Override
             public void onFailure(Call<CustomerAppResponseLogin> call, Throwable t) {
                 Toast.makeText(Signup.this,t.getMessage(),Toast.LENGTH_SHORT).show();
-
+                dialog.dismiss();
             }
         });
 

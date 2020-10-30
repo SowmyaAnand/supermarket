@@ -87,7 +87,7 @@ public interface ResponseInterface {
     Call<CustomerAppResponseLogin> signUpapi(@Field("firstName") String fname,
                                             @Field("lastName") String lname,
                                             @Field("email") String email,
-                                            @Field("phone") int phone_num,
+                                            @Field("phone") String phone_num,
                                             @Field("address") String address,
                                             @Field("pinCode") int pincode,
                                             @Field("dob") String dob,
@@ -132,6 +132,9 @@ Call<Void> checkoutapi(@Field("itemId[]") ArrayList<Integer> ItemId ,
                        @Field("userId") int id,
                        @Field("address") String address,
                        @Field("postCode") String postcode,
-                       @Field("paymentType") Integer payment
+                       @Field("paymentType") Integer payment,
+                       @Field("TotalOrdersPrice") String TotalOrdersPrice,
+                       @Field("AmountReducedPrice") String 	AmountReducedPrice,
+                       @Field("CouponApplied") String CouponApplied
 );
 }

@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -99,13 +100,21 @@ public class welcome extends AppCompatActivity {
         gt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int current = getItem(+1);
-                if (current < layouts.length) {
-                    // move to next screen
-                    viewPager.setCurrentItem(current);
-                } else {
-                    launchHomeScreen();
+                try
+                {
+                    int current = getItem(+1);
+                    if (current < layouts.length) {
+                        // move to next screen
+                        viewPager.setCurrentItem(current);
+                    } else {
+                        launchHomeScreen();
+                    }
                 }
+                catch(Exception e)
+                {
+                    Toast.makeText(welcome.this,"Error===="+e.getMessage(),Toast.LENGTH_LONG).show();
+                }
+
 
             }
         });

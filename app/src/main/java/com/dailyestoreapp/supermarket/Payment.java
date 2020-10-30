@@ -47,6 +47,9 @@ TextView total,sub_total,delivery;
     ACProgressFlower dialog;
     String pincode_booking;
     String customer_booking_name;
+    String coupon_name_for_intent_pay;
+    String tot_for_intent_pay;
+    String coupon_applid_amount_for_intent_pay;
      ArrayList<Integer> cod_items_name_count_cart_integer = new ArrayList<>();
      ArrayList<String> cod_eligible_items_name_count_cart = new ArrayList<>();
    ArrayList<String> cod_eligible_items_name_quantity_cart_new = new ArrayList<>();
@@ -77,7 +80,12 @@ TextView total,sub_total,delivery;
         address_booking =extras.getString("book_address");
         pincode_booking =extras.getString("pincode_book");
         customer_booking_name =extras.getString("name_booking");
-//       cod_total_payment=extras.getInt("cod_total");
+        coupon_name_for_intent_pay=extras.getString("coupon_name_for_intent");
+        tot_for_intent_pay=extras.getString("tot_for_intent");
+
+        coupon_applid_amount_for_intent_pay=extras.getString("coupon_applid_amount_for_intent");
+
+//       tot_for_intent_pay=extras.getInt("cod_total");
 //       not_cod_total_payment=extras.getInt("no_cod_total");
         cod_eligible_items_name_count_cart = (ArrayList<String>)extras.getSerializable("cod_eligible_items_name_count_cart");
         Log.e("payment","items name ="+cod_eligible_items_name_count_cart);
@@ -463,8 +471,11 @@ catch (Exception e)
         Log.e("cart","checkout param=    userid ====>"+user_int_id);
         Log.e("cart","checkout param=    address ====> "+address_booking);
         Log.e("cart","checkout param=    itemid ====>"+pincode_booking);
-        Log.e("cart","checkout prce ====>"+cod_eligible_items_name_price_cart_new);
-        Call call = mainInterface.checkoutapi(cod_eligible_items_name_old_cart_id,cod_items_name_count_cart_integer,cod_eligible_items_name_quantity_cart,0,cod_eligible_items_name_price_cart,user_int_id,address_booking,pincode_booking,paymentType);
+        Log.e("cart","checkout param=    itemid ====>"+pincode_booking);
+        Log.e("cart","checkout prce new ====>"+coupon_name_for_intent_pay);
+        Log.e("cart","checkout prce new====>"+coupon_applid_amount_for_intent_pay);
+        Log.e("cart","checkout prce new ====>"+tot_for_intent_pay);
+        Call call = mainInterface.checkoutapi(cod_eligible_items_name_old_cart_id,cod_items_name_count_cart_integer,cod_eligible_items_name_quantity_cart,0,cod_eligible_items_name_price_cart,user_int_id,address_booking,pincode_booking,paymentType,tot_for_intent_pay,coupon_applid_amount_for_intent_pay,coupon_name_for_intent_pay);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, retrofit2.Response response) {
@@ -602,7 +613,7 @@ dialog.dismiss();
         Log.e("cart","checkout param=    address ====> "+address_booking);
         Log.e("cart","checkout param=    itemid ====>"+pincode_booking);
         Log.e("cart","checkout prce ====>"+cod_not_eligible_items_name_price_cart);
-        Call call = mainInterface.checkoutapi(cod_not_eligible_items_name_old_cart_id,cod_not_items_name_count_cart_integer,cod_not_eligible_items_name_quantity_cart,0,cod_not_eligible_items_name_price_cart,user_int_id,address_booking,pincode_booking,paymentType);
+        Call call = mainInterface.checkoutapi(cod_not_eligible_items_name_old_cart_id,cod_not_items_name_count_cart_integer,cod_not_eligible_items_name_quantity_cart,0,cod_not_eligible_items_name_price_cart,user_int_id,address_booking,pincode_booking,paymentType,tot_for_intent_pay,coupon_applid_amount_for_intent_pay,coupon_name_for_intent_pay);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, retrofit2.Response response) {
