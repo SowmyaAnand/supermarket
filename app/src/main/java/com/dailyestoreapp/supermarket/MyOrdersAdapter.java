@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,17 +35,20 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
     ArrayList<String> personNames = new ArrayList<String>();
     Context context;
     Integer orderid_adapter;
+
     ArrayList<String> lts=new ArrayList<String>();
    ArrayList<Integer> payment_type= new ArrayList<>();
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity=1;
     ArrayList<String> items_name_price_myorders = new ArrayList<>();
+    ArrayList<String> booking_preorders_date_adapter = new ArrayList<>();
+    ArrayList<String> booking_preorders_myorders = new ArrayList<>();
     ArrayList<String> items_image_myorders = new ArrayList<>();
     ArrayList<Integer> return_request_orders_list_array_orderid = new ArrayList<>();
     ArrayList<Integer> order_id_list = new ArrayList<>();
     ArrayList<String> items_name_refund_myordersadapter = new ArrayList<>();
     ArrayList<String> items_name_myorders; ArrayList<String>items_name_quantity_myorders;ArrayList<Integer> items_name_status_myorders;ArrayList<Integer> items_count_myorders;
-    public MyOrdersAdapter(Context context,ArrayList<String> items_name_myorders, ArrayList<String>items_name_quantity_myorders,ArrayList<Integer> items_name_status_myorders,ArrayList<Integer> items_count_myorders, ArrayList<String> items_name_price_myorders,ArrayList<String> items_image_myorders,ArrayList<Integer> return_request_orders_list_array_orderid,ArrayList<Integer> order_id_list,ArrayList<Integer> payment_type, ArrayList<String> items_name_refund_myordersadapter) {
+    public MyOrdersAdapter(Context context,ArrayList<String> items_name_myorders, ArrayList<String>items_name_quantity_myorders,ArrayList<Integer> items_name_status_myorders,ArrayList<Integer> items_count_myorders, ArrayList<String> items_name_price_myorders,ArrayList<String> items_image_myorders,ArrayList<Integer> return_request_orders_list_array_orderid,ArrayList<Integer> order_id_list,ArrayList<Integer> payment_type, ArrayList<String> items_name_refund_myordersadapter,ArrayList<String> booking_preorders_myorders,ArrayList<String> booking_preorders_date_adapter) {
         this.context = context;
         this.personNames = personNames;
         this.lts.addAll(personNames);
@@ -58,7 +62,8 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
         this.order_id_list=order_id_list;
         this.items_name_refund_myordersadapter=items_name_refund_myordersadapter;
         this.payment_type=payment_type;
-
+this.booking_preorders_myorders=booking_preorders_myorders;
+this.booking_preorders_date_adapter=booking_preorders_date_adapter;
     }
     @Override
     public MyOrdersAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -82,8 +87,19 @@ String pay_txt;
         Integer p_type =payment_type.get(position);
         holder.name.setText(name);
         holder.quantityy.setText(quan);
-
-
+String b_type = booking_preorders_myorders.get(position);
+if(b_type.equals("1"))
+{
+    holder.l_preorder.setVisibility(View.VISIBLE);
+    holder.myorder_pre.setVisibility(View.VISIBLE);
+    String p_dt =booking_preorders_date_adapter.get(position);
+    holder.preorder_date.setText(p_dt);
+}
+else
+{
+    holder.l_preorder.setVisibility(View.GONE);
+    holder.myorder_pre.setVisibility(View.GONE);
+}
         Log.e("myorders","adapter orders are ="+items_name_refund_myordersadapter);
         if(p_type==1)
         {
@@ -117,7 +133,7 @@ String pay_txt;
             holder.status.setText("ORDER RETURN ACCEPTED");
         }
 
-        if((items_name_refund_myordersadapter.get(position).equals("1"))&&((st==1)))
+        if((items_name_refund_myordersadapter.get(position).equals("1"))&&((st==1)&&(b_type.equals("0"))))
         {
             holder.return_btn.setVisibility(View.VISIBLE);
         }
@@ -242,6 +258,8 @@ Log.e("myordersadapter","pr="+pr);
         TextView name,quantityy,price,status,count,cod_available;// init the item view's
         Button return_btn;
         ImageView img_my;
+        TextView myorder_pre,preorder_date;
+        LinearLayout l_preorder;
         public MyViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.Title_myorder);
@@ -252,7 +270,10 @@ Log.e("myordersadapter","pr="+pr);
            img_my=itemView.findViewById(R.id.img_myorder);
            return_btn=itemView.findViewById(R.id.return_button);
            cod_available=itemView.findViewById(R.id.pay_type_text);
+           myorder_pre =itemView.findViewById(R.id.preorder_myorder);
+           l_preorder=itemView.findViewById(R.id.pre_book_lin);
             // get the reference of item view's
+            preorder_date=itemView.findViewById(R.id.preorder_date);
 
         }
     }

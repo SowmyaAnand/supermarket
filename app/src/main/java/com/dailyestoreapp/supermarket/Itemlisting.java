@@ -20,6 +20,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -92,6 +94,8 @@ ArrayList<String> original_Item_Quantity_lts = new ArrayList<>();
     String fullname;
     static String flag;
     static TextView txt;
+    TextView preorders;
+    String  cat_name_for_validatingcakes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +104,8 @@ ArrayList<String> original_Item_Quantity_lts = new ArrayList<>();
         fullname = fullname_shared.getString("fullusername","");
  t = (Toolbar)findViewById(R.id.toolbar_itemlisting_item);
         setSupportActionBar(t);
+        preorders = findViewById(R.id.preorder);
+
         Intent in = getIntent();
         Bundle extras = in.getExtras();
          flag= extras.getString("backpressed");
@@ -107,6 +113,22 @@ ArrayList<String> original_Item_Quantity_lts = new ArrayList<>();
         String sb_id = extras.getString("subCatId");
         String sb_img = extras.getString("subCatImage");
         String  sb_inital =extras.getString("subInitial");
+        cat_name_for_validatingcakes =extras.getString("cat_name_for_intent");
+        if(cat_name_for_validatingcakes.equals("Cakes")||cat_name_for_validatingcakes.equals("CAKES")||cat_name_for_validatingcakes.equals("Cake")||cat_name_for_validatingcakes.equals("CAKE"))
+        {
+            preorders.setVisibility(View.VISIBLE);
+            Animation anim = new AlphaAnimation(0.0f, 1.0f);
+            anim.setDuration(120); //You can manage the blinking time with this parameter
+            anim.setStartOffset(20);
+            anim.setRepeatMode(Animation.REVERSE);
+            anim.setRepeatCount(Animation.INFINITE);
+            preorders.startAnimation(anim);
+        }
+        else
+        {
+            preorders.setVisibility(View.GONE);
+        }
+
         String[] cats = sb_names.split(",");//if spaces are uneven, use \\s+ instead of " "
                for (String ct : cats) {
             if (!(ct.equals("") || ct.equals(null))) {
@@ -375,7 +397,7 @@ t.setNavigationOnClickListener(new View.OnClickListener() {
                         recyclerView.setLayoutManager(linearLayoutManager);
                         //  call the constructor of CustomAdapter to send the reference and data to Adapter
                         Log.e("names","the names =="+personNames);
-                        customAdapter = new ItemAdapter(Itemlisting.this, Item_categories,Item_Quantity,Item_Price,item_id,item_image,Item_categories_offer_desc,item_id_offer,cod_eligible,refund_eligible,Item_description);
+                        customAdapter = new ItemAdapter(Itemlisting.this, Item_categories,Item_Quantity,Item_Price,item_id,item_image,Item_categories_offer_desc,item_id_offer,cod_eligible,refund_eligible,Item_description,cat_name_for_validatingcakes);
                         recyclerView.setAdapter(customAdapter);
 
                     }

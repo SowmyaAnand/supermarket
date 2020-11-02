@@ -136,5 +136,24 @@ Call<Void> checkoutapi(@Field("itemId[]") ArrayList<Integer> ItemId ,
                        @Field("TotalOrdersPrice") String TotalOrdersPrice,
                        @Field("AmountReducedPrice") String 	AmountReducedPrice,
                        @Field("CouponApplied") String CouponApplied
+
+
+
 );
+
+    @FormUrlEncoded
+    @POST("preBooking")
+    Call<Void> preBooking(@Field("itemId[]") ArrayList<Integer> ItemId ,
+                           @Field("count[]") ArrayList<Integer> count,
+                           @Field("quantity[]") ArrayList<String> quantity,
+                           @Field("type") int type,
+                           @Field("price[]") ArrayList<String> price,
+                           @Field("userId") int id,
+                           @Field("address") String address,
+                           @Field("postCode") String postcode,
+                           @Field("paymentType") Integer payment,
+                          @Field("preBookingDate") String predate,
+                          @Field("bookingType") String btype
+
+                           );
 }

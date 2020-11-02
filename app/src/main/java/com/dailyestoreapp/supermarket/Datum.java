@@ -7,6 +7,12 @@ class Datum {
     @SerializedName("typeId")
     @Expose
     private String typeId;
+    @SerializedName("bookingType")
+    @Expose
+    private String bookingType;
+    @SerializedName("preBookingDate")
+    @Expose
+    private String preBookingDate;
     @SerializedName("initialSetupflag")
     @Expose
     private String initialSetupflag;
@@ -214,6 +220,25 @@ class Datum {
     public void setRefundSmall(String refund) {
         this.refund = refund;
     }
+
+
+
+    public String getpreBookingDate() {
+        return preBookingDate;
+    }
+
+    public void setpreBookingDate(String preBookingDate) {
+        this.preBookingDate = preBookingDate;
+    }
+
+    public String getbookingType() {
+        return bookingType;
+    }
+
+    public void setbookingType(String bookingType) {
+        this.bookingType = bookingType;
+    }
+
 
     public String getCouponName() {
         return couponName;

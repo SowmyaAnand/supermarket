@@ -1,5 +1,6 @@
 package com.dailyestoreapp.supermarket;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -46,11 +49,17 @@ ArrayList<String> Item_Quantity_adapter = new ArrayList<>();
     ArrayList<Integer> item_id_offer_adapter = new ArrayList<>();
     ArrayList<Integer> item_id_status_adapter = new ArrayList<>();
     ArrayList<String> Item_description = new ArrayList<>();
+    DatePickerDialog datePickerDialog;
+    String ct_name;
+    int year;
+    int month;
+    int dayOfMonth;
+    Calendar calendar;
     public static final String MY_PREFS_NAME = "CustomerApp";
     int quantity=1;
     final String url1 = "http://dailyestoreapp.com/dailyestore/";
     public ItemAdapter(Context context,ArrayList Item_categories_adapter,ArrayList Item_Quantity_adapter,ArrayList Item_Price_adapter,ArrayList item_id_adapter,ArrayList item_image_adapter,ArrayList Item_categories_offer_desc_adapter,ArrayList item_id_offer_adapter, ArrayList Item_cod_adapter,
-    ArrayList Item_Refunf_adapter,  ArrayList Item_description ) {
+    ArrayList Item_Refunf_adapter,  ArrayList Item_description, String cat_nane) {
         this.context = context;
         this.Item_categories_adapter=Item_categories_adapter;
         this.Item_Quantity_adapter=Item_Quantity_adapter;
@@ -63,6 +72,7 @@ ArrayList<String> Item_Quantity_adapter = new ArrayList<>();
         this.Item_cod_adapter=Item_cod_adapter;
         this.Item_Refunf_adapter =Item_Refunf_adapter;
         this.Item_description = Item_description;
+        this.ct_name=cat_nane;
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -92,12 +102,6 @@ ArrayList<String> Item_Quantity_adapter = new ArrayList<>();
         final SharedPreferences fullname_shared = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         fullusername_global = fullname_shared.getString("fullusername","");
         //second addition
-
-
-
-
-
-
         // set the data in items
         String name =  Item_categories_adapter.get(position);
        holder.name.setText(name);
@@ -107,6 +111,27 @@ ArrayList<String> Item_Quantity_adapter = new ArrayList<>();
        String at = "RS: "+amt;
        holder.amont.setText(at);
        final int o = item_id_offer_adapter.get(position);
+        if(ct_name.equals("Cakes")||ct_name.equals("CAKES")||ct_name.equals("Cake")||ct_name.equals("CAKE"))
+        {
+            holder.preoder_btn.setVisibility(View.VISIBLE);
+        }
+        else 
+        {
+            holder.preoder_btn.setVisibility(View.GONE);
+        }
+            holder.preoder_btn.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+         Intent n = new Intent(context,Main3Activity.class);
+               Bundle b = new Bundle();
+               b.putInt("item_id",item_id_adapter.get(position));
+               b.putInt("prce",Item_Price_adapter.get(position));
+               b.putString("quant",Item_Quantity_adapter.get(position));
+               n.putExtras(b);
+         context.startActivity(n);
+
+           }
+       });
        if(Item_categories_offer_desc_adapter.get(position).matches("")||Item_categories_offer_desc_adapter.get(position).equals("none"))
        {
            holder.ofrdec.setText("");
@@ -871,8 +896,8 @@ Log.e("itemadapter","first befre add  add btn "+cart_item_names+items_name_old);
         return Item_categories_adapter.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name,quantityy,item_inital_qty,amont,offer_percent,ofrdec;// init the item view's
-        Button addition,substraction,addbtn;
+        TextView name,quantityy,item_inital_qty,amont,offer_percent,ofrdec,deliver_date;// init the item view's
+        Button addition,substraction,addbtn,preoder_btn;
         ImageView img_item;
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -886,6 +911,7 @@ Log.e("itemadapter","first befre add  add btn "+cart_item_names+items_name_old);
             offer_percent=itemView.findViewById(R.id.unread_check);
             img_item=itemView.findViewById(R.id.img_item);
             ofrdec=itemView.findViewById(R.id.offerdescrp);
+            preoder_btn=itemView.findViewById(R.id.preoder_btn);
             // get the reference of item view's
 
         }

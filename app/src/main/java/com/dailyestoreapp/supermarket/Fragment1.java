@@ -567,6 +567,7 @@ dialog.dismiss();
                         sb_images.append(",");
                     }
                 }
+                String cat_name_for_intent;
                 Intent next = new Intent(getContext(),Itemlisting.class);
                 Bundle b = new Bundle();
                 b.putString("backpressed","0");
@@ -574,6 +575,18 @@ dialog.dismiss();
                 b.putString("subCatId",strbul.toString());
                 b.putString("subCatImage",sb_images.toString());
                 b.putString("subInitial", String.valueOf(intialsub));
+
+                for(int i=0;i<categoriescatno_edit.size();i++)
+                { int c=categoriescatno_edit.get(i);
+                    if(c==cno)
+                    {
+                        cat_name_for_intent=categoriesEditCategies.get(i);
+                        Log.e("frag cakes","the cat name is"+cat_name_for_intent);
+                        b.putString("cat_name_for_intent", cat_name_for_intent);
+                    }
+
+                }
+
                 next.putExtras(b);
                 startActivity(next);
 
