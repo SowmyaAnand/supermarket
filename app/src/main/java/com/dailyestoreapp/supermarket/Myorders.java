@@ -1,6 +1,7 @@
 package com.dailyestoreapp.supermarket;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +27,7 @@ public class Myorders extends AppCompatActivity {
 RecyclerView orders;
     MyOrdersAdapter customAdapter_offers;
     ACProgressFlower dialog;;
+    Toolbar t;
     ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     public static final String MY_PREFS_NAME = "CustomerApp";
     final ArrayList<String> items_name_myorders = new ArrayList<>();
@@ -47,6 +49,9 @@ RecyclerView orders;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myorders);
        // MyOrders();
+        t = (Toolbar)findViewById(R.id.toolbar_myorders);
+        t.setTitle("MY ORDERS");
+        setSupportActionBar(t);
         orders = (RecyclerView) findViewById(R.id.itemrecycler_orders);
         // set a LinearLayoutManager with default vertical orientation
         SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);

@@ -258,6 +258,14 @@
                 android:text="PREORDER"
                 android:textColor="@color/white"
                 android:background="@color/colorPrimary"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delivery Charge - Rs 20/-"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/roboto_light"/>
 
             <!--                        <RadioGroup-->
             <!--                            android:id="@+id/payfirst"-->

@@ -217,26 +217,24 @@ transactionsuccess();
             if(validate)
             {
 
-                if(gpay_value)
+            int selectedid = payment.getCheckedRadioButtonId();
+            RadioButton radioButton = (RadioButton)findViewById(selectedid);
+            Log.e("pay","the selected radiobutton is "+radioButton.getText());
+               if(radioButton.getText().equals("CASH ON DELIVERY"))
                 {
-//                    String tot_amount_booking= String.valueOf(total.getText());
-//                    Log.e("payment","the amount is"+tot_amount_booking);
-//                    payUsingUpi(customer_booking_name, upi,
-//                            "payment", "1");
-//                    if(cod_eligible_pay.equals("1"))
-//                    {
-//                        String tot_cod = String.valueOf(cod_total_payment);
-//                        payUsingUpi(customer_booking_name, upi,
-//                                "payment", tot_cod);
-//                    }
-//                    else
-//                    {
-//                        String tot_cod_not = String.valueOf(not_cod_total_payment);
-//                        payUsingUpi(customer_booking_name, upi,
-//                                "payment", tot_cod_not);
-//                    }
+                    if(cod_eligible_pay.equals("1"))
+                    {
+
+                        Book_cod_now("0");
+                    }
+                    else
+
+                    {
+                        Book_no_cod_now("0");
+                    }
+
                 }
-                else  if(paytm_value)
+                else
                 {
                     Calendar c = Calendar.getInstance();
                     SimpleDateFormat df = new SimpleDateFormat("ddMMyyyy");
@@ -267,20 +265,7 @@ transactionsuccess();
                     }
 
                 }
-                else
-                {
-                    if(cod_eligible_pay.equals("1"))
-                    {
 
-                         Book_cod_now("0");
-                    }
-                    else
-
-                    {
-                        Book_no_cod_now("0");
-                    }
-
-                }
             }
             else
             {

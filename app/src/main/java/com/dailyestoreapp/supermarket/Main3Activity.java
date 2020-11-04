@@ -150,7 +150,11 @@ final Calendar c = Calendar.getInstance();
                     pre.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
+                            String name_val= nm.getText().toString();
+                            String  mobile_val= mob.getText().toString();
+                            String  place_val= plce.getText().toString();
+                            String  addr_val= address.getText().toString();
+                            String seldt_val = selecteddt.getText().toString();
                             Calendar c = Calendar.getInstance();
                             SimpleDateFormat df = new SimpleDateFormat("ddMMyyyy");
                             String date = df.format(c.getTime());
@@ -164,7 +168,7 @@ final Calendar c = Calendar.getInstance();
                             int pricee=extras.getInt("prce");
                             String count = cnt.getText().toString();
                             int cc = Integer.parseInt(count);
-                            int tot = cc*pricee;
+                            int tot = (cc*pricee)+20;
                             String tot_amount_booking= String.valueOf(tot);
                             txnAmountString = tot_amount_booking;
                             //txnAmountString = "0";
@@ -178,7 +182,17 @@ final Calendar c = Calendar.getInstance();
                                 errors ="Enter valid Amount here\n";
                                 Toast.makeText(Main3Activity.this, errors, Toast.LENGTH_SHORT).show();
 
-                            }else{
+                            }
+                            else if(selected_pincode=="SELECT PINCODE")
+                            {
+                                Toast.makeText(Main3Activity.this,"SELECT PINCODE",Toast.LENGTH_SHORT).show();
+                            }
+                            else if(name_val.equals("")||mobile_val.equals("")||place_val.equals("")||addr_val.equals("")||seldt_val.equals("SELECT DATE"))
+                            {
+
+                                Toast.makeText(Main3Activity.this,"PLEASE ENTER ALL FIELDS",Toast.LENGTH_SHORT).show();
+                            }
+                            else{
 
                                 getToken();
 

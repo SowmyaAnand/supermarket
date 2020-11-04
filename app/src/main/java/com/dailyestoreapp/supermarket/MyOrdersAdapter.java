@@ -103,11 +103,11 @@ else
         Log.e("myorders","adapter orders are ="+items_name_refund_myordersadapter);
         if(p_type==1)
         {
-           pay_txt="Gpay";
+           pay_txt="PAYTM";
         }
         else
         {
-            pay_txt="Cash On Delivery";
+            pay_txt="CASH ON DELIVERY";
         }
         holder.cod_available.setText(pay_txt);
 
@@ -117,11 +117,11 @@ else
         if(st==0)
         {
 
-        holder.status.setText("ORDER PENDING FOR APPROVAL");
+        holder.status.setText("ORDER PENDING");
         }
         else if(st==1)
         {
-            holder.status.setText("ORDER APPROVED AND READY TO SHIP");
+            holder.status.setText("ORDER DELIVERED");
         }
         else if(st==2)
         {
@@ -130,7 +130,7 @@ else
 
         else if(st==3)
         {
-            holder.status.setText("ORDER RETURN ACCEPTED");
+            holder.status.setText(" RETURN ORDER DELIVERED");
         }
 
         if((items_name_refund_myordersadapter.get(position).equals("1"))&&((st==1)&&(b_type.equals("0"))))

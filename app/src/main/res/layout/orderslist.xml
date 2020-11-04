@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="15sp"
-            android:text="PREORDER"/>
+            android:text="PRE-ORDER"/>
     <TextView
         android:layout_marginRight="30dp"
         android:id="@+id/preorder_date"
@@ -110,6 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
+            android:fontFamily="@font/roboto_light"
             android:layout_toRightOf="@+id/img_myorder"
             android:textSize="15sp"
             android:text="Title"/>
@@ -120,6 +121,7 @@
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
             android:layout_width="wrap_content"
+            android:fontFamily="@font/roboto_light"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/img_myorder"
             android:textSize="15sp"
@@ -132,7 +134,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:fontFamily="@font/roboto_light"
+            android:textSize="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/img_myorder"
@@ -144,7 +147,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:fontFamily="@font/roboto_light"
+            android:textSize="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/img_myorder"
@@ -156,7 +160,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:fontFamily="@font/roboto_light"
+            android:textSize="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/img_myorder"
@@ -169,6 +174,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/colorPrimary"
+
             android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -182,6 +188,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/status_myorder"
             android:layout_marginTop="30dp"
+            android:fontFamily="@font/roboto_light"
             android:text="**Price may vary according to the delivery charge/Coupon applied as shown during checkout"
             android:textColor="@color/black"
             android:textSize="12sp"/>
