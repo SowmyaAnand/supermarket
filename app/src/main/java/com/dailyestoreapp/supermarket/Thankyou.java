@@ -25,6 +25,7 @@ ImageView wt,cl;
         wt= (ImageView)findViewById(R.id.whatsapp_thanks);
         cl= (ImageView)findViewById(R.id.call_thanks);
 
+
         wt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,4 +64,5 @@ ImageView wt,cl;
         Intent n= new Intent(Thankyou.this,Main2Activity.class);
         startActivity(n);
     }
+
 }

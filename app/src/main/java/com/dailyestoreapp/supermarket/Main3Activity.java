@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -23,8 +25,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.paytm.pgsdk.PaytmOrder;
+import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
+import com.paytm.pgsdk.TransactionManager;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Random;
 
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
@@ -32,6 +40,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -41,6 +50,13 @@ public class Main3Activity extends AppCompatActivity implements AdapterView.OnIt
 TextView selectedorderdate,selecteddt,select_time;
 EditText cnt,nm,mob,plce,address,pincode;
 Button pre;
+LinearLayout linear2;
+    private String  TAG ="Main3Activity";
+    private ProgressBar progressBar;
+    private EditText txnAmount;
+    private String midString ="VjyeQj84716826222804", txnAmountString="", orderIdString="", txnTokenString="";
+    private Button btnPayNow;
+    private Integer ActivityRequestCode = 2;
     String selected_pincode;
     DatePickerDialog datePickerDialog;
     int year;
@@ -62,6 +78,7 @@ String selected_date;
 String selected_time;
 String price_intent;
 String quant;
+Button preorder_continue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +92,8 @@ String quant;
                 plce= findViewById(R.id.edit_text5_place_booking);
                 address= findViewById(R.id.edit_text10_address_booking);
                 selecteddt=findViewById(R.id.selectdt);
+                preorder_continue=findViewById(R.id.preoder_continue);
+               linear2=findViewById(R.id.lin2);
         select_time=findViewById(R.id.select_time);
         select_time_img=findViewById(R.id.select_time_img);
         select_time.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +148,44 @@ final Calendar c = Calendar.getInstance();
         });
                     pre= findViewById(R.id.preoder_button);
                     pre.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Calendar c = Calendar.getInstance();
+                            SimpleDateFormat df = new SimpleDateFormat("ddMMyyyy");
+                            String date = df.format(c.getTime());
+                            Random rand = new Random();
+                            int min =1000, max= 9999;
+// nextInt as provided by Random is exclusive of the top value so you need to add 1
+                            int randomNum = rand.nextInt((max - min) + 1) + min;
+                            orderIdString =  date+String.valueOf(randomNum);
+                            Intent in = getIntent();
+                            Bundle extras = in.getExtras();
+                            int pricee=extras.getInt("prce");
+                            String count = cnt.getText().toString();
+                            int cc = Integer.parseInt(count);
+                            int tot = cc*pricee;
+                            String tot_amount_booking= String.valueOf(tot);
+                            txnAmountString = tot_amount_booking;
+                            //txnAmountString = "0";
+                            String errors = "";
+                            if(orderIdString.equalsIgnoreCase("")){
+                                errors ="Enter valid Order ID here\n";
+                                Toast.makeText(Main3Activity.this, errors, Toast.LENGTH_SHORT).show();
+
+                            }else
+                            if(txnAmountString.equalsIgnoreCase("")){
+                                errors ="Enter valid Amount here\n";
+                                Toast.makeText(Main3Activity.this, errors, Toast.LENGTH_SHORT).show();
+
+                            }else{
+
+                                getToken();
+
+                            }
+                        }
+                    });
+        preorder_continue.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             String name_val= nm.getText().toString();
@@ -221,6 +278,134 @@ Toast.makeText(Main3Activity.this,"SELECT PINCODE",Toast.LENGTH_SHORT).show();
 
     }
 
+
+    private  void getToken(){
+        dialog = new ACProgressFlower.Builder(Main3Activity.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .borderPadding(1)
+                .fadeColor(Color.WHITE).build();
+        dialog.show();
+        Log.e(TAG, " get token start");
+
+        ServiceWrapper serviceWrapper = new ServiceWrapper(null);
+        Call<Token_Res> call = serviceWrapper.getTokenCall("12345", midString, orderIdString, txnAmountString);
+        call.enqueue(new Callback<Token_Res>() {
+            @Override
+            public void onResponse(Call<Token_Res> call, Response<Token_Res> response) {
+                Log.e(TAG, " respo "+ response.isSuccessful() );
+
+                try {
+
+                    if (response.isSuccessful() && response.body()!=null){
+                        if (response.body().getBody().getTxnToken()!="") {
+                            Log.e(TAG, " transaction token success : "+response.body().getBody().getTxnToken());
+                            startPaytmPayment(response.body().getBody().getTxnToken());
+
+                        }else {
+                            Log.e(TAG, " Token status false");
+                            Toast.makeText(Main3Activity.this,"NETWORK ERROR PLEASE TRY AGAIN ", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                }catch (Exception e){
+                    Log.e(TAG, " error in Token Res "+e.toString());
+                    Toast.makeText(Main3Activity.this,"NETWORK ERROR PLEASE TRY AGAIN ", Toast.LENGTH_SHORT).show();
+
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<Token_Res> call, Throwable t) {
+
+                Log.e(TAG, " response error "+t.toString());
+                Toast.makeText(Main3Activity.this,"NETWORK ERROR PLEASE TRY AGAIN ", Toast.LENGTH_SHORT).show();
+
+                dialog.dismiss();
+            }
+        });
+
+    }
+    public void startPaytmPayment (String token){
+
+        txnTokenString = token;
+        // for test mode use it
+        // String host = "https://securegw-stage.paytm.in/";
+        // for production mode use it
+        String host = "https://securegw-stage.paytm.in/";
+        String orderDetails = "MID: " + midString + ", OrderId: " + orderIdString + ", TxnToken: " + txnTokenString
+                + ", Amount: " + txnAmountString;
+        //Log.e(TAG, "order details "+ orderDetails);
+
+        String callBackUrl = host + "theia/paytmCallback?ORDER_ID="+orderIdString;
+        Log.e(TAG, " callback URL "+callBackUrl);
+        PaytmOrder paytmOrder = new PaytmOrder(orderIdString, midString, txnTokenString, txnAmountString, callBackUrl);
+        final TransactionManager transactionManager = new TransactionManager(paytmOrder, new PaytmPaymentTransactionCallback(){
+            @Override
+            public void onTransactionResponse(Bundle bundle) {
+                Log.e(TAG, "Response success (onTransactionResponse) : "+bundle.toString());
+                Log.e(TAG, "Response success (onTransactionResponse) : "+bundle.getString("STATUS"));
+
+                if(bundle.getString("STATUS").equals("TXN_SUCCESS"))
+                {
+//                    Toast.makeText(Main3Activity.this,"Transaction successful", Toast.LENGTH_SHORT).show();
+                    linear2.setVisibility(View.GONE);
+                    preorder_continue.setVisibility(View.VISIBLE);
+                    pre.setVisibility(View.GONE);
+
+
+
+                }
+                else {
+                    Toast.makeText(Main3Activity.this,"NETWORK ERROR PLEASE TRY AGAIN ", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void networkNotAvailable() {
+                Log.e(TAG, "network not available ");
+            }
+
+            @Override
+            public void onErrorProceed(String s) {
+                Log.e(TAG, " onErrorProcess "+s.toString());
+            }
+
+            @Override
+            public void clientAuthenticationFailed(String s) {
+                Log.e(TAG, "Clientauth "+s);
+            }
+
+            @Override
+            public void someUIErrorOccurred(String s) {
+                Log.e(TAG, " UI error "+s);
+            }
+
+            @Override
+            public void onErrorLoadingWebPage(int i, String s, String s1) {
+                Log.e(TAG, " error loading web "+s+"--"+s1);
+            }
+
+            @Override
+            public void onBackPressedCancelTransaction() {
+                Log.e(TAG, "backPress ");
+            }
+
+            @Override
+            public void onTransactionCancel(String s, Bundle bundle) {
+                Log.e(TAG, " transaction cancel "+s);
+            }
+        });
+        Log.e(TAG, " transaction reached here ");
+
+        transactionManager.setShowPaymentUrl(host + "theia/api/v1/showPaymentPage");
+        transactionManager.startTransaction(Main3Activity.this, ActivityRequestCode);
+        //transactionsuccess();
+    }
+
+
+
     public void preoders(String pay) {
 
         dialog = new ACProgressFlower.Builder(Main3Activity.this)
@@ -251,9 +436,10 @@ Toast.makeText(Main3Activity.this,"SELECT PINCODE",Toast.LENGTH_SHORT).show();
        String  place= plce.getText().toString();
        String  addr= address.getText().toString();
        String seldt = selected_date+" "+selected_time;
+        ccount_arry.clear();
 String count = cnt.getText().toString();
 int c = Integer.parseInt(count);
-String tot_addr = name+place+addr+mobile+pincode;
+String tot_addr = name+" "+place+" "+addr+" "+mobile;
 ccount_arry.add(c);
         Log.e("cart","checkout param=    itemid ====>"+item_id_main3);
         Log.e("cart","checkout param=    count====>"+ccount_arry);
@@ -273,9 +459,14 @@ ccount_arry.add(c);
                Log.e("cart","response preorderes="+response.body());
 
 
-//                Toast.makeText(Payment.this,"Successfully Placed Orders",Toast.LENGTH_SHORT).show();
+               Toast.makeText(Main3Activity.this,"Successfully Placed Orders",Toast.LENGTH_SHORT).show();
 //
                dialog.dismiss();
+                linear2.setVisibility(View.VISIBLE);
+                preorder_continue.setVisibility(View.GONE);
+                pre.setVisibility(View.VISIBLE);
+                push_notif();
+
 //                //clearance of cart items
 //
 //                SharedPreferences fullname_shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
@@ -350,4 +541,38 @@ ccount_arry.add(c);
         });
 
     }
+    private void push_notif()
+    {
+
+        String url_push = "http://dailyestoreapp.com/dailyestore/";
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url_push)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+        ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
+        Call<PushNotificationadaptertrial> call = mainInterface.pushnotificationtrial();
+        call.enqueue(new Callback<PushNotificationadaptertrial>() {
+            @Override
+            public void onResponse(Call<PushNotificationadaptertrial> call, retrofit2.Response<PushNotificationadaptertrial> response) {
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<PushNotificationadaptertrial> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
 }

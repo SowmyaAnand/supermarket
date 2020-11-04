@@ -176,6 +176,15 @@
             android:fontFamily="@font/roboto_medium"
             android:layout_toRightOf="@+id/img_myorder"
             android:layout_toEndOf="@+id/img_myorder" />
+        <TextView
+            android:id="@+id/note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/status_myorder"
+            android:layout_marginTop="30dp"
+            android:text="**Price may vary according to the delivery charge/Coupon applied as shown during checkout"
+            android:textColor="@color/black"
+            android:textSize="12sp"/>
 
 <Button
     android:id="@+id/return_button"
@@ -183,7 +192,7 @@
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
     android:textColor="@color/white"
-    android:layout_below="@+id/status_myorder"
+    android:layout_below="@+id/note"
     android:layout_marginTop="20dp"
     android:text="RETURN"/>
 

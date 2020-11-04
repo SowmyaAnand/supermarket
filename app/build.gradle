@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.dailyestoreapp.supermarket"
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -48,4 +48,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-wallet:18.1.1'
     implementation 'com.android.support:appcompat-v7:24.1.1'
     implementation 'cc.cloudist.acplibrary:library:1.2.1'
+    implementation 'com.paytm.appinvokesdk:appinvokesdk:1.5'
 }
