@@ -122,15 +122,20 @@ transactionsuccess();
         cod_eligible_items_name_count_cart = (ArrayList<String>)extras.getSerializable("cod_eligible_items_name_count_cart");
         Log.e("payment","items name ="+cod_eligible_items_name_count_cart);
         cod_eligible_items_name_quantity_cart=(ArrayList<String>)extras.getSerializable("cod_eligible_items_name_quantity_cart");
+        Log.e("payment","items name ="+cod_eligible_items_name_quantity_cart);
         cod_eligible_items_name_old_cart_id = (ArrayList<Integer>)extras.getSerializable("cod_eligible_items_name_old_cart_id");
+        Log.e("payment","items name ="+cod_eligible_items_name_old_cart_id);
         cod_eligible_items_name_price_cart = (ArrayList<String>)extras.getSerializable("cod_eligible_items_name_price_cart");
-
+        Log.e("payment","items name ="+cod_eligible_items_name_price_cart);
 
         cod_not_eligible_items_name_count_cart = (ArrayList<String>)extras.getSerializable("cod_not_eligible_items_name_count_cart");
-        Log.e("payment","items name ="+cod_eligible_items_name_count_cart);
+        Log.e("payment","items not name ="+cod_not_eligible_items_name_count_cart);
         cod_not_eligible_items_name_quantity_cart=(ArrayList<String>)extras.getSerializable("cod_not_eligible_items_name_quantity_cart");
+        Log.e("payment","items not name ="+cod_not_eligible_items_name_quantity_cart);
         cod_not_eligible_items_name_old_cart_id = (ArrayList<Integer>)extras.getSerializable("cod_not_eligible_items_name_old_cart_id");
+        Log.e("payment","items  not name ="+cod_not_eligible_items_name_old_cart_id);
         cod_not_eligible_items_name_price_cart = (ArrayList<String>)extras.getSerializable("cod_not_eligible_items_name_price_cart");
+        Log.e("payment","items not name ="+cod_not_eligible_items_name_price_cart);
         total=findViewById(R.id.tot_val2_payment_tot);
         sub_total=findViewById(R.id.heading_total_val_payment_sub);
         delivery = findViewById(R.id.cart_delivery_val_payment_del);
@@ -370,36 +375,44 @@ transactionsuccess();
             @Override
             public void networkNotAvailable() {
                 Log.e(TAG, "network not available ");
+                Toast.makeText(Payment.this,"network not available", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onErrorProceed(String s) {
                 Log.e(TAG, " onErrorProcess "+s.toString());
+                Toast.makeText(Payment.this,"onErrorProcess "+s.toString(), Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void clientAuthenticationFailed(String s) {
                 Log.e(TAG, "Clientauth "+s);
+                Toast.makeText(Payment.this,"Clientauth "+s, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void someUIErrorOccurred(String s) {
                 Log.e(TAG, " UI error "+s);
+                Toast.makeText(Payment.this," UI error "+s, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onErrorLoadingWebPage(int i, String s, String s1) {
                 Log.e(TAG, " error loading web "+s+"--"+s1);
+                Toast.makeText(Payment.this," error loading web "+s+"--"+s1, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onBackPressedCancelTransaction() {
                 Log.e(TAG, "backPress ");
+                Toast.makeText(Payment.this,"backPress ", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onTransactionCancel(String s, Bundle bundle) {
                 Log.e(TAG, " transaction cancel "+s);
+                Toast.makeText(Payment.this," transaction cancel ", Toast.LENGTH_SHORT).show();
             }
         });
         Log.e(TAG, " transaction reached here ");
@@ -781,20 +794,87 @@ dialog.dismiss();
                 .client(okHttpClient)
                 .build();
         ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
-        cod_not_items_name_count_cart_integer.clear();
-        for(int k=0;k<cod_not_eligible_items_name_count_cart.size();k++)
+
+//        cod_not_items_name_count_cart_integer.clear();
+//        for(int k=0;k<cod_eligible_items_name_count_cart.size();k++)
+//       // for(int k=0;k<cod_not_eligible_items_name_count_cart.size();k++)
+//        {
+//           // Integer g = Integer.valueOf(cod_not_eligible_items_name_count_cart.get(k));
+//            Integer g = Integer.valueOf(cod_eligible_items_name_count_cart.get(k));
+//            cod_not_items_name_count_cart_integer.add(g);
+//        }
+//        cod_not_eligible_items_name_quantity_cart_new.clear();
+//        //for(int l=0;l<cod_not_eligible_items_name_quantity_cart.size();l++)
+//            for(int l=0;l<cod_eligible_items_name_quantity_cart.size();l++)
+//        {
+//           // String q =cod_not_eligible_items_name_quantity_cart.get(l);
+//            String q =cod_eligible_items_name_quantity_cart.get(l);
+//
+//            String[] separated = q.split(" ");
+//            Log.e("cart","the value is "+separated[1] );
+//            String val = separated[1];
+//            cod_not_eligible_items_name_quantity_cart_new.add(val);
+//        }
+//
+//        SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+//        String useridd = shared.getString("logged_in_userId","");
+//        int user_int_id = Integer.parseInt(useridd);
+//        final ArrayList<Integer> user_cart_id = new ArrayList<>();
+//        final ArrayList<Integer> type_cart_id = new ArrayList<>();
+//       // for(int g =0;g<cod_not_eligible_items_name_old_cart_id.size();g++)
+//        for(int g =0;g<cod_eligible_items_name_old_cart_id.size();g++)
+//
+//        {
+//            user_cart_id.add(user_int_id);
+//            type_cart_id.add(0);
+//        }
+//        Log.e("cart","checkout param=    itemid ====>"+cod_eligible_items_name_old_cart_id);
+//        Log.e("cart","checkout param=    count====>"+cod_not_items_name_count_cart_integer);
+//        Log.e("cart","checkout param=    quantity ====>"+cod_not_eligible_items_name_quantity_cart_new);
+//        Log.e("cart","checkout param=    type ====>"+type_cart_id);
+//        Log.e("cart","checkout param=    userid ====>"+user_cart_id);
+//        Log.e("cart","checkout param=    address ====> "+address_booking);
+//        Log.e("cart","checkout param=    itemid ====>"+pincode_booking);
+//        Log.e("cart","checkout prce ====>"+cod_not_eligible_items_name_price_cart);
+//       // Call call = mainInterface.checkoutapi(cod_not_eligible_items_name_old_cart_id,cod_not_items_name_count_cart_integer,cod_not_eligible_items_name_quantity_cart,0,cod_not_eligible_items_name_price_cart,user_int_id,address_booking,pincode_booking,paymentType,tot_for_intent_pay,coupon_applid_amount_for_intent_pay,coupon_name_for_intent_pay);
+//        Call call = mainInterface.checkoutapi(cod_eligible_items_name_old_cart_id,cod_not_items_name_count_cart_integer,cod_not_eligible_items_name_quantity_cart,0,cod_eligible_items_name_price_cart,user_int_id,address_booking,pincode_booking,paymentType,tot_for_intent_pay,coupon_applid_amount_for_intent_pay,coupon_name_for_intent_pay);
+
+        cod_eligible_items_name_old_cart_id_new.clear();
+        for(int k=0;k<cod_eligible_items_name_old_cart_id.size();k++)
         {
-            Integer g = Integer.valueOf(cod_not_eligible_items_name_count_cart.get(k));
-            cod_not_items_name_count_cart_integer.add(g);
+            Integer g = Integer.valueOf(cod_eligible_items_name_old_cart_id.get(k));
+            cod_eligible_items_name_old_cart_id_new.add(g);
         }
-        cod_not_eligible_items_name_quantity_cart_new.clear();
-        for(int l=0;l<cod_not_eligible_items_name_quantity_cart.size();l++)
+
+
+        cod_eligible_items_name_price_cart_new.clear();
+        for(int k=0;k<cod_eligible_items_name_price_cart.size();k++)
         {
-            String q =cod_not_eligible_items_name_quantity_cart.get(l);
+            String price = cod_eligible_items_name_price_cart.get(k);
+            cod_eligible_items_name_price_cart_new.add(price);
+        }
+
+
+
+
+
+
+
+
+        cod_items_name_count_cart_integer.clear();
+        for(int k=0;k<cod_eligible_items_name_count_cart.size();k++)
+        {
+            Integer g = Integer.valueOf(cod_eligible_items_name_count_cart.get(k));
+            cod_items_name_count_cart_integer.add(g);
+        }
+        cod_eligible_items_name_quantity_cart_new.clear();
+        for(int l=0;l<cod_eligible_items_name_quantity_cart.size();l++)
+        {
+            String q =cod_eligible_items_name_quantity_cart.get(l);
             String[] separated = q.split(" ");
             Log.e("cart","the value is "+separated[1] );
             String val = separated[1];
-            cod_not_eligible_items_name_quantity_cart_new.add(val);
+            cod_eligible_items_name_quantity_cart_new.add(val);
         }
 
         SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
@@ -802,20 +882,23 @@ dialog.dismiss();
         int user_int_id = Integer.parseInt(useridd);
         final ArrayList<Integer> user_cart_id = new ArrayList<>();
         final ArrayList<Integer> type_cart_id = new ArrayList<>();
-        for(int g =0;g<cod_not_eligible_items_name_old_cart_id.size();g++)
+        for(int g =0;g<cod_eligible_items_name_old_cart_id.size();g++)
         {
             user_cart_id.add(user_int_id);
             type_cart_id.add(0);
         }
-        Log.e("cart","checkout param=    itemid ====>"+cod_not_eligible_items_name_old_cart_id);
-        Log.e("cart","checkout param=    count====>"+cod_not_items_name_count_cart_integer);
-        Log.e("cart","checkout param=    quantity ====>"+cod_not_eligible_items_name_quantity_cart_new);
-        Log.e("cart","checkout param=    type ====>"+type_cart_id);
-        Log.e("cart","checkout param=    userid ====>"+user_cart_id);
+        Log.e("cart","checkout param=    itemid ====>"+cod_eligible_items_name_old_cart_id_new);
+        Log.e("cart","checkout param=    count====>"+cod_items_name_count_cart_integer);
+        Log.e("cart","checkout param=    quantity ====>"+cod_eligible_items_name_quantity_cart_new);
+        Log.e("cart","checkout param=    type ====>0");
+        Log.e("cart","checkout param=    userid ====>"+user_int_id);
         Log.e("cart","checkout param=    address ====> "+address_booking);
         Log.e("cart","checkout param=    itemid ====>"+pincode_booking);
-        Log.e("cart","checkout prce ====>"+cod_not_eligible_items_name_price_cart);
-        Call call = mainInterface.checkoutapi(cod_not_eligible_items_name_old_cart_id,cod_not_items_name_count_cart_integer,cod_not_eligible_items_name_quantity_cart,0,cod_not_eligible_items_name_price_cart,user_int_id,address_booking,pincode_booking,paymentType,tot_for_intent_pay,coupon_applid_amount_for_intent_pay,coupon_name_for_intent_pay);
+        Log.e("cart","checkout param=    itemid ====>"+pincode_booking);
+        Log.e("cart","checkout prce new ====>"+coupon_name_for_intent_pay);
+        Log.e("cart","checkout prce new====>"+coupon_applid_amount_for_intent_pay);
+        Log.e("cart","checkout prce new ====>"+tot_for_intent_pay);
+        Call call = mainInterface.checkoutapi(cod_eligible_items_name_old_cart_id,cod_items_name_count_cart_integer,cod_eligible_items_name_quantity_cart,0,cod_eligible_items_name_price_cart,user_int_id,address_booking,pincode_booking,paymentType,tot_for_intent_pay,coupon_applid_amount_for_intent_pay,coupon_name_for_intent_pay);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, retrofit2.Response response) {
@@ -877,7 +960,7 @@ dialog.dismiss();
                 editor_payment.putString(cart_item_offer_percent_payment,"");
 
                 editor_payment.apply();
-
+                push_notif();
 
 
                 Intent next = new Intent(Payment.this,Thankyou.class);

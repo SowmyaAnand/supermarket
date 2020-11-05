@@ -182,10 +182,7 @@ String cnt1 ="COUNT: "+cnt;
         holder.rm.setEnabled(false);
         String delete_item_name = String.valueOf(holder.name_cart.getText());
         int int_new_position = items_name_old_cartadapter.indexOf(delete_item_name);
-//        int new_removal_flag = items_name_old_cartadapter.size();
-//        int diff = removal_flag-new_removal_flag;
-//        int int_new_position_val = items_index_eligible_cod.get(position);
-//        int int_new_position = int_new_position_val-diff;
+
         Log.e("cartadapter","text removed"+items_name_old_cartadapter+items_index_eligible_cod+int_new_position);
 
         String name_item_nm = String.valueOf(holder.name_cart.getText());

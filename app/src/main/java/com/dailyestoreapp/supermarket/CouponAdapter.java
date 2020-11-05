@@ -86,26 +86,6 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.MyViewHold
 
         }
     }
-//    public void filter(String charText) {
-//        Log.e("texting if","persons="+charText);
-//        charText = charText.toLowerCase(Locale.getDefault());
-//        Log.e("texting if2","persons="+charText);
-//        personNames.clear();
-//        Iterator itr=personNames.iterator();
-//        if (charText.length() == 0) {
-//            Log.e("texting if3","persons="+charText);
-//            personNames.addAll(lts);
-//        } else {
-//            for(int i =0;i<lts.size();i++) {
-//                Log.e("texting else","persons="+lts.get(i));
-//                String s = (String) lts.get(i);
-//                if (s.toLowerCase(Locale.getDefault()).contains(charText)) {
-//                    personNames.add(s);
-//                }
-//            }
-//        }
-//        Log.e("text","persons="+personNames);
-//        notifyDataSetChanged();
-//    }
+
 }
 
