@@ -47,7 +47,9 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         fullname = fullname_shared.getString("fullusername","");
         SharedPreferences shared_firstpop = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         popup_img = shared_firstpop.getString("firstpop_img", "");
+
         int popup_id = shared_firstpop.getInt("popup_initalval",0);
+        Log.e("main","popupimage is "+popup_id);
         popupid=popup_id;
         ShowPopup(this);
 

@@ -40,13 +40,15 @@ DealsPageAdpater dd;
         setContentView(R.layout.activity_test);
         Toolbar toolbar = findViewById(R.id.toolbar21);
         setSupportActionBar(toolbar);
-        dealspage=findViewById(R.id.dealspage);
+        dealspage = findViewById(R.id.dealspage);
         SharedPreferences shared_deal_typeId_test = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String deal_type_id_test = shared_deal_typeId_test.getString("deals_typeid", "");
         String[] deal_type_id_numbers_test = deal_type_id_test.split(",");//if spaces are uneven, use \\s+ instead of " "
+        if (!(deal_type_id_test.isEmpty())) {
+
+
         for (String number : deal_type_id_numbers_test) {
-            if(!(deal_type_id_numbers_test.equals("")||deal_type_id_numbers_test.equals(null)))
-            {
+            if (!(deal_type_id_numbers_test.equals("") || deal_type_id_numbers_test.equals(null))) {
                 deals_type_id_for_click_test.add(Integer.valueOf(number));
 
             }
@@ -56,20 +58,19 @@ DealsPageAdpater dd;
         String shared_dealflyer = shared_firstflyer.getString("viewalldeals_img", "");
         String[] shared_dealflyer_img = shared_dealflyer.split(",");//if spaces are uneven, use \\s+ instead of " "
         for (String ct : shared_dealflyer_img) {
-            if(!(ct.equals("")||ct.equals(null)))
-            {
+            if (!(ct.equals("") || ct.equals(null))) {
                 deal_image.add(ct);
             }
 
         }
-        intialdealFlyers = shared_firstflyer.getInt("deal_flyer_initalval",0);
+        intialdealFlyers = shared_firstflyer.getInt("deal_flyer_initalval", 0);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         dealspage.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-    dd = new DealsPageAdpater(test.this,deal_image,intialdealFlyers,deals_type_id_for_click_test);
-    dealspage.setAdapter(dd);
-
+        dd = new DealsPageAdpater(test.this, deal_image, intialdealFlyers, deals_type_id_for_click_test);
+        dealspage.setAdapter(dd);
+    }
 
     }
 

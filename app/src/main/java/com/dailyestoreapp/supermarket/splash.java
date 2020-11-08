@@ -68,7 +68,7 @@ private static int SPLASH_TIME_OUT = 1000;
                 public void onResponse(Call<CustomerAppResponse> call, retrofit2.Response<CustomerAppResponse> response) {
                     CustomerAppResponse listCategoryResponseobject = response.body();
                     int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
-                    Log.e("firstpop","the succes value is "+listCategoryResponseobject.getResponsedata().getSuccess());
+                    Log.e("firstpop","first value is  succes value is "+listCategoryResponseobject.getResponsedata().getSuccess());
                     int data_length = response.body().getResponsedata().getData().size();
 
 
@@ -98,6 +98,7 @@ private static int SPLASH_TIME_OUT = 1000;
                                     frst_flyer_images.append(",");
                                 }
                             }
+
                             SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                             editor_frst.putString("first_flyer_new", frst_flyer_images.toString());
                             editor_frst.putInt("first_flyer_initalval",intialfirstFlyers);
@@ -105,6 +106,12 @@ private static int SPLASH_TIME_OUT = 1000;
                             Log.e("fragment1","the imageurl is===="+original_item_image_lts_splash);
 
 
+                        }
+                        else
+                        {
+                            SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                            editor_frst.putInt("first_flyer_initalval",intialfirstFlyers);
+                            editor_frst.apply();
                         }
 
                     } catch (Exception e) {
@@ -288,7 +295,7 @@ SecondViewFlyers();
             public void onResponse(Call<CustomerAppResponse> call, retrofit2.Response<CustomerAppResponse> response) {
                 CustomerAppResponse listCategoryResponseobject = response.body();
                 int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
-                Log.e("firstpop","the succes value is "+listCategoryResponseobject.getResponsedata().getSuccess());
+                Log.e("firstpop","the succes value is of second flyers "+listCategoryResponseobject.getResponsedata().getSuccess());
                 int data_length = response.body().getResponsedata().getData().size();
 
 
@@ -325,12 +332,15 @@ SecondViewFlyers();
                         }
                         SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                         editor_frst.putString("sec_flyers_images_new", sec_flyers_images.toString());
+                        Log.e("splash","second_flyer_initalval="+intialsecondFlyers);
                         editor_frst.putInt("second_flyer_initalval",intialsecondFlyers);
                         editor_frst.apply();
 
                     }
                     else {
-
+                        SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                        editor_frst.putInt("second_flyer_initalval",intialsecondFlyers);
+                        editor_frst.apply();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -500,6 +510,7 @@ SecondViewFlyers();
                         }
                         SharedPreferences.Editor editor_frst = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                         editor_frst.putString("firstpop_img", firstpopup_img.toString());
+                        Log.e("main","popupimage is "+intialpopup);
                         editor_frst.putInt("popup_initalval",intialpopup);
                         editor_frst.apply();
                     }

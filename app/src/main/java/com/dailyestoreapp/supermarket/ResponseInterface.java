@@ -63,10 +63,10 @@ public interface ResponseInterface {
                                             @Field("type") String typeres
             );
     @FormUrlEncoded
-    @POST("contactUs")
+    @POST("contactUsNeww")
     Call<CustomerAppResponseLogin> contactus_send(@Field("userId") int userId,
                                             @Field("email") String email,
-                                            @Field("mobile") int mobile,
+                                            @Field("mobile") String mobile,
                                                   @Field("address")String address,
                                                   @Field("message") String msg
     );

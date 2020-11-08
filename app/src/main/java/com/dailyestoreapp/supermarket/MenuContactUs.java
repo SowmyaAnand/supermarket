@@ -150,7 +150,7 @@ public class MenuContactUs extends AppCompatActivity {
                 .client(okHttpClient)
                 .build();
         ResponseInterface mainInterface = retrofit.create(ResponseInterface.class);
-        int mob_num = Integer.parseInt(mobile);
+
         String userid = String.valueOf(useridd);
         contactus_string.add(userid);
         contactus_string.add(email);
@@ -158,7 +158,7 @@ public class MenuContactUs extends AppCompatActivity {
         contactus_string.add(address);
         contactus_string.add(messages);
 
-        Call<CustomerAppResponseLogin> call = mainInterface.contactus_send(useridd,email,mob_num,address,messages);
+        Call<CustomerAppResponseLogin> call = mainInterface.contactus_send(useridd,email,mobile,address,messages);
         call.enqueue(new Callback<CustomerAppResponseLogin>() {
             @Override
             public void onResponse(Call<CustomerAppResponseLogin> call, retrofit2.Response<CustomerAppResponseLogin> response) {
@@ -168,19 +168,27 @@ public class MenuContactUs extends AppCompatActivity {
                 Log.e("login","success="+success);
                 String userid = obj.getResponsedata().getData();
                 String fullusername = "username"+userid;
-                if(success==1)
+                try
                 {
+                    if(success==1)
+                    {
 
-                    Toast.makeText(MenuContactUs.this,"Message Sent",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MenuContactUs.this,"Message Sent",Toast.LENGTH_SHORT).show();
 
 
+
+                    }
+                    else
+                    {
+
+                        Toast.makeText(MenuContactUs.this,"Error Please try after some time",Toast.LENGTH_SHORT).show();
+
+                    }
 
                 }
-                else
+                catch(Exception e)
                 {
-
-                    Toast.makeText(MenuContactUs.this,"Error Please try after some time",Toast.LENGTH_SHORT).show();
-
+                    Log.e("contactus=","the contactus msg is "+e);
                 }
 
             }

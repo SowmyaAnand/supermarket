@@ -169,14 +169,18 @@ public class Fragment1 extends Fragment {
         String savedString = shared2.getString("categories_no_new", "");
         Log.e("editcategories","the categories are images arae "+categoriesEditCategies_image);
         String[] numbers = savedString.split(",");//if spaces are uneven, use \\s+ instead of " "
-        if(categoriescatno_edit.size()==0) {
-            for (String number : numbers) {
-                if (!(numbers.equals("") || numbers.equals(null))) {
-                    categoriescatno_edit.add(Integer.valueOf(number));
-                }
+        if(!(savedString.isEmpty()))
+        {
+            if(categoriescatno_edit.size()==0) {
+                for (String number : numbers) {
+                    if (!(numbers.equals("") || numbers.equals(null))) {
+                        categoriescatno_edit.add(Integer.valueOf(number));
+                    }
 
+                }
             }
         }
+
         SharedPreferences shared_cat_id = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         int intial_cat_id =shared_cat_id.getInt("categories_intial",0);
         SharedPreferences shared_firstflyer = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
@@ -214,13 +218,17 @@ public class Fragment1 extends Fragment {
         String deal_type_id_fragment1 = shared_deal_typeId.getString("deals_typeid", "");
         String[] deal_type_id_numbers = deal_type_id_fragment1.split(",");//if spaces are uneven, use \\s+ instead of " "
      if(deals_type_id_for_click.size()==0) {
-         for (String number : deal_type_id_numbers) {
-             if (!(deal_type_id_numbers.equals("") || deal_type_id_numbers.equals(null))) {
-                 deals_type_id_for_click.add(Integer.valueOf(number));
+if(!(deal_type_id_fragment1.isEmpty()))
+{
+    for (String number : deal_type_id_numbers) {
+        if (!(deal_type_id_numbers.equals("") || deal_type_id_numbers.equals(null))) {
+            deals_type_id_for_click.add(Integer.valueOf(number));
 
-             }
+        }
 
-         }
+    }
+}
+
      }
 
 
@@ -261,7 +269,7 @@ public class Fragment1 extends Fragment {
 //        txtSearch.setHintTextColor(Color.LTGRAY);
 //        txtSearch.setTextColor(getResources().getColor(R.color.black));
 //        txtSearch.setTextSize(12);
-
+Log.e("fragment1","the intital flyer id"+intial_firstflyer_id);
         flyeradapterview = new Imageadapterforflyers(getContext(),firstflyer_image,intial_firstflyer_id);
         flyerpager.setAdapter(flyeradapterview);
         Timer t = new Timer();

@@ -1,6 +1,7 @@
 package com.dailyestoreapp.supermarket;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class Imageadapterforflyers extends PagerAdapter {
 
     @Override
     public int getCount() {
-
+        Log.e("imageadapter","the flyerid frst==>"+firstflyerid);
         if(this.firstflyerid==0)
         {
             return firstflyerimage.size();
